@@ -14,12 +14,12 @@ namespace Ergenekon.Infrastructure
         public DbSet<Country> Countries { get; set; }
         public DbSet<StateProvince> StateProvinces { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
             // Country & StateProvince Map
-            modelBuilder.Entity<Country>(b =>
+            builder.Entity<Country>(b =>
             {
                 b.ToTable("Countries");
                 b.HasKey(e => e.Id);
@@ -29,7 +29,7 @@ namespace Ergenekon.Infrastructure
                 b.Property(e => e.Iso3Code).HasMaxLength(3).IsUnicode(false);
             });
 
-            modelBuilder.Entity<StateProvince>(b =>
+            builder.Entity<StateProvince>(b =>
             {
                 b.ToTable("StateProvinces");
                 b.HasKey(e => e.Id);

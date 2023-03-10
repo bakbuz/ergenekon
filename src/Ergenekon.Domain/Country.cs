@@ -1,4 +1,6 @@
-﻿namespace Ergenekon.Domain
+﻿using Ergenekon.Common;
+
+namespace Ergenekon.Domain
 {
     public class Country : Entity<int>
     {

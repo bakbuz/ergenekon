@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Ergenekon.Common\Ergenekon.Common.csproj" />
     <ProjectReference Include="..\Ergenekon.Domain\Ergenekon.Domain.csproj" />
+    <ProjectReference Include="..\Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

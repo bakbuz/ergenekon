@@ -1,17 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Ergenekon.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
 namespace Ergenekon.Infrastructure
 {
-    internal class BaseOperationManager<TEntity> where TEntity : class
+    public abstract class BaseOperationManager<TEntity, TKey> where TEntity : Entity<TKey>
     {
         private readonly DataContext _context;
         private DbSet<TEntity> _entitySet;
 
-        public BaseOperationManager([NotNull] DataContext context)
+        private readonly ILogger _logger;
+
+        public BaseOperationManager([NotNull] DataContext context, ILogger logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public virtual IQueryable<TEntity> Queryable => EntitySet;
@@ -22,96 +27,216 @@ namespace Ergenekon.Infrastructure
             {
                 if (_entitySet == null)
                     _entitySet = _context.Set<TEntity>();
+
                 return _entitySet;
             }
         }
 
-        public virtual IList<TEntity> GetAll()
+        #region Select Operations
+
+        public virtual List<TEntity> GetAll()
         {
             return EntitySet.ToList();
         }
 
-        public virtual IList<TEntity> GetMany(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            return await EntitySet.ToListAsync(cancellationToken);
+        }
+
+        public virtual List<TEntity> GetMany(Expression<Func<TEntity, bool>> predicate)
         {
             return EntitySet.Where(predicate).ToList();
         }
 
-        public virtual TEntity GetById(object id)
+        public virtual async Task<List<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            //return Entities.SingleOrDefault(q => q.Id == id);
-            return EntitySet.Find(id);
+            return await EntitySet.Where(predicate).ToListAsync(cancellationToken);
         }
 
-        public virtual TEntity GetOne(Expression<Func<TEntity, bool>> predicate)
+        public virtual TEntity GetById(TKey id)
         {
-            return EntitySet.Where(predicate).SingleOrDefault();
+            return EntitySet.Where(q => q.Id == id).SingleOrDefault();
         }
+
+        public virtual async Task<TEntity> GetByIdAsync(object id, CancellationToken cancellationToken = default)
+        {
+            return await EntitySet.SingleOrDefaultAsync(q => q.Id == id, cancellationToken);
+        }
+
+        public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return EntitySet.Where(predicate).FirstOrDefault();
+        }
+
+        public virtual async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        {
+            return await EntitySet.Where(predicate).FirstOrDefaultAsync(cancellationToken);
+        }
+
+        #endregion
+
+        #region Insert Operations
 
         public virtual void Insert(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
+            EntitySet.Add(entity);
+
             try
             {
-                EntitySet.Add(entity);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to insert record");
+
+                throw;
             }
         }
 
-        public virtual void Insert(IEnumerable<TEntity> entities)
+        public virtual async Task InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            await EntitySet.AddAsync(entity);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to insert record");
+
+                throw;
+            }
+        }
+
+        public virtual void InsertRange(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
 
+            EntitySet.AddRange(entities);
+
             try
             {
-                EntitySet.AddRange(entities);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to insert record");
+
+                throw;
             }
         }
 
+        public virtual async Task InsertRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            if (entities == null)
+                throw new ArgumentNullException(nameof(entities));
+
+            await EntitySet.AddRangeAsync(entities);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to insert record");
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Update Operations
 
         public virtual void Update(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
+            EntitySet.Update(entity);
+
             try
             {
-                EntitySet.Update(entity);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to update record");
+
+                throw;
             }
         }
 
-        public virtual void Update(IEnumerable<TEntity> entities)
+        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            EntitySet.Update(entity);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to update record");
+
+                throw;
+            }
+        }
+
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
 
+            EntitySet.UpdateRange(entities);
+
             try
             {
-                EntitySet.UpdateRange(entities);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to update record");
+
+                throw;
             }
         }
 
+        public virtual async Task UpdateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            if (entities == null)
+                throw new ArgumentNullException(nameof(entities));
+
+            EntitySet.UpdateRange(entities);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to update record");
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Delete Operations
 
         public virtual void SoftDelete(TEntity entity)
         {
@@ -119,6 +244,7 @@ namespace Ergenekon.Infrastructure
                 throw new ArgumentNullException(nameof(entity));
 
             (entity as ISoftDelete).Deleted = true;
+
             Update(entity);
         }
 
@@ -130,8 +256,9 @@ namespace Ergenekon.Infrastructure
             foreach (TEntity entity in entities)
             {
                 (entity as ISoftDelete).Deleted = true;
-                Update(entity);
             }
+
+            UpdateRange(entities);
         }
 
 
@@ -140,33 +267,80 @@ namespace Ergenekon.Infrastructure
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
+            EntitySet.Remove(entity);
+
             try
             {
-                EntitySet.Remove(entity);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to delete record");
+
+                throw;
             }
         }
 
-        public virtual void Delete(IEnumerable<TEntity> entities)
+        public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            EntitySet.Remove(entity);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete record");
+
+                throw;
+            }
+        }
+
+        public virtual void DeleteRange(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
 
+            EntitySet.RemoveRange(entities);
+
             try
             {
-                EntitySet.RemoveRange(entities);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Failed to delete record");
+
+                throw;
             }
         }
 
+        public virtual async Task DeleteRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            if (entities == null)
+                throw new ArgumentNullException(nameof(entities));
+
+            EntitySet.RemoveRange(entities);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete record");
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region Aggregate Operations
 
         public virtual int Count()
         {
@@ -188,153 +362,27 @@ namespace Ergenekon.Infrastructure
             return EntitySet.LongCount(predicate);
         }
 
-        #region Async
-
-        public virtual async Task<IList<TEntity>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return await EntitySet.ToListAsync(cancellationToken);
-        }
-
-        public virtual async Task<IList<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
-        {
-            return await EntitySet.Where(predicate).ToListAsync(cancellationToken);
-        }
-
-        public virtual async Task<TEntity> GetByIdAsync(object id, CancellationToken cancellationToken)
-        {
-            //return await Entities.SingleOrDefaultAsync(q => q.Id == id, cancellationToken);
-            return await EntitySet.FindAsync(id);
-        }
-
-        public virtual async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
-        {
-            return await EntitySet.Where(predicate).SingleOrDefaultAsync(cancellationToken);
-        }
-
-
-        public virtual async Task InsertAsync(TEntity entity, CancellationToken cancellationToken)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-
-            try
-            {
-                await EntitySet.AddAsync(entity);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public virtual async Task InsertAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
-        {
-            if (entities == null)
-                throw new ArgumentNullException(nameof(entities));
-
-            try
-            {
-                await EntitySet.AddRangeAsync(entities);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-
-            try
-            {
-                EntitySet.Update(entity);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public virtual async Task UpdateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
-        {
-            if (entities == null)
-                throw new ArgumentNullException(nameof(entities));
-
-            try
-            {
-                EntitySet.UpdateRange(entities);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public virtual async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
-        {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
-
-            try
-            {
-                EntitySet.Remove(entity);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public virtual async Task DeleteAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
-        {
-            if (entities == null)
-                throw new ArgumentNullException(nameof(entities));
-
-            try
-            {
-                EntitySet.RemoveRange(entities);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public virtual async Task<int> CountAsync(CancellationToken cancellationToken)
+        public virtual async Task<int> CountAsync(CancellationToken cancellationToken = default)
         {
             return await EntitySet.CountAsync(cancellationToken);
         }
 
-        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await EntitySet.CountAsync(predicate, cancellationToken);
         }
 
-        public virtual async Task<long> LongCountAsync(CancellationToken cancellationToken)
+        public virtual async Task<long> LongCountAsync(CancellationToken cancellationToken = default)
         {
             return await EntitySet.LongCountAsync(cancellationToken);
         }
 
-        public virtual async Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        public virtual async Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await EntitySet.LongCountAsync(predicate, cancellationToken);
         }
 
         #endregion
-
-
-
 
         //public virtual TEntity GetByIdIncluding(int id, params Expression<Func<TEntity, object>>[] includes)
         //{

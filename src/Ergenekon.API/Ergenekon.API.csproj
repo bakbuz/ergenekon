@@ -14,4 +14,15 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ergenekon.Common\Ergenekon.Common.csproj" />
+    <ProjectReference Include="..\Ergenekon.Domain\Ergenekon.Domain.csproj" />
+    <ProjectReference Include="..\Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ergenekon.Services\Ergenekon.Services.csproj" />
+  </ItemGroup>
+
 </Project>

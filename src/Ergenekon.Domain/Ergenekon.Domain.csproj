@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ergenekon.Common\Ergenekon.Common.csproj" />
+  </ItemGroup>
+
 </Project>
