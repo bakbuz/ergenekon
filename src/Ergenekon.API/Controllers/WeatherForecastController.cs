@@ -1,3 +1,4 @@
+using Ergenekon.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.API.Controllers

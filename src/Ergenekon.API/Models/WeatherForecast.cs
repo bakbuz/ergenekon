@@ -1,4 +1,4 @@
-namespace Ergenekon.API
+namespace Ergenekon.API.Models
 {
     public class WeatherForecast
     {
