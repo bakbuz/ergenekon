@@ -13,4 +13,10 @@ namespace Ergenekon.Domain
     {
 
     }
+
+    public static class SystemRoles
+    {
+        public const string Admin = "Admin";
+        //public const string ReportViewer = "ReportViewer";
+    }
 }

@@ -13,12 +13,9 @@ namespace Ergenekon.Infrastructure
         private readonly DataContext _context;
         private DbSet<TEntity> _entitySet;
 
-        private readonly ILogger _logger;
-
-        public BaseOperationManager([NotNull] DataContext context, [NotNull] ILogger logger)
+        public BaseOperationManager([NotNull] DataContext context)
         {
             _context = context;
-            _logger = logger;
         }
 
         public virtual IQueryable<TEntity> Queryable => EntitySet;
@@ -93,7 +90,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to insert record");
+                //_logger.LogError(ex, "Failed to insert record");
 
                 throw;
             }
@@ -112,7 +109,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to insert record");
+                //_logger.LogError(ex, "Failed to insert record");
 
                 throw;
             }
@@ -131,7 +128,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to insert record");
+                //_logger.LogError(ex, "Failed to insert record");
 
                 throw;
             }
@@ -150,7 +147,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to insert record");
+                //_logger.LogError(ex, "Failed to insert record");
 
                 throw;
             }
@@ -173,7 +170,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update record");
+                //_logger.LogError(ex, "Failed to update record");
 
                 throw;
             }
@@ -192,7 +189,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update record");
+                //_logger.LogError(ex, "Failed to update record");
 
                 throw;
             }
@@ -211,7 +208,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update record");
+                //_logger.LogError(ex, "Failed to update record");
 
                 throw;
             }
@@ -230,7 +227,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update record");
+                //_logger.LogError(ex, "Failed to update record");
 
                 throw;
             }
@@ -277,7 +274,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete record");
+                //_logger.LogError(ex, "Failed to delete record");
 
                 throw;
             }
@@ -296,7 +293,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete record");
+                //_logger.LogError(ex, "Failed to delete record");
 
                 throw;
             }
@@ -315,7 +312,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete record");
+                //_logger.LogError(ex, "Failed to delete record");
 
                 throw;
             }
@@ -334,7 +331,7 @@ namespace Ergenekon.Infrastructure
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete record");
+                //_logger.LogError(ex, "Failed to delete record");
 
                 throw;
             }

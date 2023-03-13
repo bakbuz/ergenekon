@@ -14,7 +14,7 @@ namespace Ergenekon.Services
 
     public class CountryService : BaseOperationManager<Country, int>, ICountryService
     {
-        public CountryService([NotNull] DataContext context, ILogger logger) : base(context, logger)
+        public CountryService([NotNull] DataContext context) : base(context)
         {
         }
 

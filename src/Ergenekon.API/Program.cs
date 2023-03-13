@@ -1,10 +1,19 @@
+using Ergenekon.API;
+using Ergenekon.Domain;
 using Ergenekon.Infrastructure;
 using Ergenekon.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+// identity
+builder.Services.AddIdentityCore<User>()
+    .AddRoles<Role>()
+    .AddEntityFrameworkStores<DataContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddScoped<ICountryService, CountryService>();
@@ -22,6 +31,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    DataSeeder.Initialize(app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
 }
 
 app.UseHttpsRedirection();
