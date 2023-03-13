@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ergenekon.Common\Ergenekon.Common.csproj" />
     <ProjectReference Include="..\Ergenekon.Domain\Ergenekon.Domain.csproj" />
     <ProjectReference Include="..\Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj" />

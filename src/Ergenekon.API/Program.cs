@@ -4,6 +4,7 @@ using Ergenekon.Infrastructure;
 using Ergenekon.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddIdentity<User, Role>()
 // Add services to the container.
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IStateProvinceService, StateProvinceService>();
+
+
+//builder.Services.AddAutoMapper(typeof(Ergenekon.Services.ICountryService), typeof(ProfileTypeFromAssembly2) /*, ...*/);
+builder.Services.AddAutoMapper(typeof(CountryService));
 
 builder.Services.Configure<RouteOptions>(options =>
 {

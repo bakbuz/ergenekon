@@ -1,5 +1,7 @@
-﻿using Ergenekon.Domain;
+﻿using AutoMapper;
+using Ergenekon.Domain;
 using Ergenekon.Infrastructure;
+using Ergenekon.Services.DTOs;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
@@ -9,13 +11,16 @@ namespace Ergenekon.Services
     {
         List<Country> GetAllCountries();
 
-        Task<List<Country>> GetAllCountriesAsync();
+        Task<List<CountryDto>> GetAllCountriesAsync();
     }
 
     public class CountryService : BaseOperationManager<Country, int>, ICountryService
     {
-        public CountryService([NotNull] DataContext context) : base(context)
+        private readonly IMapper _mappper;
+
+        public CountryService([NotNull] DataContext context, IMapper mapper) : base(context)
         {
+            _mappper = mapper;
         }
 
         public List<Country> GetAllCountries()
@@ -23,9 +28,10 @@ namespace Ergenekon.Services
             return base.GetAll();
         }
 
-        public async Task<List<Country>> GetAllCountriesAsync()
+        public async Task<List<CountryDto>> GetAllCountriesAsync()
         {
-            return await base.GetAllAsync();
+            var countries = await base.GetAllAsync();
+            return _mappper.Map<List<CountryDto>>(countries);
         }
     }
 }
