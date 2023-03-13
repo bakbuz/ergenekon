@@ -56,15 +56,15 @@ namespace Ergenekon.Infrastructure
             return await EntitySet.Where(predicate).ToListAsync(cancellationToken);
         }
 
-        public virtual TEntity GetById(TKey id)
-        {
-            return EntitySet.Where(q => q.Id == id).SingleOrDefault();
-        }
+        //public virtual TEntity GetById(TKey id)
+        //{
+        //    return EntitySet.Where(q => q.Id == id).SingleOrDefault();
+        //}
 
-        public virtual async Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
-        {
-            return await EntitySet.SingleOrDefaultAsync(q => q.Id == id, cancellationToken);
-        }
+        //public virtual async Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
+        //{
+        //    return await EntitySet.SingleOrDefaultAsync(q => q.Id == id, cancellationToken);
+        //}
 
         public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
