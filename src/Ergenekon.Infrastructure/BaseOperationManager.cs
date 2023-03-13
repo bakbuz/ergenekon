@@ -6,14 +6,16 @@ using System.Linq.Expressions;
 
 namespace Ergenekon.Infrastructure
 {
-    public abstract class BaseOperationManager<TEntity, TKey> where TEntity : Entity<TKey>
+    public abstract class BaseOperationManager<TEntity, TKey>
+        where TEntity : Entity<TKey>
+        where TKey : IEquatable<TKey>
     {
         private readonly DataContext _context;
         private DbSet<TEntity> _entitySet;
 
         private readonly ILogger _logger;
 
-        public BaseOperationManager([NotNull] DataContext context, ILogger logger)
+        public BaseOperationManager([NotNull] DataContext context, [NotNull] ILogger logger)
         {
             _context = context;
             _logger = logger;
@@ -59,7 +61,7 @@ namespace Ergenekon.Infrastructure
             return EntitySet.Where(q => q.Id == id).SingleOrDefault();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(object id, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
         {
             return await EntitySet.SingleOrDefaultAsync(q => q.Id == id, cancellationToken);
         }
