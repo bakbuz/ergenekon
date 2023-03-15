@@ -23,7 +23,12 @@ namespace Ergenekon.Services
 
         public async Task<List<StateProvinceDto>> GetStateProvincesAsync(int countryId)
         {
-            var stateProvinces = await _ctx.StateProvinces.Where(q => q.CountryId == countryId).ToListAsync();
+            var stateProvinces = await _ctx.StateProvinces
+                .Where(q => q.CountryId == countryId)
+                .OrderBy(o => o.DisplayOrder)
+                .ThenBy(o => o.Id)
+                .ToListAsync();
+
             return _mappper.Map<List<StateProvinceDto>>(stateProvinces);
         }
     }

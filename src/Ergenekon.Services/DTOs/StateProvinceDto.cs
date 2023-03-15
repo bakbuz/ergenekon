@@ -21,8 +21,6 @@ namespace Ergenekon.Services.DTOs
         public short NumericIsoCode { get; set; }
 
         public short? CallingCode { get; set; }
-
-        public short DisplayOrder { get; set; }
     }
 
     public class StateProvinceDto : EntityDto<int>
@@ -30,7 +28,5 @@ namespace Ergenekon.Services.DTOs
         public string Name { get; set; }
 
         public string Abbreviation { get; set; }
-
-        public short DisplayOrder { get; set; }
     }
 }

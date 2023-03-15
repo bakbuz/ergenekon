@@ -2,18 +2,24 @@ using Ergenekon.API;
 using Ergenekon.Domain;
 using Ergenekon.Infrastructure;
 using Ergenekon.Services;
-using Microsoft.EntityFrameworkCore;
+using Ergenekon.Services.Messages;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 // identity
-builder.Services.AddIdentity<User, Role>()
+builder.Services.AddIdentity<User, Role>(opts =>
+    {
+        opts.SignIn.RequireConfirmedAccount = true;
+    })
     .AddEntityFrameworkStores<DataContext>()
     .AddDefaultTokenProviders();
+
+// email
+builder.Services.AddSingleton<IEmailSender, NullEmailSender>();
 
 // Add services to the container.
 builder.Services.AddScoped<ICountryService, CountryService>();

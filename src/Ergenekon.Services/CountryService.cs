@@ -31,7 +31,7 @@ namespace Ergenekon.Services
         public async Task<List<CountryDto>> GetAllCountriesAsync()
         {
             var countries = await base.GetAllAsync();
-            return _mappper.Map<List<CountryDto>>(countries);
+            return _mappper.Map<List<CountryDto>>(countries.OrderBy(o=>o.DisplayOrder).ThenBy(o=>o.Id));
         }
     }
 }
