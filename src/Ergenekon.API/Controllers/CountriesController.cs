@@ -1,5 +1,6 @@
-﻿using Ergenekon.Domain;
+﻿using Ergenekon.API.Models;
 using Ergenekon.Services;
+using Ergenekon.Services.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.API.Controllers
@@ -18,6 +19,8 @@ namespace Ergenekon.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CountryDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         public async Task<IActionResult> Get()
         {
             var countries = await _countryService.GetAllCountriesAsync();
@@ -25,6 +28,8 @@ namespace Ergenekon.API.Controllers
         }
 
         [HttpGet("{id}/StateProvinces")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<StateProvinceDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
         public async Task<IActionResult> GetStateProvinces([FromRoute] int id)
         {
             var stateProvinces = await _stateProvinceService.GetStateProvincesAsync(id);

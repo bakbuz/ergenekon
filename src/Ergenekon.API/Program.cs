@@ -1,8 +1,8 @@
 using Ergenekon.API;
+using Ergenekon.Common.Messages;
 using Ergenekon.Domain;
 using Ergenekon.Infrastructure;
 using Ergenekon.Services;
-using Ergenekon.Services.Messages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

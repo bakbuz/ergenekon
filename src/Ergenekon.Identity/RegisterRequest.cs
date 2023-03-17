@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ergenekon.API.Models.Account
+namespace Ergenekon.Identity
 {
     public class RegisterRequest
     {
@@ -14,17 +14,5 @@ namespace Ergenekon.API.Models.Account
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-    }
-
-    public class RequireConfirmedAccountResponse
-    {
-        public bool RequireConfirmedAccount { get; set; }
-        public string Email { get; set; }
-    }
-
-    public class RegisterResponse
-    {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
     }
 }

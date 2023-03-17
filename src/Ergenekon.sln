@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.API", "Ergenekon.API\Ergenekon.API.csproj", "{964A26D6-D736-4EC9-8C73-E6C2BE8DB799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.API", "Ergenekon.API\Ergenekon.API.csproj", "{964A26D6-D736-4EC9-8C73-E6C2BE8DB799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Domain", "Ergenekon.Domain\Ergenekon.Domain.csproj", "{84339149-C9CF-4DB3-AE8E-E1469EB6F574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Domain", "Ergenekon.Domain\Ergenekon.Domain.csproj", "{84339149-C9CF-4DB3-AE8E-E1469EB6F574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Infrastructure", "Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj", "{6FF6BEDD-78CF-4583-814B-2F4F0D7D5371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Infrastructure", "Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj", "{6FF6BEDD-78CF-4583-814B-2F4F0D7D5371}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Common", "Ergenekon.Common\Ergenekon.Common.csproj", "{9B3D7987-431D-46CD-8A54-C4AFA3319253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Common", "Ergenekon.Common\Ergenekon.Common.csproj", "{9B3D7987-431D-46CD-8A54-C4AFA3319253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Services", "Ergenekon.Services\Ergenekon.Services.csproj", "{4A94A029-A4EB-4633-A462-F90275F876B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Services", "Ergenekon.Services\Ergenekon.Services.csproj", "{4A94A029-A4EB-4633-A462-F90275F876B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Identity", "Ergenekon.Identity\Ergenekon.Identity.csproj", "{0C08ABCA-41E9-4759-A38E-3092BEF062D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{4A94A029-A4EB-4633-A462-F90275F876B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A94A029-A4EB-4633-A462-F90275F876B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A94A029-A4EB-4633-A462-F90275F876B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C08ABCA-41E9-4759-A38E-3092BEF062D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C08ABCA-41E9-4759-A38E-3092BEF062D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C08ABCA-41E9-4759-A38E-3092BEF062D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C08ABCA-41E9-4759-A38E-3092BEF062D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
