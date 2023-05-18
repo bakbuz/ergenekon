@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Ergenekon.API.Other;
 
 namespace Ergenekon.API.Controllers
 {
@@ -26,14 +27,22 @@ namespace Ergenekon.API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
         private readonly AppSettings _appSettings;
+        private readonly JwtSettings _jwtSettings;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IEmailSender emailSender, IOptions<AppSettings> appSettings, ILogger<AccountController> logger)
+        public AccountController(
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
+            IEmailSender emailSender,
+            IOptions<AppSettings> appSettings,
+            IOptions<JwtSettings> jwtSettings,
+            ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _emailSender = emailSender;
             _appSettings = appSettings.Value;
+            _jwtSettings = jwtSettings.Value;
             _logger = logger;
         }
 
@@ -72,7 +81,7 @@ namespace Ergenekon.API.Controllers
 
             if (_userManager.Options.SignIn.RequireConfirmedAccount)
             {
-            var response = new RequireConfirmedAccountResponse();
+                var response = new RequireConfirmedAccountResponse();
                 response.RequireConfirmedAccount = true;
                 response.Email = request.Email;
 
@@ -84,8 +93,8 @@ namespace Ergenekon.API.Controllers
                 JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user, ipAddress);
 
                 var response = new RegisterResponse();
-                response.RequireConfirmedAccount = true;
-                response.Email = request.Email;
+                response.Token = "";
+                response.RefreshToken = "";
 
                 return Ok(response);
 
@@ -118,7 +127,7 @@ namespace Ergenekon.API.Controllers
             .Union(userClaims)
             .Union(roleClaims);
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
             var jwtSecurityToken = new JwtSecurityToken(
