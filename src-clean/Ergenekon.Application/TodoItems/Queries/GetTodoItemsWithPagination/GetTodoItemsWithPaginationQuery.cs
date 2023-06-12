@@ -5,11 +5,6 @@ using Ergenekon.Application.Common.Mappings;
 using Ergenekon.Application.Common.Models;
 using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ergenekon.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 

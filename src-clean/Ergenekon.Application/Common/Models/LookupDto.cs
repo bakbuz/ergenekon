@@ -1,6 +1,6 @@
 ﻿namespace Ergenekon.Application.Common.Models;
 
-public class LookupDto 
+public class LookupDto
 {
     public int Id { get; init; }
 
