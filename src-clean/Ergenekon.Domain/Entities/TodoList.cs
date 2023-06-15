@@ -7,6 +7,7 @@ namespace Ergenekon.Domain.Entities
     {
         public string? Title { get; set; }
         public Colour Colour { get; set; } = Colour.White;
+        //public System.Drawing.Color Color { get; set; } = System.Drawing.Color.White;
 
         public IList<TodoItem> Items { get; private set; } = new List<TodoItem>();
     }

@@ -28,11 +28,34 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     public DbSet<TodoItem> TodoItems { get; set; }
 
+    public DbSet<Category> Categories { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(builder);
+
+        builder.Entity<TodoList>(b =>
+        {
+            b.ToTable(nameof(TodoLists));
+            b.HasKey(t => t.Id);
+
+            b.Property(e => e.Title).IsRequired().HasMaxLength(100);
+            b.OwnsOne(e => e.Colour, navigationBuilder =>
+            {
+                navigationBuilder.Property(color => color.Code).HasColumnName("ColourCode");
+            });
+
+        });
+
+        builder.Entity<TodoItem>(b =>
+        {
+            b.ToTable(nameof(TodoItems));
+            b.HasKey(t => t.Id);
+
+            b.Property(e => e.Title).IsRequired().HasMaxLength(100);
+        });
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

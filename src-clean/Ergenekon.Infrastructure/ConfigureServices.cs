@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Infrastructure.Files;
 using Ergenekon.Infrastructure.Identity;
+using Ergenekon.Infrastructure.Localization;
 using Ergenekon.Infrastructure.Persistence;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using Microsoft.AspNetCore.Identity;
@@ -28,17 +29,20 @@ public static class ConfigureServices
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<ApplicationDbContextInitialiser>();
 
         services
             .AddDefaultIdentity<ApplicationUser>()
             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddErrorDescriber<TurkishIdentityErrorDescriber>();
 
         //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddTransient<IAuthenticationService, AuthenticationService>();
 
         services.AddAuthentication()
             ;//.AddIdentityServerJwt();
