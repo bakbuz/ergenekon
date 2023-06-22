@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Infrastructure.Files;
 using Ergenekon.Infrastructure.Identity;
+using Ergenekon.Infrastructure.Localization;
 using Ergenekon.Infrastructure.Persistence;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using Ergenekon.Infrastructure.Services;
