@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddWebUIServices(this IServiceCollection services)
+    public static IServiceCollection AddHostServices(this IServiceCollection services)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
