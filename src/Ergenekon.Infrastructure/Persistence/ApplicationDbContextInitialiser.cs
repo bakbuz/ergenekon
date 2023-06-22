@@ -92,5 +92,50 @@ public class ApplicationDbContextInitialiser
 
             await _context.SaveChangesAsync();
         }
+
+        // World items
+        CreateCountries();
+    }
+
+    private  void CreateCountries()
+    {
+        string filePath = Path.Combine(_env.ContentRootPath, "App_Data", "Install", "CountriesAndStates.js");
+
+        string jsonData = ReadFile(filePath);
+
+        var countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(jsonData).OrderBy(o => o.DisplayOrder).ToList();
+        foreach (var c in countries)
+        {
+            _context.Set<Country>().Add(c);
+            _context.SaveChanges();
+        }
+
+        CreateDistricts();
+    }
+
+    private  void CreateDistricts()
+    {
+        var countryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
+        var StateProvinces = _context.StateProvinces.Where(q => q.CountryId == countryId).ToList();
+
+        string filePath = Path.Combine(_env.ContentRootPath, "App_Data", "Install", "turkiye_il_ilce.json");
+        string jsonData = ReadFile(filePath);
+
+        var allProvinces = System.Text.Json.JsonSerializer.Deserialize<List<CityImportDto>>(jsonData).OrderBy(o => o.DisplayOrder).ToList();
+
+        foreach (var sp in StateProvinces)
+        {
+            var province = allProvinces.Where(q => q.Abbreviation == sp.Abbreviation).Single();
+
+            foreach (var d in province.Districts.Order())
+            {
+                var district = new District();
+                district.StateProvinceId = sp.Id;
+                district.Name = d;
+
+                _context.Set<District>().Add(district);
+                _context.SaveChanges();
+            }
+        }
     }
 }
