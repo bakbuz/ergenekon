@@ -3,11 +3,6 @@ using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.DeleteCategory;
 
@@ -24,7 +19,7 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Categories.SingleOrDefaultAsync(q => q.Id == request.Id);
         if (entity == null)
@@ -35,7 +30,5 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         _context.Categories.Remove(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
-
-        return Unit.Value;
     }
 }
