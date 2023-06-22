@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.WebUI.Filters;
+﻿using Ergenekon.WebUI.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitecture.WebUI.Controllers;
+namespace Ergenekon.WebUI.Controllers;
 
 [ApiController]
 [ApiExceptionFilter]

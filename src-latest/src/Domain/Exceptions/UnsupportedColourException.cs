@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Exceptions;
+﻿namespace Ergenekon.Domain.Exceptions;
 
 public class UnsupportedColourException : Exception
 {

@@ -1,10 +1,10 @@
-﻿using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.ValueObjects;
+﻿using Ergenekon.Application.TodoLists.Queries.GetTodos;
+using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.ValueObjects;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.IntegrationTests.TodoLists.Queries;
+namespace Ergenekon.Application.IntegrationTests.TodoLists.Queries;
 
 using static Testing;
 

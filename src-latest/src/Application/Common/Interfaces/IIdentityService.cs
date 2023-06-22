@@ -1,6 +1,6 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using Ergenekon.Application.Common.Models;
 
-namespace CleanArchitecture.Application.Common.Interfaces;
+namespace Ergenekon.Application.Common.Interfaces;
 
 public interface IIdentityService
 {

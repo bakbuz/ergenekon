@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
+﻿using Ergenekon.Application.Common.Mappings;
+using Ergenekon.Domain.Entities;
 
-namespace CleanArchitecture.Application.Common.Models;
+namespace Ergenekon.Application.Common.Models;
 
 // Note: This is currently just used to demonstrate applying multiple IMapFrom attributes.
 public class LookupDto : IMapFrom<TodoList>, IMapFrom<TodoItem>

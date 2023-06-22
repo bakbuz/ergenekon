@@ -1,12 +1,12 @@
-﻿using CleanArchitecture.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.DeleteTodoList;
-using CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList;
-using CleanArchitecture.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
+﻿using Ergenekon.Application.TodoLists.Commands.CreateTodoList;
+using Ergenekon.Application.TodoLists.Commands.DeleteTodoList;
+using Ergenekon.Application.TodoLists.Commands.UpdateTodoList;
+using Ergenekon.Application.TodoLists.Queries.ExportTodos;
+using Ergenekon.Application.TodoLists.Queries.GetTodos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CleanArchitecture.WebUI.Controllers;
+namespace Ergenekon.WebUI.Controllers;
 
 [Authorize]
 public class TodoListsController : ApiControllerBase

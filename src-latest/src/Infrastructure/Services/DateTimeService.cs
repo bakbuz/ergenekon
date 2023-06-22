@@ -1,6 +1,6 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using Ergenekon.Application.Common.Interfaces;
 
-namespace CleanArchitecture.Infrastructure.Services;
+namespace Ergenekon.Infrastructure.Services;
 
 public class DateTimeService : IDateTime
 {

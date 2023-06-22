@@ -1,12 +1,12 @@
 ﻿using System.Runtime.Serialization;
 using AutoMapper;
-using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Application.Common.Models;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
-using CleanArchitecture.Domain.Entities;
+using Ergenekon.Application.Common.Mappings;
+using Ergenekon.Application.Common.Models;
+using Ergenekon.Application.TodoLists.Queries.GetTodos;
+using Ergenekon.Domain.Entities;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.UnitTests.Common.Mappings;
+namespace Ergenekon.Application.UnitTests.Common.Mappings;
 
 public class MappingTests
 {

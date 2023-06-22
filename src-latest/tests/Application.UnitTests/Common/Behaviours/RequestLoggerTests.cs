@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Application.Common.Behaviours;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.TodoItems.Commands.CreateTodoItem;
+﻿using Ergenekon.Application.Common.Behaviours;
+using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Application.TodoItems.Commands.CreateTodoItem;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.UnitTests.Common.Behaviours;
+namespace Ergenekon.Application.UnitTests.Common.Behaviours;
 
 public class RequestLoggerTests
 {

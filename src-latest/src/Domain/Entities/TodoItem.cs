@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Entities;
+﻿namespace Ergenekon.Domain.Entities;
 
 public class TodoItem : BaseAuditableEntity
 {

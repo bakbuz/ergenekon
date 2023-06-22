@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.ValueObjects;
+﻿namespace Ergenekon.Domain.ValueObjects;
 
 public class Colour : ValueObject
 {

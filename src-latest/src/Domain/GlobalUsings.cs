@@ -1,6 +1,6 @@
-﻿global using CleanArchitecture.Domain.Common;
-global using CleanArchitecture.Domain.Entities;
-global using CleanArchitecture.Domain.Enums;
-global using CleanArchitecture.Domain.Events;
-global using CleanArchitecture.Domain.Exceptions;
-global using CleanArchitecture.Domain.ValueObjects;
+﻿global using Ergenekon.Domain.Common;
+global using Ergenekon.Domain.Entities;
+global using Ergenekon.Domain.Enums;
+global using Ergenekon.Domain.Events;
+global using Ergenekon.Domain.Exceptions;
+global using Ergenekon.Domain.ValueObjects;

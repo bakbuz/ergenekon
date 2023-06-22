@@ -1,10 +1,10 @@
 ﻿using System.Globalization;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.TodoLists.Queries.ExportTodos;
-using CleanArchitecture.Infrastructure.Files.Maps;
+using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Application.TodoLists.Queries.ExportTodos;
+using Ergenekon.Infrastructure.Files.Maps;
 using CsvHelper;
 
-namespace CleanArchitecture.Infrastructure.Files;
+namespace Ergenekon.Infrastructure.Files;
 
 public class CsvFileBuilder : ICsvFileBuilder
 {

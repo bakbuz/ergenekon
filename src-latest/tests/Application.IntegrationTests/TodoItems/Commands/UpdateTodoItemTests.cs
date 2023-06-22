@@ -1,12 +1,12 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.TodoItems.Commands.CreateTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
-using CleanArchitecture.Application.TodoLists.Commands.CreateTodoList;
-using CleanArchitecture.Domain.Entities;
+﻿using Ergenekon.Application.Common.Exceptions;
+using Ergenekon.Application.TodoItems.Commands.CreateTodoItem;
+using Ergenekon.Application.TodoItems.Commands.UpdateTodoItem;
+using Ergenekon.Application.TodoLists.Commands.CreateTodoList;
+using Ergenekon.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace CleanArchitecture.Application.IntegrationTests.TodoItems.Commands;
+namespace Ergenekon.Application.IntegrationTests.TodoItems.Commands;
 
 using static Testing;
 
