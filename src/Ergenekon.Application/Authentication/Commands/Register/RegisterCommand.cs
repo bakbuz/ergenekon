@@ -1,5 +1,4 @@
 ﻿using Ergenekon.Application.Authentication.Services;
-using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Common.Models;
 using MediatR;
 
