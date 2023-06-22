@@ -1,4 +1,4 @@
-﻿using Ergenekon.Application.Common.Services;
+﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Entities;
 using System;
 using System.Collections.Generic;

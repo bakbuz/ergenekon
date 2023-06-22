@@ -1,9 +1,9 @@
 ﻿using Ergenekon.Domain.Common;
 
-namespace Ergenekon.Application.Common.Services;
+namespace Ergenekon.Application.Common.Interfaces;
 
 public interface ICrudService<TEntity>
-    where TEntity : Entity<Guid>
+    where TEntity : BaseEntity<Guid>
 {
     Task<List<TEntity>> GetAsync(CancellationToken cancellationToken = default);
 
