@@ -1,9 +1,11 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Application.World.Services;
 using Ergenekon.Infrastructure.Files;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Localization;
 using Ergenekon.Infrastructure.Persistence;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
+using Ergenekon.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -42,8 +44,9 @@ public static class ConfigureServices
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
         //services.AddTransient<IDateTime, DateTimeService>();
-        services.AddTransient<IIdentityService, IdentityService>();
-        services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddScoped<IIdentityService, IdentityService>();
+        services.AddScoped<IWorldService, WorldService>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();

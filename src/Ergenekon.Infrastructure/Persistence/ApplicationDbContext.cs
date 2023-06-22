@@ -5,7 +5,6 @@ using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -32,6 +31,14 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<TodoItem> TodoItems { get; set; }
 
+
+    public DbSet<Country> Countries { get; set; }
+
+    public DbSet<StateProvince> StateProvinces { get; set; }
+
+    public DbSet<District> Districts { get; set; }
+
+
     public DbSet<Category> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -41,14 +48,16 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         base.OnModelCreating(builder);
 
         // Identity Map
+        /*
         const string IdentitySchema = "Identity";
         builder.Entity<ApplicationUser>(b => { b.ToTable("Users", IdentitySchema); });
         builder.Entity<IdentityRole>(b => { b.ToTable("Roles", IdentitySchema); });
         builder.Entity<IdentityUserClaim<int>>(b => { b.ToTable("UserClaims", IdentitySchema); });
-        builder.Entity<IdentityUserLogin<int>>(b => { b.ToTable("UserLogins", IdentitySchema); });
+        builder.Entity<IdentityUserLogin<int>>(b => { b.ToTable("UserLogins", IdentitySchema).HasKey(e => e.Id); });
         builder.Entity<IdentityUserToken<int>>(b => { b.ToTable("UserTokens", IdentitySchema); });
         builder.Entity<IdentityUserRole<int>>(b => { b.ToTable("UserRoles", IdentitySchema); });
         builder.Entity<IdentityRoleClaim<int>>(b => { b.ToTable("RoleClaims", IdentitySchema); });
+        */
 
         /* 
         builder.Entity<TodoList>(b =>
