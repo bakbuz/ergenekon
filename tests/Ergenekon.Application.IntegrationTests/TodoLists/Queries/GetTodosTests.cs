@@ -2,7 +2,6 @@
 using Ergenekon.Domain.Entities;
 using Ergenekon.Domain.ValueObjects;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace Ergenekon.Application.IntegrationTests.TodoLists.Queries;
 

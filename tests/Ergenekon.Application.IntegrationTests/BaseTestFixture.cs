@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace Ergenekon.Application.IntegrationTests;
+﻿namespace Ergenekon.Application.IntegrationTests;
 
 using static Testing;
 

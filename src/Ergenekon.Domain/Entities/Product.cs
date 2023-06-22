@@ -1,6 +1,4 @@
-﻿using Ergenekon.Domain.Common;
-
-namespace Ergenekon.Domain.Entities;
+﻿namespace Ergenekon.Domain.Entities;
 
 public class Product : BaseEntity<Guid>
 {

@@ -2,7 +2,6 @@
 using Ergenekon.Application.TodoLists.Commands.CreateTodoList;
 using Ergenekon.Domain.Entities;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace Ergenekon.Application.IntegrationTests.TodoLists.Commands;
 

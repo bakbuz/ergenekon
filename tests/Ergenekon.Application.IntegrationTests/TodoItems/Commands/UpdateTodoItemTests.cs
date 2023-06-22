@@ -4,7 +4,6 @@ using Ergenekon.Application.TodoItems.Commands.UpdateTodoItem;
 using Ergenekon.Application.TodoLists.Commands.CreateTodoList;
 using Ergenekon.Domain.Entities;
 using FluentAssertions;
-using NUnit.Framework;
 
 namespace Ergenekon.Application.IntegrationTests.TodoItems.Commands;
 
