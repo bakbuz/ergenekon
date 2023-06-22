@@ -56,6 +56,12 @@ public static class ConfigureServices
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
         });
 
+  services.Configure<RouteOptions>(options =>
+        {
+            options.LowercaseUrls = true;
+        });
+
+
         return services;
     }
 }
