@@ -31,7 +31,7 @@ public class Country : BaseEntity<byte>
     public virtual ICollection<StateProvince> StateProvinces { get; set; }
 }
 
-public class StateProvince : BaseEntity<short>
+public class StateProvince : BaseEntity<ushort>
 {
     //[JsonIgnore]
     public byte CountryId { get; set; }
@@ -47,10 +47,10 @@ public class StateProvince : BaseEntity<short>
     public virtual Country Country { get; set; } = null!;
 }
 
-public class District : BaseEntity<short>
+public class District : BaseEntity<ushort>
 {
     [JsonIgnore]
-    public short StateProvinceId { get; set; }
+    public ushort StateProvinceId { get; set; }
 
     public string Name { get; set; } = null!;
 }

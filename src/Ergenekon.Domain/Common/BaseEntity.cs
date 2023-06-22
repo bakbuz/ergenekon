@@ -8,6 +8,7 @@ public abstract class BaseEntity : BaseEntity<int>
 
 public abstract class BaseEntity<TKey>
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public TKey Id { get; set; }
 
     private readonly List<BaseEvent> _domainEvents = new();

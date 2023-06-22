@@ -4,9 +4,9 @@ using MediatR;
 
 namespace Ergenekon.Application.World.Queries.GetGetDistrictsByStateProvinceId;
 
-public record GetGetDistrictsByStateProvinceIdQuery(short ProvinceId) : IRequest<List<LookupDto1<short>>>;
+public record GetGetDistrictsByStateProvinceIdQuery(ushort ProvinceId) : IRequest<List<LookupDto1<ushort>>>;
 
-public class GetGetDistrictsByStateProvinceIdQueryHandler : IRequestHandler<GetGetDistrictsByStateProvinceIdQuery, List<LookupDto1<short>>>
+public class GetGetDistrictsByStateProvinceIdQueryHandler : IRequestHandler<GetGetDistrictsByStateProvinceIdQuery, List<LookupDto1<ushort>>>
 {
     private readonly IWorldService _worldService;
 
@@ -15,7 +15,7 @@ public class GetGetDistrictsByStateProvinceIdQueryHandler : IRequestHandler<GetG
         _worldService = worldService;
     }
 
-    public async Task<List<LookupDto1<short>>> Handle(GetGetDistrictsByStateProvinceIdQuery request, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> Handle(GetGetDistrictsByStateProvinceIdQuery request, CancellationToken cancellationToken)
     {
         return await _worldService.GetDistrictsAsync(request.ProvinceId, cancellationToken);
     }

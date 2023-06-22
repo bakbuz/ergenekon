@@ -9,7 +9,7 @@ public interface IWorldService
 
     Task<List<LookupDto1<byte>>> GetAllCountriesAsync(CancellationToken cancellationToken);
 
-    Task<List<LookupDto1<short>>> GetStateProvincesAsync(byte countryId, CancellationToken cancellationToken);
+    Task<List<LookupDto1<ushort>>> GetStateProvincesAsync(byte countryId, CancellationToken cancellationToken);
 
-    Task<List<LookupDto1<short>>> GetDistrictsAsync(short stateProvinceId, CancellationToken cancellationToken);
+    Task<List<LookupDto1<ushort>>> GetDistrictsAsync(ushort stateProvinceId, CancellationToken cancellationToken);
 }

@@ -32,23 +32,23 @@ public class WorldService : IWorldService
         return countries;
     }
 
-    public async Task<List<LookupDto1<short>>> GetStateProvincesAsync(byte countryId, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetStateProvincesAsync(byte countryId, CancellationToken cancellationToken)
     {
         var stateProvinces = await _ctx.StateProvinces
             .Where(q => q.CountryId == countryId)
             .OrderBy(o => o.DisplayOrder)
             .ThenBy(o => o.Id)
-            .Select(s => new LookupDto1<short>(s.Id, s.Name))
+            .Select(s => new LookupDto1<ushort>(s.Id, s.Name))
             .ToListAsync(cancellationToken);
 
         return stateProvinces;
     }
 
-    public async Task<List<LookupDto1<short>>> GetDistrictsAsync(short stateProvinceId, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetDistrictsAsync(ushort stateProvinceId, CancellationToken cancellationToken)
     {
         var districts = await _ctx.Districts
             .Where(q => q.StateProvinceId == stateProvinceId)
-            .Select(s => new LookupDto1<short>(s.Id, s.Name))
+            .Select(s => new LookupDto1<ushort>(s.Id, s.Name))
             .ToListAsync(cancellationToken);
 
         return districts;

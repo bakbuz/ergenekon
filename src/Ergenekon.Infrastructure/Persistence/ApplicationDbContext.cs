@@ -1,6 +1,7 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Media;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using MediatR;
@@ -28,18 +29,18 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     }
 
     public DbSet<TodoList> TodoLists { get; set; }
-
     public DbSet<TodoItem> TodoItems { get; set; }
 
 
     public DbSet<Country> Countries { get; set; }
-
     public DbSet<StateProvince> StateProvinces { get; set; }
-
     public DbSet<District> Districts { get; set; }
 
+    public DbSet<Picture> Pictures { get; set; }
+    public DbSet<Video> Videos { get; set; }
 
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
