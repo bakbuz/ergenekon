@@ -2,9 +2,13 @@
 
 namespace Ergenekon.Domain.Common;
 
-public abstract class BaseEntity
+public abstract class BaseEntity : BaseEntity<int>
 {
-    public int Id { get; set; }
+}
+
+public abstract class BaseEntity<TKey>
+{
+    public required TKey Id { get; set; }
 
     private readonly List<BaseEvent> _domainEvents = new();
 

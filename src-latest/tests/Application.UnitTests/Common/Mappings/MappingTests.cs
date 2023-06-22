@@ -1,10 +1,10 @@
-﻿using System.Runtime.Serialization;
-using AutoMapper;
+﻿using AutoMapper;
 using Ergenekon.Application.Common.Mappings;
 using Ergenekon.Application.Common.Models;
 using Ergenekon.Application.TodoLists.Queries.GetTodos;
 using Ergenekon.Domain.Entities;
 using NUnit.Framework;
+using System.Runtime.Serialization;
 
 namespace Ergenekon.Application.UnitTests.Common.Mappings;
 

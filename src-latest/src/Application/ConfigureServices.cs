@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using Ergenekon.Application.Common.Behaviours;
+﻿using Ergenekon.Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
+using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

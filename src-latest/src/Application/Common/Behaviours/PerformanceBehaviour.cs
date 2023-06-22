@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using Ergenekon.Application.Common.Interfaces;
+﻿using Ergenekon.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace Ergenekon.Application.Common.Behaviours;
 

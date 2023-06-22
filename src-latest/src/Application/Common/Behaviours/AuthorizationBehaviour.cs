@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using Ergenekon.Application.Common.Exceptions;
+﻿using Ergenekon.Application.Common.Exceptions;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Common.Security;
 using MediatR;
+using System.Reflection;
 
 namespace Ergenekon.Application.Common.Behaviours;
 

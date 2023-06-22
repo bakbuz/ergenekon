@@ -1,13 +1,13 @@
-﻿using System.Reflection;
+﻿using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
-using Duende.IdentityServer.EntityFramework.Options;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 
 namespace Ergenekon.Infrastructure.Persistence;
 
