@@ -103,15 +103,16 @@ public class ApplicationDbContextInitialiser
         }
 
         // World items
-        CreateCountries();
+        if (!_context.Countries.Any())
+            CreateCountries();
     }
 
     private void CreateCountries()
     {
-        string filePath = Path.Combine(_env.ContentRootPath, "App_Data", "Install", "CountriesAndStates.js");
-        string jsonData = ReadFile(filePath);
+        var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
+            .OrderBy(o => o.DisplayOrder)
+            .ToList();
 
-        var countries = JsonSerializer.Deserialize<List<Country>>(jsonData).OrderBy(o => o.DisplayOrder).ToList();
         foreach (var country in countries)
         {
             _context.Countries.Add(country);
@@ -126,10 +127,9 @@ public class ApplicationDbContextInitialiser
         var trCountryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
         var trStateProvinces = _context.StateProvinces.Where(q => q.CountryId == trCountryId).ToList();
 
-        string filePath = Path.Combine(_env.ContentRootPath, "App_Data", "Install", "turkiye_il_ilce.json");
-        string jsonData = ReadFile(filePath);
-
-        var allProvinces = JsonSerializer.Deserialize<List<CityImportDto>>(jsonData).OrderBy(o => o.DisplayOrder).ToList();
+        var allProvinces = ReadFromJson<List<CityImportDto>>("turkiye_il_ilce.json")
+            .OrderBy(o => o.DisplayOrder)
+            .ToList();
 
         foreach (var sp in trStateProvinces)
         {
@@ -149,15 +149,17 @@ public class ApplicationDbContextInitialiser
 
     #region utils
 
-    private string ReadFile(string filePath)
+    private T ReadFromJson<T>(string fileName)
     {
+        string filePath = Path.Combine(_env.ContentRootPath, "App_Data", "Install", fileName);
+
         string jsonData;
         using (var r = new StreamReader(filePath))
         {
             jsonData = r.ReadToEnd();
         }
 
-        return jsonData;
+        return JsonSerializer.Deserialize<T>(jsonData);
     }
 
     internal class CityImportDto
