@@ -1,0 +1,2 @@
+﻿Ergenekon.Infrastructure
+kaldır: AutoMapper
