@@ -19,8 +19,14 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
     using (var scope = app.Services.CreateScope())
     {
         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-        await initialiser.InitialiseAsync();
-        await initialiser.SeedAsync();
+        //await initialiser.InitialiseAsync();
+        //await initialiser.SeedAsync();
+
+        // TEMP
+        if (initialiser.EnsureCreated())
+        {
+            await initialiser.SeedAsync();
+        }
     }
 }
 else

@@ -1,4 +1,5 @@
-﻿using Ergenekon.Application.Common.Interfaces;
+﻿using Ergenekon.Application.Authentication.Services;
+using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Common.Models;
 using MediatR;
 
@@ -10,15 +11,15 @@ public sealed record RegisterCommand(string Username, string Email, string Passw
 }
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, (Result Result, string UserId)>
 {
-    private readonly IIdentityService _identityService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public RegisterCommandHandler(IIdentityService identityService)
+    public RegisterCommandHandler(IAuthenticationService authenticationService)
     {
-        _identityService = identityService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<(Result Result, string UserId)> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        return await _identityService.CreateUserAsync(request.Username, request.Email, request.Password);
+        return await _authenticationService.CreateAsync(request.Username, request.Email, request.Password);
     }
 }

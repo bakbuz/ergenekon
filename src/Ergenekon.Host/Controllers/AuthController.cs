@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
 
+[Route("api/[controller]/[action]")]
 public class AuthController : ApiControllerBase
 {
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterCommand command)
+    [HttpPost]
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterCommand command)
     {
         var result = await Mediator.Send(command);
         if (!result.Result.Succeeded)
@@ -16,8 +17,8 @@ public class AuthController : ApiControllerBase
         return Created("", result.UserId);
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginCommand command)
+    [HttpPost]
+    public async Task<IActionResult> LoginAsync([FromBody] LoginCommand command)
     {
         var result = await Mediator.Send(command);
         if (!result.Result.Succeeded)

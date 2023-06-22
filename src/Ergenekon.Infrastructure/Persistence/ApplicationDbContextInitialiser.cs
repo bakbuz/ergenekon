@@ -31,6 +31,11 @@ public class ApplicationDbContextInitialiser
         _env = env;
     }
 
+    public bool EnsureCreated()
+    {
+        return _context.Database.EnsureCreated();
+    }
+
     public async Task InitialiseAsync()
     {
         try

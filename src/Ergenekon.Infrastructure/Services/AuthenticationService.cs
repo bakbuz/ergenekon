@@ -1,13 +1,9 @@
 ﻿using Ergenekon.Application.Authentication.Commands.Register;
+using Ergenekon.Application.Authentication.Services;
 using Ergenekon.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Ergenekon.Infrastructure;
-
-public interface IAuthenticationService
-{
-    void Create(RegisterCommand request, CancellationToken cancellationToken);
-}
+namespace Ergenekon.Infrastructure.Services;
 
 public class AuthenticationService : IAuthenticationService
 {
@@ -18,7 +14,7 @@ public class AuthenticationService : IAuthenticationService
         _userManager = userManager;
     }
 
-    public void Create(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<IdentityResult> CreateAsync(RegisterCommand request, CancellationToken cancellationToken)
     {
         var user = new ApplicationUser
         {
@@ -27,7 +23,7 @@ public class AuthenticationService : IAuthenticationService
             CreatedAt = DateTime.Now
         };
 
-        var result = _userManager.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
         //if(result.)
     }
 }
