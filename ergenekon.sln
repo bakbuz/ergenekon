@@ -5,24 +5,25 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5579D9A-20F7-41B4-8903-586F3235CB91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Host", "src\Ergenekon.Host\Ergenekon.Host.csproj", "{83DF3E63-38E0-427E-AC3D-E930485E9355}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Host", "src\Ergenekon.Host\Ergenekon.Host.csproj", "{83DF3E63-38E0-427E-AC3D-E930485E9355}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Domain", "src\Ergenekon.Domain\Ergenekon.Domain.csproj", "{A5A80D2D-34F6-4B44-9354-9B0134F252B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Domain", "src\Ergenekon.Domain\Ergenekon.Domain.csproj", "{A5A80D2D-34F6-4B44-9354-9B0134F252B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Infrastructure", "src\Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj", "{B2B1028C-EF99-4DA7-BF88-72B7A8AD43AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Infrastructure", "src\Ergenekon.Infrastructure\Ergenekon.Infrastructure.csproj", "{B2B1028C-EF99-4DA7-BF88-72B7A8AD43AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Application", "src\Ergenekon.Application\Ergenekon.Application.csproj", "{B7AD1EF6-7930-4F79-828B-6A4F0E86D94F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Application", "src\Ergenekon.Application\Ergenekon.Application.csproj", "{B7AD1EF6-7930-4F79-828B-6A4F0E86D94F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{91ECE7E7-F4B1-4EC9-9617-2D883B8D8BFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Domain.UnitTests", "tests\Ergenekon.Domain.UnitTests\Ergenekon.Domain.UnitTests.csproj", "{4247EA48-7313-42AC-9673-377A06EE7FA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Domain.UnitTests", "tests\Ergenekon.Domain.UnitTests\Ergenekon.Domain.UnitTests.csproj", "{4247EA48-7313-42AC-9673-377A06EE7FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Application.UnitTests", "tests\Ergenekon.Application.UnitTests\Ergenekon.Application.UnitTests.csproj", "{95E8E7FE-9B90-4C89-AE61-35C29BEEA9AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Application.UnitTests", "tests\Ergenekon.Application.UnitTests\Ergenekon.Application.UnitTests.csproj", "{95E8E7FE-9B90-4C89-AE61-35C29BEEA9AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ergenekon.Application.IntegrationTests", "tests\Ergenekon.Application.IntegrationTests\Ergenekon.Application.IntegrationTests.csproj", "{951CA0AF-47C5-4F09-A7FB-91C17DE1B456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ergenekon.Application.IntegrationTests", "tests\Ergenekon.Application.IntegrationTests\Ergenekon.Application.IntegrationTests.csproj", "{951CA0AF-47C5-4F09-A7FB-91C17DE1B456}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution items", ".solution items", "{E869C441-5007-4C7D-B3E1-A3D764DF83F2}"
 	ProjectSection(SolutionItems) = preProject
+		Makefile = Makefile
 		Notlar.txt = Notlar.txt
 	EndProjectSection
 EndProject
