@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
 
-public class AccountController : ApiControllerBase
+public class AuthController : ApiControllerBase
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterCommand command)

@@ -33,11 +33,16 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
-app.UseSwaggerUi3(settings =>
-{
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
+//app.UseSwaggerUi3(settings =>
+//{
+//    settings.Path = "/api";
+//    settings.DocumentPath = "/api/specification.json";
+//});
+
+app.UseOpenApi();       // serve OpenAPI/Swagger documents
+app.UseSwaggerUi3();    // serve Swagger UI
+app.UseReDoc();         // serve ReDoc UI
+
 
 app.UseRouting();
 

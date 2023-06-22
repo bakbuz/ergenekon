@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
 
-public class WeatherForecastController : ApiControllerBase
+public class WeatherForecastsController : ApiControllerBase
 {
     [HttpGet]
     public async Task<IEnumerable<WeatherForecast>> Get()
