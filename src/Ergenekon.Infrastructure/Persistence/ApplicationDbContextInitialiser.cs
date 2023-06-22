@@ -27,8 +27,9 @@ public class ApplicationDbContextInitialiser
         {
             if (_context.Database.IsSqlServer())
             {
-                await _context.Database.EnsureCreatedAsync();
-                await _context.Database.MigrateAsync();
+                bool created = await _context.Database.EnsureCreatedAsync();
+                if (created)
+                    await _context.Database.MigrateAsync();
             }
         }
         catch (Exception ex)
