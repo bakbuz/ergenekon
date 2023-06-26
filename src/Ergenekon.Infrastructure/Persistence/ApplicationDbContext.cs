@@ -69,29 +69,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         //builder.Entity(nameof(UserRoles)).ToTable(nameof(UserRoles), IdentityConsts.IdentitySchema);
         //builder.Entity(nameof(RoleClaims)).ToTable(nameof(RoleClaims), IdentityConsts.IdentitySchema);
         
-
-        /* 
-        builder.Entity<TodoList>(b =>
-        {
-            b.ToTable(nameof(TodoLists));
-            b.HasKey(t => t.Id);
-
-            b.Property(e => e.Title).IsRequired().HasMaxLength(100);
-            b.OwnsOne(e => e.Colour, navigationBuilder =>
-            {
-                navigationBuilder.Property(color => color.Code).HasColumnName("ColourCode");
-            });
-
-        });
-
-        builder.Entity<TodoItem>(b =>
-        {
-            b.ToTable(nameof(TodoItems));
-            b.HasKey(t => t.Id);
-
-            b.Property(e => e.Title).IsRequired().HasMaxLength(100);
-        });
-        */
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
