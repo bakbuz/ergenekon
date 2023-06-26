@@ -3,6 +3,7 @@
 public struct IdentityConsts
 {
     public const int PasswordMinimumLength = 6;
+    public const int PasswordMaximumLength = 36;
     public const string IdentitySchema = "Identity";
     public const string IdentityServerSchema = "IdentityServer";
 

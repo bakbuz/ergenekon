@@ -1,11 +1,13 @@
 ﻿using Ergenekon.Domain.Consts;
 using FluentValidation;
 
-namespace Ergenekon.Application.Authentication.Commands.Login;
+namespace Ergenekon.Infrastructure.Identity.Models;
 
-public class LoginCommandValidator : AbstractValidator<LoginCommand>
+public sealed record LoginRequest(string Email, string Password);
+
+public class LoginRequestValidator : AbstractValidator<LoginRequest>
 {
-    public LoginCommandValidator()
+    public LoginRequestValidator()
     {
         RuleFor(m => m.Email).NotEmpty().EmailAddress();
         RuleFor(m => m.Password).NotEmpty().MinimumLength(IdentityConsts.PasswordMinimumLength);

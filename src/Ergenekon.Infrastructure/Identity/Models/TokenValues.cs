@@ -1,4 +1,4 @@
-﻿namespace Ergenekon.Application.Authentication.Shared;
+﻿namespace Ergenekon.Infrastructure.Identity.Models;
 
 public class TokenValues
 {

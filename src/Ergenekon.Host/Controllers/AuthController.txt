@@ -1,0 +1,123 @@
+﻿using Azure;
+using Ergenekon.Application.Authentication.Commands.Login;
+using Ergenekon.Application.Authentication.Commands.Register;
+using Ergenekon.Application.Authentication.Shared;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text.Encodings.Web;
+using System.Text;
+using Ergenekon.Application.Authentication.Commands.PasswordRecovery;
+using Ergenekon.Application.Authentication.Services;
+
+namespace Ergenekon.Host.Controllers;
+
+[Route("api/[controller]/[action]")]
+public class AuthController : ApiControllerBase
+{
+    private readonly IAuthenticationService _authenticationService;
+
+    public AuthController(IAuthenticationService authenticationService)
+    {
+        _authenticationService = authenticationService;
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TokenValues))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterCommand command)
+    {
+        var result = await Mediator.Send(command);
+        if (!result.Result.Succeeded)
+            return BadRequest(result.Result.Errors);
+
+        return Created("", result.TokenValues);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenValues))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    public async Task<IActionResult> LoginAsync([FromBody] LoginCommand command)
+    {
+        var result = await Mediator.Send(command);
+        if (!result.Result.Succeeded)
+            return BadRequest(result.Result.Errors);
+
+        return Ok(result.TokenValues);
+    }
+
+    [HttpPost("password-recovery")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    public async Task<IActionResult> PasswordRecoveryAsync([FromBody] PasswordRecoveryCommand command)
+    {
+        var result = await Mediator.Send(command);
+        if (!result.Result.Succeeded)
+            return BadRequest(result.Result.Errors);
+
+        return Ok(new ResponseMessage("Belirttiğiniz e-posta adresinize parola sıfırlama bağlantısı içeren bir e-posta gönderildi. Lütfen e-posta adresinizi denetleyin."));
+    }
+
+
+    [HttpPost("password-reset")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    public async Task<IActionResult> PasswordResetAsync([FromBody] PasswordResetRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ErrorResponse(ModelState));
+
+        var user = await _userManager.FindByEmailAsync(request.Email.ToLowerInvariant());
+        if (user == null)
+            return BadRequest(new ErrorResponse("Kullanıcı bulunamadı"));
+
+        var result = await _userManager.ResetPasswordAsync(user, request.Code, request.Password);
+        if (result.Succeeded)
+        {
+            return Ok("Parolanız başarıyla sıfırlandı. Lütfen oturum açın.");
+        }
+        else
+        {
+            var errorMessage = string.Join('|', result.Errors.Select(s => s.Description));
+            return BadRequest(new ErrorResponse(errorMessage));
+        }
+    }
+
+
+
+
+    [HttpGet("Confirm-Email")]
+    public async Task<IActionResult> ConfirmEmailAsync([FromQuery] ConfirmEmailRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ErrorResponse(ModelState));
+
+        var result = await _identityService.EmailConfirmAsync(request.UserId, request.Code);
+        if (!result.Succeeded)
+            return BadRequest(new ErrorResponse(result));
+
+        return Ok("E-posta adresiniz başarıyla doğrulandı");
+    }
+
+    [HttpGet("Confirm-Email-Change")]
+    public async Task<IActionResult> ConfirmEmailChangeAsync([FromQuery] ConfirmEmailChangeRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new ErrorResponse(ModelState));
+
+        var result = await _identityService.ChangeEmailConfirmAsync(request.UserId, request.Email, request.Code);
+        if (!result.Succeeded)
+            return BadRequest(new ErrorResponse(result));
+
+        return Ok("E-posta adresiniz başarıyla değiştirildi");
+    }
+}
+
+public class ResponseMessage
+{
+    public ResponseMessage(string message)
+    {
+        Message = message;
+    }
+    public string Message { get; set; }
+}

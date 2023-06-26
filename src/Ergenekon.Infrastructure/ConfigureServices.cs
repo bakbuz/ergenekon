@@ -53,7 +53,7 @@ public static class ConfigureServices
 
         //services.AddTransient<IDateTime, DateTimeService>();
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
-        services.AddScoped<Ergenekon.Application.Authentication.Services.IAuthenticationService, Ergenekon.Infrastructure.Services.AuthenticationService>();
+        services.AddScoped<Ergenekon.Infrastructure.Identity.IAuthenticationService, Ergenekon.Infrastructure.Identity.AuthenticationService>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IWorldService, WorldService>();
         services.AddScoped<IMailboxService, MailboxService>();

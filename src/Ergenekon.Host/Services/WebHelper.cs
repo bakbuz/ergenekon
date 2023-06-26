@@ -10,10 +10,12 @@ namespace Ergenekon.Host.Services;
 public class WebHelper : IWebHelper
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IConfiguration _configuration;
 
-    public WebHelper(IHttpContextAccessor httpContextAccessor)
+    public WebHelper(IHttpContextAccessor httpContextAccessor, IConfiguration configuration)
     {
         _httpContextAccessor = httpContextAccessor;
+        _configuration = configuration;
     }
 
     public string GetCurrentApplicationUrl()
@@ -32,10 +34,20 @@ public class WebHelper : IWebHelper
         return $"{(useSSL ? Uri.UriSchemeHttps : Uri.UriSchemeHttp)}{Uri.SchemeDelimiter}{hostHeader.FirstOrDefault()}";
     }
 
-    public string GetEmailConfirmCallbackUrl(string userId, string code)
+    public string EmailConfirmCallbackUrl(string userId, string code)
     {
         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
         return HtmlEncoder.Default.Encode($"{GetCurrentApplicationUrl()}/api/account/confirm-email?userId={userId}&code={code}");
     }
+
+    public string PasswordRecoveryCallbackUrl(string code)
+    {
+        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+        return HtmlEncoder.Default.Encode($"{_configuration["AppOptions:ClientUrl"]}/{_configuration["AppOptions:ClientResetPasswordPath"]}?code={code}");
+    }
+
+
+
 }

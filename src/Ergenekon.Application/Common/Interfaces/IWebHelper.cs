@@ -4,5 +4,7 @@ public interface IWebHelper
 {
     string GetCurrentApplicationUrl();
 
-    string GetEmailConfirmCallbackUrl(string userId, string code);
+    string EmailConfirmCallbackUrl(string userId, string code);
+
+    string PasswordRecoveryCallbackUrl(string code);
 }

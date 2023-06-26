@@ -1,11 +1,13 @@
 ﻿using Ergenekon.Domain.Consts;
 using FluentValidation;
 
-namespace Ergenekon.Application.Authentication.Commands.Register;
+namespace Ergenekon.Infrastructure.Identity.Models;
 
-public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+public sealed record RegisterRequest(string Username, string Email, string Password);
+
+public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {
-    public RegisterCommandValidator()
+    public RegisterRequestValidator()
     {
         RuleFor(m => m.Username).NotEmpty();
         RuleFor(m => m.Email).NotEmpty().EmailAddress();
