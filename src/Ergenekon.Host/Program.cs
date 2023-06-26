@@ -1,6 +1,11 @@
 using Ergenekon.Infrastructure.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
+    .WriteTo.Console()
+    .ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
@@ -39,28 +44,20 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
-//app.UseSwaggerUi3(settings =>
-//{
-//    settings.Path = "/api";
-//    settings.DocumentPath = "/api/specification.json";
-//});
-
-app.UseOpenApi();       // serve OpenAPI/Swagger documents
-app.UseSwaggerUi3();    // serve Swagger UI
-app.UseReDoc();         // serve ReDoc UI
-
-
 app.UseRouting();
 
 app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
 
+app.UseSerilogRequestLogging();
+
+app.UseOpenApi();       // serve OpenAPI/Swagger documents
+app.UseSwaggerUi3();    // serve Swagger UI
+app.UseReDoc();         // serve ReDoc UI
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
-
-//app.MapRazorPages();
-//app.MapFallbackToFile("index.html");
 
 app.Run();

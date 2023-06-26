@@ -112,17 +112,48 @@ public class ApplicationDbContextInitialiser
             CreateCountries();
     }
 
-    private void CreateCountries()
+    private void CreateCountriesOld()
     {
         var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
             .OrderBy(o => o.DisplayOrder)
             .ToList();
+
+        var ciTR = new System.Globalization.CultureInfo("tr-TR");
+        var ciEN = new System.Globalization.CultureInfo("en-US");
 
         foreach (var country in countries)
         {
             _context.Countries.Add(country);
             _context.SaveChanges();
         }
+
+        CreateDistricts();
+    }
+
+    private void CreateCountries()
+    {
+        var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
+            .OrderBy(o => o.DisplayOrder)
+            .Reverse()
+            .ToList();
+
+        var ciTR = new System.Globalization.CultureInfo("tr-TR");
+        var ciEN = new System.Globalization.CultureInfo("en-US");
+
+        foreach (var country in countries)
+        {
+            country.Name = country.Name.ToUpper(ciTR);
+            country.EnglishName = country.EnglishName.ToUpper(ciEN);
+
+            foreach (var sp in country.StateProvinces)
+            {
+                sp.Name = sp.Name.ToUpper();
+            }
+
+            _context.Countries.Add(country);
+        }
+
+        _context.SaveChanges();
 
         CreateDistricts();
     }

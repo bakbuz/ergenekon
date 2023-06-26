@@ -50,7 +50,6 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
         // Identity Map
         /*
-        const string IdentitySchema = "Identity";
         builder.Entity<ApplicationUser>(b => { b.ToTable("Users", IdentitySchema); });
         builder.Entity<IdentityRole>(b => { b.ToTable("Roles", IdentitySchema); });
         builder.Entity<IdentityUserClaim<int>>(b => { b.ToTable("UserClaims", IdentitySchema); });

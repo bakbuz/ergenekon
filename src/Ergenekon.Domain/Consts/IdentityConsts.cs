@@ -3,6 +3,7 @@
 public struct IdentityConsts
 {
     public const int PasswordMinimumLength = 6;
+    public const string IdentitySchema = "Identity";
 
     public struct RoleNames
     {
