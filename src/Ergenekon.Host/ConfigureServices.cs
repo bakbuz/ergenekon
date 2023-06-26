@@ -61,6 +61,8 @@ public static class ConfigureServices
             options.LowercaseUrls = true;
         });
 
+        services.AddScoped<IWebHelper, WebHelper>();
+
         return services;
     }
 }

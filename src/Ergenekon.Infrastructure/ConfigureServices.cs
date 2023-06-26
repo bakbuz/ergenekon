@@ -21,8 +21,7 @@ public static class ConfigureServices
 
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("ErgenekonDb"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("ErgenekonDb"));
         }
         else
         {
@@ -45,14 +44,21 @@ public static class ConfigureServices
 
         //services.AddTransient<IDateTime, DateTimeService>();
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
+        services.AddScoped<Ergenekon.Application.Authentication.Services.IAuthenticationService, Ergenekon.Infrastructure.Services.AuthenticationService>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IWorldService, WorldService>();
+        services.AddScoped<IMailboxService, MailboxService>();
 
         services.AddAuthentication()
             .AddIdentityServerJwt();
 
         services.AddAuthorization(options =>
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
+
+        // email
+        services
+            .AddFluentEmail("postaci@maydere.com", "Postacı")
+            .AddSmtpSender("smtp.yandex.com.tr", 587, "postaci@maydere.com", "bYPdPPgzSXGAw7P");
 
         return services;
     }
