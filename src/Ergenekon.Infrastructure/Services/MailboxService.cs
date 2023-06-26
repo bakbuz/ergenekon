@@ -50,7 +50,7 @@ public class MailboxService : IMailboxService
         }
         catch (Exception ex)
         {
-            _logger.LogError("SendEmailAsync Exception", ex);
+            _logger.LogCritical("SendEmailAsync Exception", ex);
         }
     }
 
@@ -149,7 +149,7 @@ internal class EmailBodyBuilder
             _builder = new StringBuilder();
     }
 
-    internal string Title { get; set; }
+    private string Title { get; set; }
 
     private bool FooterInfo { get; set; }
 
