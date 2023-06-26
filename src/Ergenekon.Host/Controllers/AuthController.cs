@@ -14,7 +14,7 @@ public class AuthController : ApiControllerBase
         if (!result.Result.Succeeded)
             return BadRequest(result.Result.Errors);
 
-        return Created("", result.UserId);
+        return Created("", result.TokenValues);
     }
 
     [HttpPost]
@@ -24,6 +24,6 @@ public class AuthController : ApiControllerBase
         if (!result.Result.Succeeded)
             return BadRequest(result.Result.Errors);
 
-        return Created("", result.UserId);
+        return Ok(result.TokenValues);
     }
 }

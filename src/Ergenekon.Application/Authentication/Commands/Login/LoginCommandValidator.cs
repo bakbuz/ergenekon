@@ -7,7 +7,6 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {
     public LoginCommandValidator()
     {
-        RuleFor(m => m.Username).NotEmpty();
         RuleFor(m => m.Email).NotEmpty().EmailAddress();
         RuleFor(m => m.Password).NotEmpty().MinimumLength(IdentityConsts.PasswordMinimumLength);
     }

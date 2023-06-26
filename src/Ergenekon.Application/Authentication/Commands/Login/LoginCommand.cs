@@ -1,24 +1,31 @@
-﻿using Ergenekon.Application.Common.Interfaces;
+﻿using Ergenekon.Application.Authentication.Services;
+using Ergenekon.Application.Authentication.Shared;
 using Ergenekon.Application.Common.Models;
 using MediatR;
 
 namespace Ergenekon.Application.Authentication.Commands.Login;
 
-public sealed record LoginCommand(string Username, string Email, string Password) : IRequest<(Result Result, string UserId)>
+public sealed record LoginCommand(string Email, string Password) : IRequest<(Result Result, TokenValues? TokenValues)>
 {
 
 }
-public class LoginCommandHandler : IRequestHandler<LoginCommand, (Result Result, string UserId)>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, (Result Result, TokenValues? TokenValues)>
 {
-    private readonly IIdentityService _identityService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public LoginCommandHandler(IIdentityService identityService)
+    public LoginCommandHandler(IAuthenticationService authenticationService)
     {
-        _identityService = identityService;
+        _authenticationService = authenticationService;
     }
 
-    public async Task<(Result Result, string UserId)> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<(Result Result, TokenValues? TokenValues)> Handle(LoginCommand command, CancellationToken cancellationToken)
     {
-        return await _identityService.CreateUserAsync(request.Username, request.Email, request.Password);
+        var result = await _authenticationService.LoginAsync(command);
+        if (!result.Succeeded)
+            return (Result.Failure(result.Errors.Select(s => s.Description).AsEnumerable()), null);
+
+        var userId = await _authenticationService.GetUserIdAsync(command.Email);
+        var tokenValues = _authenticationService.CreateToken(userId);
+        return (Result.Success(), tokenValues);
     }
 }
