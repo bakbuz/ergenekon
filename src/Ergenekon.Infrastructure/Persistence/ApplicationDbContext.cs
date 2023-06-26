@@ -1,11 +1,13 @@
 ﻿using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Domain.Entities.Media;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -16,6 +18,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 {
     private readonly IMediator _mediator;
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
+    private readonly OperationalStoreOptions _operationalStoreOptions;
 
     public ApplicationDbContext(
         DbContextOptions<ApplicationDbContext> options,
@@ -26,6 +29,7 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     {
         _mediator = mediator;
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
+        _operationalStoreOptions = operationalStoreOptions.Value;
     }
 
     public DbSet<TodoList> TodoLists { get; set; }
@@ -49,15 +53,22 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         base.OnModelCreating(builder);
 
         // Identity Map
-        /*
-        builder.Entity<ApplicationUser>(b => { b.ToTable("Users", IdentitySchema); });
-        builder.Entity<IdentityRole>(b => { b.ToTable("Roles", IdentitySchema); });
-        builder.Entity<IdentityUserClaim<int>>(b => { b.ToTable("UserClaims", IdentitySchema); });
-        builder.Entity<IdentityUserLogin<int>>(b => { b.ToTable("UserLogins", IdentitySchema).HasKey(e => e.Id); });
-        builder.Entity<IdentityUserToken<int>>(b => { b.ToTable("UserTokens", IdentitySchema); });
-        builder.Entity<IdentityUserRole<int>>(b => { b.ToTable("UserRoles", IdentitySchema); });
-        builder.Entity<IdentityRoleClaim<int>>(b => { b.ToTable("RoleClaims", IdentitySchema); });
-        */
+        //builder.Entity<ApplicationUser>(b => { b.ToTable("Users", IdentityConsts.IdentitySchema); });
+        //builder.Entity<IdentityRole>(b => { b.ToTable("Roles", IdentityConsts.IdentitySchema); });
+        //builder.Entity<IdentityUserClaim<int>>(b => { b.ToTable("UserClaims", IdentityConsts.IdentitySchema); });
+        //builder.Entity<IdentityUserLogin<int>>(b => { b.ToTable("UserLogins", IdentityConsts.IdentitySchema).HasKey(e => e.Id); });
+        //builder.Entity<IdentityUserToken<int>>(b => { b.ToTable("UserTokens", IdentityConsts.IdentitySchema); });
+        //builder.Entity<IdentityUserRole<int>>(b => { b.ToTable("UserRoles", IdentityConsts.IdentitySchema); });
+        //builder.Entity<IdentityRoleClaim<int>>(b => { b.ToTable("RoleClaims", IdentityConsts.IdentitySchema); });
+
+        //_operationalStoreOptions.DefaultSchema = IdentityConsts.IdentitySchema;
+
+        //builder.Entity(nameof(UserClaims)).ToTable(nameof(UserClaims), IdentityConsts.IdentitySchema);
+        //builder.Entity(nameof(UserLogins)).ToTable(nameof(UserLogins), IdentityConsts.IdentitySchema);
+        //builder.Entity(nameof(UserTokens)).ToTable(nameof(UserTokens), IdentityConsts.IdentitySchema);
+        //builder.Entity(nameof(UserRoles)).ToTable(nameof(UserRoles), IdentityConsts.IdentitySchema);
+        //builder.Entity(nameof(RoleClaims)).ToTable(nameof(RoleClaims), IdentityConsts.IdentitySchema);
+        
 
         /* 
         builder.Entity<TodoList>(b =>
