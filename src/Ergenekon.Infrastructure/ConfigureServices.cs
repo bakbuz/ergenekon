@@ -41,6 +41,16 @@ public static class ConfigureServices
         services.AddIdentityServer()
             .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+        services.Configure<IdentityOptions>(options =>
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+
+            // Lockout settings.
+            options.Lockout.AllowedForNewUsers = true;
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+        });
+
         //services.AddTransient<IDateTime, DateTimeService>();
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
         services.AddScoped<Ergenekon.Application.Authentication.Services.IAuthenticationService, Ergenekon.Infrastructure.Services.AuthenticationService>();

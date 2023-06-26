@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.EntityFramework.Options;
+﻿using Duende.IdentityServer.EntityFramework.Entities;
+using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
@@ -53,22 +54,17 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         base.OnModelCreating(builder);
 
         // Identity Map
-        //builder.Entity<ApplicationUser>(b => { b.ToTable("Users", IdentityConsts.IdentitySchema); });
-        //builder.Entity<IdentityRole>(b => { b.ToTable("Roles", IdentityConsts.IdentitySchema); });
-        //builder.Entity<IdentityUserClaim<int>>(b => { b.ToTable("UserClaims", IdentityConsts.IdentitySchema); });
-        //builder.Entity<IdentityUserLogin<int>>(b => { b.ToTable("UserLogins", IdentityConsts.IdentitySchema).HasKey(e => e.Id); });
-        //builder.Entity<IdentityUserToken<int>>(b => { b.ToTable("UserTokens", IdentityConsts.IdentitySchema); });
-        //builder.Entity<IdentityUserRole<int>>(b => { b.ToTable("UserRoles", IdentityConsts.IdentitySchema); });
-        //builder.Entity<IdentityRoleClaim<int>>(b => { b.ToTable("RoleClaims", IdentityConsts.IdentitySchema); });
+        builder.Entity<ApplicationUser>().ToTable("Users", IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityRole>().ToTable("Roles", IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityUserClaim<string>>().ToTable(nameof(UserClaims), IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityUserLogin<string>>().ToTable(nameof(UserLogins), IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityUserToken<string>>().ToTable(nameof(UserTokens), IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityUserRole<string>>().ToTable(nameof(UserRoles), IdentityConsts.IdentitySchema);
+        builder.Entity<IdentityRoleClaim<string>>().ToTable(nameof(RoleClaims), IdentityConsts.IdentitySchema);
 
-        //_operationalStoreOptions.DefaultSchema = IdentityConsts.IdentitySchema;
-
-        //builder.Entity(nameof(UserClaims)).ToTable(nameof(UserClaims), IdentityConsts.IdentitySchema);
-        //builder.Entity(nameof(UserLogins)).ToTable(nameof(UserLogins), IdentityConsts.IdentitySchema);
-        //builder.Entity(nameof(UserTokens)).ToTable(nameof(UserTokens), IdentityConsts.IdentitySchema);
-        //builder.Entity(nameof(UserRoles)).ToTable(nameof(UserRoles), IdentityConsts.IdentitySchema);
-        //builder.Entity(nameof(RoleClaims)).ToTable(nameof(RoleClaims), IdentityConsts.IdentitySchema);
-        
+        builder.Entity<Key>().ToTable(nameof(Keys), IdentityConsts.IdentityServerSchema);
+        builder.Entity<PersistedGrant>().ToTable(nameof(PersistedGrants), IdentityConsts.IdentityServerSchema);
+        builder.Entity<DeviceFlowCodes>().ToTable(nameof(DeviceFlowCodes), IdentityConsts.IdentityServerSchema);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
