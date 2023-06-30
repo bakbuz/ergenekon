@@ -1,7 +1,9 @@
 ﻿using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Identity.Models;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Ergenekon.Host.Controllers;
 
@@ -15,11 +17,29 @@ public class AuthController : ApiControllerBase
         _authenticationService = authenticationService;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Token()
+    {
+        (IdentityResult result, string userId) = await _authenticationService.LoginAsync(new LoginRequest("bayram@maydere.com", "Ab123,,"));
+        if (!result.Succeeded)
+            return BadRequest(new ResponseErrors(result));
+
+        var tokenValues = _authenticationService.CreateToken(userId);
+        return Ok(tokenValues);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TokenValues))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
+        //if (!ModelState.IsValid)
+        //    return BadRequest(new ResponseErrors(ModelState));
+
+        var validateResult = new RegisterRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         (IdentityResult result, string userId) = await _authenticationService.RegisterAsync(request, cancellationToken);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
@@ -118,6 +138,16 @@ public class ResponseErrors
     public ResponseErrors(IdentityResult result)
     {
         Errors = result.Errors.Select(s => new ResponseError(s.Description, s.Code)).ToArray();
+    }
+
+    public ResponseErrors(ModelStateDictionary modelState)
+    {
+        Errors = modelState.SelectMany(s => s.Value.Errors.Select(e => new ResponseError(e.ErrorMessage))).ToArray();
+    }
+
+    public ResponseErrors(ValidationResult validateResult)
+    {
+        Errors = validateResult.Errors.Select(s => new ResponseError(s.ErrorMessage, s.ErrorCode)).ToArray();
     }
 
     public ResponseError[] Errors { get; set; }
