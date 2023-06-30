@@ -1,4 +1,5 @@
-﻿using Ergenekon.Infrastructure.Identity;
+﻿using Ergenekon.Domain.Consts;
+using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Identity.Models;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +21,7 @@ public class AuthController : ApiControllerBase
     [HttpGet("token")]
     public async Task<IActionResult> Token()
     {
-        (IdentityResult result, string userId) = await _authenticationService.LoginAsync(new LoginRequest("bayram@maydere.com", "Ab123,,"));
+        (IdentityResult result, string userId) = await _authenticationService.LoginAsync(new LoginRequest(IdentityConsts.DefaultUserEmail, IdentityConsts.DefaultUserPass));
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
 

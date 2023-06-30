@@ -1,4 +1,5 @@
-﻿using Ergenekon.Domain.Entities;
+﻿using Ergenekon.Domain.Consts;
+using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -77,11 +78,11 @@ public class ApplicationDbContextInitialiser
         }
 
         // Default users
-        var administrator = new ApplicationUser { UserName = "maydere", Email = "bayram@maydere.com", CreatedAt = DateTime.Now };
+        var administrator = new ApplicationUser { UserName = IdentityConsts.DefaultUserName, Email = IdentityConsts.DefaultUserEmail, CreatedAt = DateTime.Now };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
-            await _userManager.CreateAsync(administrator, "Ab123,,");
+            await _userManager.CreateAsync(administrator, IdentityConsts.DefaultUserPass);
             if (!string.IsNullOrWhiteSpace(administratorRole.Name))
             {
                 await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
