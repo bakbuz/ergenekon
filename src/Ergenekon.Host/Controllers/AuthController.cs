@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Ergenekon.Host.Controllers;
 
-[Route("api/[controller]/[action]")]
+[Route("api/[controller]")]
 public class AuthController : ApiControllerBase
 {
     private readonly IAuthenticationService _authenticationService;
@@ -17,7 +17,7 @@ public class AuthController : ApiControllerBase
         _authenticationService = authenticationService;
     }
 
-    [HttpGet]
+    [HttpGet("token")]
     public async Task<IActionResult> Token()
     {
         (IdentityResult result, string userId) = await _authenticationService.LoginAsync(new LoginRequest("bayram@maydere.com", "Ab123,,"));
@@ -28,14 +28,11 @@ public class AuthController : ApiControllerBase
         return Ok(tokenValues);
     }
 
-    [HttpPost]
+    [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TokenValues))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
-        //if (!ModelState.IsValid)
-        //    return BadRequest(new ResponseErrors(ModelState));
-
         var validateResult = new RegisterRequestValidator().Validate(request);
         if (!validateResult.IsValid)
             return BadRequest(new ResponseErrors(validateResult));
@@ -48,11 +45,15 @@ public class AuthController : ApiControllerBase
         return Created("", tokenValues);
     }
 
-    [HttpPost]
+    [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenValues))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
     {
+        var validateResult = new LoginRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         (IdentityResult result, string userId) = await _authenticationService.LoginAsync(request);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
@@ -66,6 +67,10 @@ public class AuthController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
     public async Task<IActionResult> PasswordRecoveryAsync([FromBody] PasswordRecoveryRequest request, CancellationToken cancellationToken)
     {
+        var validateResult = new PasswordRecoveryRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         var result = await _authenticationService.PasswordRecoveryAsync(request, cancellationToken);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
@@ -78,6 +83,10 @@ public class AuthController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
     public async Task<IActionResult> PasswordResetAsync([FromBody] PasswordResetRequest request)
     {
+        var validateResult = new PasswordResetRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         var result = await _authenticationService.PasswordResetAsync(request);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
@@ -88,6 +97,10 @@ public class AuthController : ApiControllerBase
     [HttpGet("confirm-email")]
     public async Task<IActionResult> ConfirmEmailAsync([FromQuery] ConfirmEmailRequest request)
     {
+        var validateResult = new ConfirmEmailRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         var result = await _authenticationService.ConfirmEmailAsync(request);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));
@@ -98,6 +111,10 @@ public class AuthController : ApiControllerBase
     [HttpGet("Confirm-Email-Change")]
     public async Task<IActionResult> ConfirmEmailChangeAsync([FromQuery] ConfirmEmailChangeRequest request)
     {
+        var validateResult = new ConfirmEmailChangeRequestValidator().Validate(request);
+        if (!validateResult.IsValid)
+            return BadRequest(new ResponseErrors(validateResult));
+
         var result = await _authenticationService.ConfirmEmailChangeAsync(request);
         if (!result.Succeeded)
             return BadRequest(new ResponseErrors(result));

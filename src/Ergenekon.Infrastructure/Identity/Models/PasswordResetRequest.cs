@@ -5,7 +5,7 @@ namespace Ergenekon.Infrastructure.Identity.Models;
 
 public record PasswordResetRequest(string Email, string Password, string Code);
 
-internal class PasswordResetRequestValidator : AbstractValidator<PasswordResetRequest>
+public class PasswordResetRequestValidator : AbstractValidator<PasswordResetRequest>
 {
     public PasswordResetRequestValidator()
     {

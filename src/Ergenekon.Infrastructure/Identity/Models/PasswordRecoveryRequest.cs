@@ -4,9 +4,9 @@ namespace Ergenekon.Infrastructure.Identity.Models;
 
 public sealed record PasswordRecoveryRequest(string Email);
 
-public class PasswordRecoveryValidator : AbstractValidator<PasswordRecoveryRequest>
+public class PasswordRecoveryRequestValidator : AbstractValidator<PasswordRecoveryRequest>
 {
-    public PasswordRecoveryValidator()
+    public PasswordRecoveryRequestValidator()
     {
         RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
     }

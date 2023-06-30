@@ -4,9 +4,9 @@ namespace Ergenekon.Infrastructure.Identity.Models;
 
 public record ConfirmEmailChangeRequest(string UserId, string Email, string Code);
 
-internal class ConfirmEmailChangeValidator : AbstractValidator<ConfirmEmailChangeRequest>
+public class ConfirmEmailChangeRequestValidator : AbstractValidator<ConfirmEmailChangeRequest>
 {
-    public ConfirmEmailChangeValidator()
+    public ConfirmEmailChangeRequestValidator()
     {
         RuleFor(m => m.UserId).NotEmpty();
         RuleFor(m => m.Code).NotEmpty();
