@@ -6,10 +6,14 @@ using Ergenekon.Infrastructure.Localization;
 using Ergenekon.Infrastructure.Persistence;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
 using Ergenekon.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
+using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -58,8 +62,8 @@ public static class ConfigureServices
         services.AddScoped<IWorldService, WorldService>();
         services.AddScoped<IMailboxService, MailboxService>();
 
-        services.AddAuthentication()
-            .AddIdentityServerJwt();
+        //services.AddAuthentication().AddIdentityServerJwt();
+        services.AddAuthenticationJwt(configuration);
 
         services.AddAuthorization(options =>
             options.AddPolicy("CanPurge", policy => policy.RequireRole("Administrator")));
@@ -68,6 +72,32 @@ public static class ConfigureServices
         services
             .AddFluentEmail("postaci@maydere.com", "Postacı")
             .AddSmtpSender("smtp.yandex.com.tr", 587, "postaci@maydere.com", "bYPdPPgzSXGAw7P");
+
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        return services;
+    }
+}
+
+public static class Ext
+{
+    public static IServiceCollection AddAuthenticationJwt(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateAudience = true,    // İzin verilecek sitelerin denetlenip denetlenmeyeceğini belirler
+                    ValidateIssuer = true,      // 
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["JwtOptions:Issuer"],
+                    ValidAudience = configuration["JwtOptions:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtOptions:SecretKey"])),
+                    ClockSkew = TimeSpan.Zero // sunucular arasındaki zaman farkını sıfırlamak için
+                };
+            });
 
         return services;
     }
