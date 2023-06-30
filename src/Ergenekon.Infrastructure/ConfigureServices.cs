@@ -55,7 +55,6 @@ public static class ConfigureServices
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
         });
 
-        //services.AddTransient<IDateTime, DateTimeService>();
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
         services.AddScoped<Ergenekon.Infrastructure.Identity.IAuthenticationService, Ergenekon.Infrastructure.Identity.AuthenticationService>();
         services.AddScoped<IIdentityService, IdentityService>();
@@ -74,6 +73,8 @@ public static class ConfigureServices
             .AddSmtpSender("smtp.yandex.com.tr", 587, "postaci@maydere.com", "bYPdPPgzSXGAw7P");
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        ValidatorOptions.Global.LanguageManager.Enabled = true;
+        ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
 
         return services;
     }

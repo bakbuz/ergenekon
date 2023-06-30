@@ -9,7 +9,7 @@ public class LoginRequestValidator : AbstractValidator<LoginRequest>
 {
     public LoginRequestValidator()
     {
-        RuleFor(m => m.Email).NotEmpty().EmailAddress();
-        RuleFor(m => m.Password).NotEmpty().MinimumLength(IdentityConsts.PasswordMinimumLength);
+        RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
+        RuleFor(m => m.Password).NotEmpty().WithName("Parola").MinimumLength(IdentityConsts.PasswordMinimumLength);
     }
 }

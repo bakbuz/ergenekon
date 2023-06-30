@@ -9,8 +9,8 @@ public class RegisterRequestValidator : AbstractValidator<RegisterRequest>
 {
     public RegisterRequestValidator()
     {
-        RuleFor(m => m.Username).NotEmpty();
-        RuleFor(m => m.Email).NotEmpty().EmailAddress();
-        RuleFor(m => m.Password).NotEmpty().MinimumLength(IdentityConsts.PasswordMinimumLength);
+        RuleFor(m => m.Username).NotEmpty().WithName("Kullanıcı adı");
+        RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
+        RuleFor(m => m.Password).NotEmpty().WithName("Parola").MinimumLength(IdentityConsts.PasswordMinimumLength);
     }
 }

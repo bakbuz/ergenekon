@@ -8,6 +8,6 @@ public class PasswordRecoveryValidator : AbstractValidator<PasswordRecoveryReque
 {
     public PasswordRecoveryValidator()
     {
-        RuleFor(m => m.Email).NotEmpty().EmailAddress();
+        RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
     }
 }

@@ -10,6 +10,6 @@ internal class ConfirmEmailChangeValidator : AbstractValidator<ConfirmEmailChang
     {
         RuleFor(m => m.UserId).NotEmpty();
         RuleFor(m => m.Code).NotEmpty();
-        RuleFor(m => m.Email).NotEmpty().EmailAddress();
+        RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
     }
 }

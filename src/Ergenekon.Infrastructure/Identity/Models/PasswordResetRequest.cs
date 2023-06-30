@@ -10,8 +10,8 @@ internal class PasswordResetRequestValidator : AbstractValidator<PasswordResetRe
     public PasswordResetRequestValidator()
     {
         RuleFor(m => m.Code).NotEmpty();
-        RuleFor(m => m.Email).NotEmpty().EmailAddress();
-        RuleFor(m => m.Password).NotEmpty()
+        RuleFor(m => m.Email).NotEmpty().WithName("E-posta").EmailAddress();
+        RuleFor(m => m.Password).NotEmpty().WithName("Parola")
             .MinimumLength(IdentityConsts.PasswordMinimumLength)
             .MaximumLength(IdentityConsts.PasswordMaximumLength);
     }
