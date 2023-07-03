@@ -65,7 +65,7 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("password-recovery")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> PasswordRecoveryAsync([FromBody] PasswordRecoveryRequest request, CancellationToken cancellationToken)
     {
         var validateResult = new PasswordRecoveryRequestValidator().Validate(request);
@@ -81,7 +81,7 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("password-reset")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseError))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> PasswordResetAsync([FromBody] PasswordResetRequest request)
     {
         var validateResult = new PasswordResetRequestValidator().Validate(request);
