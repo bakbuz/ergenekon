@@ -2,6 +2,9 @@
 using Ergenekon.Application.Catalog.Categories.Commands.DeleteCategory;
 using Ergenekon.Application.Catalog.Categories.Commands.UpdateCategory;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
+using Ergenekon.Application.Catalog.Categories.Queries.GetCategoriesByParentId;
+using Ergenekon.Application.Catalog.Categories.Queries.GetCategoryById;
+using Ergenekon.Application.Catalog.Categories.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +15,23 @@ public class CategoriesController : ApiControllerBase
 {
     [HttpGet]
     [AllowAnonymous]
-    public async Task<ActionResult<CategoriesVm>> GetAll()
+    public async Task<ActionResult<CategoriesVm>> GetCategories()
     {
         return Ok(await Mediator.Send(new GetCategoriesQuery()));
+    }
+
+    [HttpGet("{id}")]
+    [AllowAnonymous]
+    public async Task<ActionResult<CategoriesVm>> GetCategory([FromRoute] int id)
+    {
+        return Ok(await Mediator.Send(new GetCategoryByIdQuery(id)));
+    }
+
+    [HttpGet("{id}/children")]
+    [AllowAnonymous]
+    public async Task<ActionResult<CategoriesVm>> GetChildrenCategories([FromRoute] int id)
+    {
+        return Ok(await Mediator.Send(new GetCategoriesByParentIdQuery(id)));
     }
 
     [HttpPost]

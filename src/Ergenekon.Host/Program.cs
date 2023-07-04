@@ -30,7 +30,7 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
         // TEMP
         if (initialiser.EnsureCreated())
         {
-            //await initialiser.SeedAsync();
+            await initialiser.SeedAsync();
         }
     }
 }

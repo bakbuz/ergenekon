@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Ergenekon.Domain.Common;
 
@@ -15,6 +16,7 @@ public abstract class BaseEntity<TKey> //where TKey : IEquatable<TKey>
 
     private readonly List<BaseEvent> _domainEvents = new();
 
+    [JsonIgnore]
     [NotMapped]
     public IReadOnlyCollection<BaseEvent> DomainEvents => _domainEvents.AsReadOnly();
 
@@ -32,11 +34,4 @@ public abstract class BaseEntity<TKey> //where TKey : IEquatable<TKey>
     {
         _domainEvents.Clear();
     }
-
-
-
-    //public override bool Equals(object? obj)
-    //{
-    //    return EqualityComparer<TKey>.Default.Equals(obj);
-    //}
 }

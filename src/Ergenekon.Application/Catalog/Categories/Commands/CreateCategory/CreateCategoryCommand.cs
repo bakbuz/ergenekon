@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.CreateCategory;
 
-public record CreateCategoryCommand(string Name, string Description, byte[]? Picture) : IRequest<int>
+public record CreateCategoryCommand(int ParentId, string Name, string Description, byte[]? Picture) : IRequest<int>
 {
 }
 
@@ -20,6 +20,7 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
     public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         Category entity = new Category();
+        entity.ParentId = request.ParentId;
         entity.Name = request.Name;
         entity.Description = request.Description;
         entity.Picture = request.Picture;

@@ -26,7 +26,7 @@ public class CrudService<TEntity, TKey> : ICrudService<TEntity, TKey>
 
     public async Task<TEntity?> GetByIdAsync([NotNull] TKey id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.SingleOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
+        return await _dbSet.Where(x => x.Id.Equals(id)).SingleOrDefaultAsync(cancellationToken);
     }
 
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -70,9 +70,17 @@ public class CrudService<TEntity, TKey> : ICrudService<TEntity, TKey>
 
 public class CategoryService : CrudService<Category, int>, ICategoryService
 {
+    private readonly ApplicationDbContext _context;
+
     public CategoryService(ApplicationDbContext context)
         : base(context)
     {
+        _context = context;
+    }
+
+    public async Task<List<Category>> GetCategoriesByParentId(int parentId, CancellationToken cancellationToken)
+    {
+        return await _context.Categories.Where(q => q.ParentId == parentId).ToListAsync(cancellationToken);
     }
 }
 public class ProductService : CrudService<Product, Guid>, IProductService

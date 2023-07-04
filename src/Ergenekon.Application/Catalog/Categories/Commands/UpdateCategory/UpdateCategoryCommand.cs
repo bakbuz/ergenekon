@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.UpdateCategory;
 
-public record UpdateCategoryCommand(string Name, string Description, byte[]? Picture) : IRequest
+public record UpdateCategoryCommand(int ParentId, string Name, string Description, byte[]? Picture) : IRequest
 {
     internal int Id { get; set; }
 
@@ -31,6 +31,7 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         if (entity == null)
             throw new NotFoundException(nameof(Category), request.Id);
 
+        entity.ParentId = request.ParentId;
         entity.Name = request.Name;
         entity.Description = request.Description;
         entity.Picture = request.Picture;

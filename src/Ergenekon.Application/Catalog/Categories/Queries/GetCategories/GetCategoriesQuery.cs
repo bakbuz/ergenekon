@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using Ergenekon.Application.Catalog.Categories.Shared;
 using Ergenekon.Application.Common.Interfaces;
 using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
 
-public class GetCategoriesQuery : IRequest<CategoriesVm>
+public record GetCategoriesQuery : IRequest<CategoriesVm>
 {
 }
 

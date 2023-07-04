@@ -1,6 +1,6 @@
 ﻿using Ergenekon.Domain.Entities;
 
-namespace Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
+namespace Ergenekon.Application.Catalog.Categories.Shared;
 
 public class CategoriesVm
 {
