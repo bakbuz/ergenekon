@@ -6,7 +6,7 @@ public abstract class BaseEntity : BaseEntity<int>
 {
 }
 
-public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
+public abstract class BaseEntity<TKey> //where TKey : IEquatable<TKey>
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public TKey Id { get; set; } = default!;
@@ -32,4 +32,11 @@ public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
     {
         _domainEvents.Clear();
     }
+
+
+
+    //public override bool Equals(object? obj)
+    //{
+    //    return EqualityComparer<TKey>.Default.Equals(obj);
+    //}
 }

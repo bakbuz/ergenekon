@@ -26,7 +26,7 @@ public class CrudService<TEntity, TKey> : ICrudService<TEntity, TKey>
 
     public async Task<TEntity?> GetByIdAsync([NotNull] TKey id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+        return await _dbSet.SingleOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
     }
 
     public async Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
