@@ -4,8 +4,15 @@ using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.CreateCategory;
 
-public record CreateCategoryCommand(int ParentId, string Name, string Description, byte[]? Picture) : IRequest<int>
+public record CreateCategoryCommand(int ParentId, string Name, string Description) : IRequest<int>
 {
+    internal string? Picture { get; set; }
+
+    public CreateCategoryCommand SetPicture(string? picture)
+    {
+        Picture = picture;
+        return this;
+    }
 }
 
 public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, int>

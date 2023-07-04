@@ -64,7 +64,7 @@ public static class ConfigureServices
         services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IProductService, ProductService>();
-        
+
 
         //services.AddAuthentication().AddIdentityServerJwt();
         services.AddAuthenticationJwt(configuration);

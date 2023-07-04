@@ -12,6 +12,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
         builder.Property(e => e.Description).HasMaxLength(100).IsRequired();
+        builder.Property(e => e.Picture).HasMaxLength(100);
     }
 }
 

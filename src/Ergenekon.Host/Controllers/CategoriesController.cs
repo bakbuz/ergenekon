@@ -5,6 +5,7 @@ using Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategoriesByParentId;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategoryById;
 using Ergenekon.Application.Catalog.Categories.Shared;
+using Ergenekon.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,6 +61,30 @@ public class CategoriesController : ApiControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         await Mediator.Send(new DeleteCategoryCommand(id));
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/images")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task<IActionResult> AddImage(int id, IFormFile image)
+    {
+        var uploadResult = UploadImage(image);
+        if (!uploadResult.Ok)
+            return BadRequest(new ResponseErrors(uploadResult.Message));
+
+        await Mediator.Send(new AddCategoryImageCommand(id, uploadResult.FileName));
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}/images")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> RemoveImage(int id)
+    {
+        await Mediator.Send(new RemoveCategoryImageCommand(id));
 
         return NoContent();
     }

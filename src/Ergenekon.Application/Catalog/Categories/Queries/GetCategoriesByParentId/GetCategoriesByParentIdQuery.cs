@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Queries.GetCategoriesByParentId;
 
-public record GetCategoriesByParentIdQuery (int ParentId): IRequest<CategoriesVm>
+public record GetCategoriesByParentIdQuery(int ParentId) : IRequest<CategoriesVm>
 {
 }
 

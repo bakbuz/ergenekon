@@ -5,13 +5,21 @@ using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.UpdateCategory;
 
-public record UpdateCategoryCommand(int ParentId, string Name, string Description, byte[]? Picture) : IRequest
+public record UpdateCategoryCommand(int ParentId, string Name, string Description) : IRequest
 {
     internal int Id { get; set; }
+
+    internal string? Picture { get; set; }
 
     public UpdateCategoryCommand SetId(int id)
     {
         Id = id;
+        return this;
+    }
+
+    public UpdateCategoryCommand SetPicture(string? picture)
+    {
+        Picture = picture;
         return this;
     }
 }
@@ -34,7 +42,9 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
         entity.ParentId = request.ParentId;
         entity.Name = request.Name;
         entity.Description = request.Description;
-        entity.Picture = request.Picture;
+
+        if (!string.IsNullOrEmpty(request.Picture))
+            entity.Picture = request.Picture;
 
         await _categoryService.UpdateAsync(entity, cancellationToken);
     }

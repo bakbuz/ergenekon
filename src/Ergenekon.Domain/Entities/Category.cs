@@ -8,5 +8,5 @@ public class Category : BaseAuditableEntity<int>
 
     public string? Description { get; set; }
 
-    public byte[]? Picture { get; set; }
+    public string? Picture { get; set; }
 }

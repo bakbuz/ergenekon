@@ -22,7 +22,7 @@ public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery,
 
     public async Task<Category> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        var category = await _categoryService.GetByIdAsync(request.Id ,cancellationToken);
+        var category = await _categoryService.GetByIdAsync(request.Id, cancellationToken);
 
         return category;
     }
