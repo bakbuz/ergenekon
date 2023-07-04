@@ -2,7 +2,6 @@
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.DeleteCategory;
 
@@ -12,23 +11,19 @@ public record DeleteCategoryCommand(int Id) : IRequest
 
 public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
 {
-    private readonly IApplicationDbContext _context;
+    private readonly ICategoryService _categoryService;
 
-    public DeleteCategoryCommandHandler(IApplicationDbContext context)
+    public DeleteCategoryCommandHandler(ICategoryService categoryService)
     {
-        _context = context;
+        _categoryService = categoryService;
     }
 
     public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Categories.SingleOrDefaultAsync(q => q.Id == request.Id);
+        var entity = await _categoryService.GetByIdAsync(request.Id);
         if (entity == null)
-        {
             throw new NotFoundException(nameof(Category), request.Id);
-        }
 
-        _context.Categories.Remove(entity);
-
-        await _context.SaveChangesAsync(cancellationToken);
+        await _categoryService.DeleteAsync(entity, cancellationToken);
     }
 }

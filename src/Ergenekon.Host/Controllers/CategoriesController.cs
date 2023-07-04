@@ -1,5 +1,6 @@
-﻿using Ergenekon.Application.Catalog.Categories.Commands.DeleteCategory;
-using Ergenekon.Application.Catalog.Categories.Commands.UpsertCategory;
+﻿using Ergenekon.Application.Catalog.Categories.Commands.CreateCategory;
+using Ergenekon.Application.Catalog.Categories.Commands.DeleteCategory;
+using Ergenekon.Application.Catalog.Categories.Commands.UpdateCategory;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,21 @@ public class CategoriesController : ApiControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Upsert(UpsertCategoryCommand command)
+    public async Task<IActionResult> Create([FromBody] CreateCategoryCommand command)
     {
         var id = await Mediator.Send(command);
 
         return Ok(id);
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryCommand command)
+    {
+        await Mediator.Send(command.SetId(id));
+
+        return NoContent();
     }
 
     [HttpDelete("{id}")]

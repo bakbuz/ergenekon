@@ -6,10 +6,12 @@ public abstract class BaseEntity : BaseEntity<int>
 {
 }
 
-public abstract class BaseEntity<TKey>
+public abstract class BaseEntity<TKey> where TKey : IEquatable<TKey>
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public TKey Id { get; set; }
+    public TKey Id { get; set; } = default!;
+
+
 
     private readonly List<BaseEvent> _domainEvents = new();
 

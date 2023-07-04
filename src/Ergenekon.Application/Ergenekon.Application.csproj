@@ -17,4 +17,8 @@
 	  <ProjectReference Include="..\Ergenekon.Domain\Ergenekon.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Catalog\Products\" />
+	</ItemGroup>
+
 </Project>
