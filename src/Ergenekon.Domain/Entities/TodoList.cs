@@ -1,6 +1,6 @@
 ﻿namespace Ergenekon.Domain.Entities;
 
-public class TodoList : BaseAuditableEntity
+public class TodoList : BaseAuditableEntity<int>
 {
     public string? Title { get; set; }
 

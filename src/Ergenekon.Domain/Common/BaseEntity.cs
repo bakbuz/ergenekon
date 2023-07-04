@@ -3,12 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Ergenekon.Domain.Common;
 
-public abstract class BaseEntity : BaseEntity<int>
-{
-}
+//public abstract class BaseEntity : BaseEntity<int>
+//{
+//}
 
 public abstract class BaseEntity<TKey> //where TKey : IEquatable<TKey>
 {
+    [JsonPropertyOrder(-1)]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public TKey Id { get; set; } = default!;
 

@@ -1,12 +1,18 @@
-﻿namespace Ergenekon.Domain.Common;
+﻿using System.Text.Json.Serialization;
 
-public abstract class BaseAuditableEntity : BaseEntity
+namespace Ergenekon.Domain.Common;
+
+public abstract class BaseAuditableEntity<TKey> : BaseEntity<TKey>
 {
-    public DateTime CreatedAt { get; set; }
-
+    [JsonPropertyOrder(96)]
     public string? CreatedBy { get; set; }
 
-    public DateTime? LastModifiedAt { get; set; }
+    [JsonPropertyOrder(97)]
+    public DateTime CreatedAt { get; set; }
 
+    [JsonPropertyOrder(98)]
     public string? LastModifiedBy { get; set; }
+
+    [JsonPropertyOrder(99)]
+    public DateTime? LastModifiedAt { get; set; }
 }
