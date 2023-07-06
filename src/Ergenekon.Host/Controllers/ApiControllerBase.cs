@@ -1,4 +1,5 @@
-﻿using Ergenekon.Host.Filters;
+﻿using Ergenekon.Host.Extensions;
+using Ergenekon.Host.Filters;
 using Ergenekon.Host.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +28,3 @@ public abstract class ApiControllerBase : ControllerBase
     }
 }
 
-public class UploadResult
-{
-    public bool Ok { get; set; }
-    public string? FileName { get; set; }
-    public string? Message { get; set; }
-}

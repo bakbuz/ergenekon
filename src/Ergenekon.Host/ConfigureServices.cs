@@ -62,7 +62,7 @@ public static class ConfigureServices
         });
 
         services.AddScoped<IWebHelper, WebHelper>();
-        services.AddScoped<IImageProcessor, ImageProcessor>();
+        services.AddScoped<IImageProcessor, SkiaSharpImageProcessor>();
 
         return services;
     }
