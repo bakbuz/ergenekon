@@ -19,7 +19,7 @@ public abstract class ApiControllerBase : ControllerBase
     {
         var imageProcessor = HttpContext.RequestServices.GetRequiredService<IImageProcessor>;
 
-        return new UploadResult { Ok = true, FileName = "sample.jpg" };
+        return new UploadResult(true) { FileName = "sample.jpg" };
     }
 
     protected void ResizeImageAsync()
