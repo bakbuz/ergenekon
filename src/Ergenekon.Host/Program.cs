@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
     .WriteTo.Console()
+    //.WriteTo.Seq("http://localhost:5341")
     .ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
