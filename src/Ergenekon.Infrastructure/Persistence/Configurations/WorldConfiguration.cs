@@ -17,9 +17,9 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
     }
 }
 
-public class StateProvinceConfiguration : IEntityTypeConfiguration<StateProvince>
+public class ProvinceConfiguration : IEntityTypeConfiguration<Province>
 {
-    public void Configure(EntityTypeBuilder<StateProvince> builder)
+    public void Configure(EntityTypeBuilder<Province> builder)
     {
         builder.HasKey(e => e.Id);
 
@@ -27,7 +27,7 @@ public class StateProvinceConfiguration : IEntityTypeConfiguration<StateProvince
         builder.Property(e => e.Abbreviation).HasMaxLength(100);
 
         builder.HasOne(state => state.Country)
-            .WithMany(country => country.StateProvinces)
+            .WithMany(country => country.Provinces)
             .HasForeignKey(state => state.CountryId)
             .IsRequired();
     }
@@ -36,6 +36,16 @@ public class StateProvinceConfiguration : IEntityTypeConfiguration<StateProvince
 public class DistrictConfiguration : IEntityTypeConfiguration<District>
 {
     public void Configure(EntityTypeBuilder<District> builder)
+    {
+        builder.HasKey(e => e.Id);
+
+        builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
+    }
+}
+
+public class NeighborhoodConfiguration : IEntityTypeConfiguration<Neighborhood>
+{
+    public void Configure(EntityTypeBuilder<Neighborhood> builder)
     {
         builder.HasKey(e => e.Id);
 

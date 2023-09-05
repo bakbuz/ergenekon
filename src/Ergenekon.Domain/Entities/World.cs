@@ -6,7 +6,7 @@ public class Country : BaseEntity<byte>
 {
     public Country()
     {
-        StateProvinces = new HashSet<StateProvince>();
+        Provinces = new HashSet<Province>();
     }
 
     public string Name { get; set; } = null!;
@@ -28,10 +28,10 @@ public class Country : BaseEntity<byte>
     public short DisplayOrder { get; set; }
 
     //[JsonIgnore]
-    public virtual ICollection<StateProvince> StateProvinces { get; set; }
+    public virtual ICollection<Province> Provinces { get; set; }
 }
 
-public class StateProvince : BaseEntity<ushort>
+public class Province : BaseEntity<ushort>
 {
     //[JsonIgnore]
     public byte CountryId { get; set; }
@@ -50,7 +50,18 @@ public class StateProvince : BaseEntity<ushort>
 public class District : BaseEntity<ushort>
 {
     [JsonIgnore]
-    public ushort StateProvinceId { get; set; }
+    public ushort ProvinceId { get; set; }
 
     public string Name { get; set; } = null!;
+
+    public virtual Province Province { get; set; } = null!;
+}
+
+public class Neighborhood : BaseEntity<uint>
+{
+    public ushort DistrictId { get; set; }
+
+    public string Name { get; set; } = null!;
+
+    public virtual District District { get; set; } = null!;
 }

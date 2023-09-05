@@ -38,8 +38,9 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
 
     public DbSet<Country> Countries { get; set; }
-    public DbSet<StateProvince> StateProvinces { get; set; }
+    public DbSet<Province> Provinces { get; set; }
     public DbSet<District> Districts { get; set; }
+    public DbSet<Neighborhood> Neighborhoods { get; set; }
 
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Video> Videos { get; set; }

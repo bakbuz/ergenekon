@@ -32,25 +32,35 @@ public class WorldService : IWorldService
         return countries;
     }
 
-    public async Task<List<LookupDto1<ushort>>> GetStateProvincesAsync(byte countryId, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetProvincesAsync(byte countryId, CancellationToken cancellationToken)
     {
-        var stateProvinces = await _ctx.StateProvinces
+        var provinces = await _ctx.Provinces
             .Where(q => q.CountryId == countryId)
             .OrderBy(o => o.DisplayOrder)
             .ThenBy(o => o.Id)
             .Select(s => new LookupDto1<ushort>(s.Id, s.Name))
             .ToListAsync(cancellationToken);
 
-        return stateProvinces;
+        return provinces;
     }
 
-    public async Task<List<LookupDto1<ushort>>> GetDistrictsAsync(ushort stateProvinceId, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetDistrictsAsync(ushort provinceId, CancellationToken cancellationToken)
     {
         var districts = await _ctx.Districts
-            .Where(q => q.StateProvinceId == stateProvinceId)
+            .Where(q => q.ProvinceId == provinceId)
             .Select(s => new LookupDto1<ushort>(s.Id, s.Name))
             .ToListAsync(cancellationToken);
 
         return districts;
+    }
+
+    public async Task<List<LookupDto1<uint>>> GetNeighborhoodsAsync(ushort districtId, CancellationToken cancellationToken)
+    {
+        var neighborhoods = await _ctx.Neighborhoods
+           .Where(q => q.DistrictId == districtId)
+           .Select(s => new LookupDto1<uint>(s.Id, s.Name))
+           .ToListAsync(cancellationToken);
+
+        return neighborhoods;
     }
 }

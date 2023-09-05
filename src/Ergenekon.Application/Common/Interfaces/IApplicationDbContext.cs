@@ -10,8 +10,9 @@ public interface IApplicationDbContext
     DbSet<TodoItem> TodoItems { get; }
 
     DbSet<Country> Countries { get; }
-    DbSet<StateProvince> StateProvinces { get; }
+    DbSet<Province> Provinces { get; }
     DbSet<District> Districts { get; }
+    DbSet<Neighborhood> Neighborhoods { get; }
 
     DbSet<Picture> Pictures { get; }
     DbSet<Video> Videos { get; }

@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.World.Queries.GetCountries;
-using Ergenekon.Application.World.Queries.GetGetDistrictsByStateProvinceId;
-using Ergenekon.Application.World.Queries.GetStateProvincesByCountryId;
+using Ergenekon.Application.World.Queries.GetGetDistrictsByProvinceId;
+using Ergenekon.Application.World.Queries.GetNeighborhoodsByDistrictId;
+using Ergenekon.Application.World.Queries.GetProvincesByCountryId;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
@@ -15,19 +16,19 @@ public class WorldsController : ApiControllerBase
         return Ok(result);
     }
 
-    [HttpGet("countries/{countryId}/StateProvinces")]
+    [HttpGet("countries/{countryId}/provinces")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-    public async Task<IActionResult> GetStateProvinces([FromRoute] byte countryId)
+    public async Task<IActionResult> GetProvinces([FromRoute] byte countryId)
     {
         if (countryId <= 0)
             //return BadRequest(new ErrorResponse("Belirtilen kimlik değeri geçersiz: " + countryId));
             throw new ArgumentOutOfRangeException(nameof(countryId));
 
-        return Ok(await Mediator.Send(new GetStateProvincesByCountryIdQuery(countryId)));
+        return Ok(await Mediator.Send(new GetProvincesByCountryIdQuery(countryId)));
     }
 
-    [HttpGet("countries/{countryId}/StateProvinces/{provinceId}/districts")]
+    [HttpGet("countries/{countryId}/provinces/{provinceId}/districts")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
     public async Task<IActionResult> GetDistricts([FromRoute] ushort provinceId)
@@ -36,6 +37,17 @@ public class WorldsController : ApiControllerBase
             //return BadRequest(new ErrorResponse("Belirtilen kimlik değeri geçersiz: " + provinceId));
             throw new ArgumentOutOfRangeException(nameof(provinceId));
 
-        return Ok(await Mediator.Send(new GetGetDistrictsByStateProvinceIdQuery(provinceId)));
+        return Ok(await Mediator.Send(new GetDistrictsByProvinceIdQuery(provinceId)));
+    }
+
+    [HttpGet("countries/{countryId}/provinces/{provinceId}/districts/{districtId}/neighborhoods")]
+    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
+    //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    public async Task<IActionResult> GetNeighborhoods([FromRoute] ushort districtId)
+    {
+        if (districtId <= 0)
+            throw new ArgumentOutOfRangeException(nameof(districtId));
+
+        return Ok(await Mediator.Send(new GetNeighborhoodsByDistrictIdQuery(districtId)));
     }
 }

@@ -146,7 +146,7 @@ public class ApplicationDbContextInitialiser
             country.Name = country.Name.ToUpper(ciTR);
             country.EnglishName = country.EnglishName.ToUpper(ciEN);
 
-            foreach (var sp in country.StateProvinces)
+            foreach (var sp in country.Provinces)
             {
                 sp.Name = sp.Name.ToUpper();
             }
@@ -162,20 +162,20 @@ public class ApplicationDbContextInitialiser
     private void CreateDistricts()
     {
         var trCountryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
-        var trStateProvinces = _context.StateProvinces.Where(q => q.CountryId == trCountryId).ToList();
+        var trProvinces = _context.Provinces.Where(q => q.CountryId == trCountryId).ToList();
 
         var allProvinces = ReadFromJson<List<CityImportDto>>("turkiye_il_ilce.json")
             .OrderBy(o => o.DisplayOrder)
             .ToList();
 
-        foreach (var sp in trStateProvinces)
+        foreach (var sp in trProvinces)
         {
             var province = allProvinces.Where(q => q.Abbreviation == sp.Abbreviation).Single();
 
             foreach (var d in province.Districts.Order())
             {
                 var district = new District();
-                district.StateProvinceId = sp.Id;
+                district.ProvinceId = sp.Id;
                 district.Name = d;
 
                 _context.Districts.Add(district);
