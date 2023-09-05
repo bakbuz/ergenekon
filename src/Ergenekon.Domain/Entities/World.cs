@@ -45,6 +45,8 @@ public class Province : BaseEntity<ushort>
 
     //[JsonIgnore]
     public virtual Country Country { get; set; } = null!;
+
+    public virtual ICollection<District> Districts { get; set; } = new List<District>();
 }
 
 public class District : BaseEntity<ushort>
@@ -55,6 +57,8 @@ public class District : BaseEntity<ushort>
     public string Name { get; set; } = null!;
 
     public virtual Province Province { get; set; } = null!;
+
+    public virtual ICollection<Neighborhood> Neighborhoods { get; set; } = new List<Neighborhood>();
 }
 
 public class Neighborhood : BaseEntity<uint>
