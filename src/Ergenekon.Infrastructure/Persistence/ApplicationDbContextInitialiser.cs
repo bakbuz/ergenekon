@@ -44,7 +44,7 @@ public class ApplicationDbContextInitialiser
             if (_context.Database.IsSqlServer())
             {
                 await _context.Database.MigrateAsync();
-                //await _context.Database.EnsureCreatedAsync();
+                await _context.Database.EnsureCreatedAsync();
             }
         }
         catch (Exception ex)
@@ -146,9 +146,9 @@ public class ApplicationDbContextInitialiser
             country.Name = country.Name.ToUpper(ciTR);
             country.EnglishName = country.EnglishName.ToUpper(ciEN);
 
-            foreach (var sp in country.Provinces)
+            foreach (var province in country.Provinces)
             {
-                sp.Name = sp.Name.ToUpper();
+                province.Name = province.Name.ToUpper();
             }
 
             _context.Countries.Add(country);
@@ -171,12 +171,13 @@ public class ApplicationDbContextInitialiser
         foreach (var sp in trProvinces)
         {
             var province = allProvinces.Where(q => q.Abbreviation == sp.Abbreviation).Single();
+            var districtNames = province.Districts.Order();
 
-            foreach (var d in province.Districts.Order())
+            foreach (var districtName in districtNames)
             {
                 var district = new District();
                 district.ProvinceId = sp.Id;
-                district.Name = d;
+                district.Name = districtName;
 
                 _context.Districts.Add(district);
                 _context.SaveChanges();
