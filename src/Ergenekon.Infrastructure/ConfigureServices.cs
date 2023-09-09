@@ -1,4 +1,6 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Application.Pages.Services;
+using Ergenekon.Application.SearchTerms.Services;
 using Ergenekon.Application.World.Services;
 using Ergenekon.Infrastructure.Files;
 using Ergenekon.Infrastructure.Identity;
@@ -64,7 +66,8 @@ public static class ConfigureServices
         services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IProductService, ProductService>();
-
+        services.AddScoped<IPageService, PageService>();
+        services.AddScoped<ISearchTermService, SearchTermService>();
 
         //services.AddAuthentication().AddIdentityServerJwt();
         services.AddAuthenticationJwt(configuration);

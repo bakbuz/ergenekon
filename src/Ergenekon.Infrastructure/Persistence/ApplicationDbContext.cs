@@ -47,6 +47,8 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<Page> Pages { get; set; }
+    public DbSet<SearchTerm> SearchTerms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

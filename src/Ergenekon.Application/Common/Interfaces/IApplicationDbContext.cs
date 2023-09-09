@@ -19,6 +19,8 @@ public interface IApplicationDbContext
 
     DbSet<Category> Categories { get; }
     DbSet<Product> Products { get; }
+    DbSet<Page> Pages { get; }
+    DbSet<SearchTerm> SearchTerms { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
