@@ -21,18 +21,18 @@ public class WorldService : IWorldService
         return _ctx.Countries.ToList();
     }
 
-    public async Task<List<LookupDto1<byte>>> GetAllCountriesAsync(CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetAllCountriesAsync(CancellationToken cancellationToken)
     {
         var countries = await _ctx.Countries
             .OrderBy(o => o.DisplayOrder)
             .ThenBy(o => o.Id)
-            .Select(s => new LookupDto1<byte>(s.Id, s.Name))
+            .Select(s => new LookupDto1<ushort>(s.Id, s.Name))
             .ToListAsync(cancellationToken);
 
         return countries;
     }
 
-    public async Task<List<LookupDto1<ushort>>> GetProvincesAsync(byte countryId, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<ushort>>> GetProvincesAsync(ushort countryId, CancellationToken cancellationToken)
     {
         var provinces = await _ctx.Provinces
             .Where(q => q.CountryId == countryId)

@@ -10,7 +10,7 @@ public interface IPageService
 
     Task<Page?> GetPageBySlugAsync(string slug, CancellationToken cancellationToken);
 
-    Task<Page?> GetPageByCodeAsync(string code, bool showHidden = false, CancellationToken cancellationToken);
+    Task<Page?> GetPageByCodeAsync(string code, bool showHidden = false, CancellationToken cancellationToken = default);
 
     Task InsertPageAsync(Page page, CancellationToken cancellationToken);
 

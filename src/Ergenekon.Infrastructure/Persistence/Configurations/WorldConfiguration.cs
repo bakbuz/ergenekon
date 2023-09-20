@@ -42,6 +42,7 @@ public class DistrictConfiguration : IEntityTypeConfiguration<District>
         builder.ToTable("Districts", "Territory");
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
 
         builder.HasOne(d => d.Province)
@@ -57,6 +58,7 @@ public class NeighborhoodConfiguration : IEntityTypeConfiguration<Neighborhood>
         builder.ToTable("Neighborhoods", "Territory");
         builder.HasKey(e => e.Id);
 
+        builder.Property(e => e.Id).ValueGeneratedNever();
         builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
 
         builder.HasOne(d => d.District)

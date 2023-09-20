@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ergenekon.Application.Common.Interfaces;
+﻿namespace Ergenekon.Application.Common.Interfaces;
 
 public interface ICacheManager
 {
-
+    Task<T> GetAsync<T>(string key, Func<T> value);
 }

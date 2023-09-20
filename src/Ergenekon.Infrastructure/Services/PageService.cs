@@ -10,59 +10,49 @@ public class PageService : IPageService
 {
     private readonly IApplicationDbContext _ctx;
     private readonly ILogger<PageService> _logger;
-   private readonly ICacheManager _cacheManager;
 
-    public PageService(IApplicationDbContext ctx, ILogger<PageService> logger, ICacheManager cacheManager)
+    public PageService(IApplicationDbContext ctx, ILogger<PageService> logger)
     {
         _ctx = ctx;
         _logger = logger;
-        _cacheManager = cacheManager;
     }
 
-    private const string PagesAllCacheKey = "ergenekon-pages";
-    private const string PagesByIdCacheKey = PagesAllCacheKey + "-{0}";
+    //private const string PagesAllCacheKey = "ergenekon-pages";
+    //private const string PagesByIdCacheKey = PagesAllCacheKey + "-{0}";
 
-    public Task<List<Page>> GetAllPagesAsync(bool showHidden = false, CancellationToken cancellationToken=default)
+    public async Task<List<Page>> GetAllPagesAsync(bool showHidden = false, CancellationToken cancellationToken = default)
     {
-        var key = string.Format(PagesAllCacheKey, showHidden);
-        return _cacheManager.Get(key, () =>
-        {
-            var query = _ctx.Pages;
-            query = query.OrderBy(t => t.DisplayOrder).ThenBy(t => t.Code);
+        var query = _ctx.Pages.AsQueryable();
 
-            if (!showHidden)
-                query = query.Where(t => t.Published);
+        if (!showHidden)
+            query = query.Where(t => t.Published);
 
-            return query.ToListAsync(cancellationToken);
-        });
+        var pages = await query.OrderBy(t => t.DisplayOrder).ToListAsync(cancellationToken);
+
+        return pages;
     }
 
-    public Task<Page?> GetPageByIdAsync(int pageId, CancellationToken cancellationToken)
+    public async Task<Page?> GetPageByIdAsync(int pageId, CancellationToken cancellationToken)
     {
         if (pageId == 0)
-            return null;
+            return await Task.FromResult<Page?>(null);
 
-        var key = string.Format(PagesByIdCacheKey, pageId);
-        return _cacheManager.Get(key, async () => await _ctx.Pages.SingleOrDefaultAsync(x => x.Id == pageId, cancellationToken));
+        return await _ctx.Pages.SingleOrDefaultAsync(x => x.Id == pageId, cancellationToken);
     }
 
-    public Task<Page?> GetPageBySlugAsync(string slug, CancellationToken cancellationToken)
+    public async Task<Page?> GetPageBySlugAsync(string slug, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(slug))
+            return await Task.FromResult<Page?>(null);
+
+        var page = await _ctx.Pages.SingleOrDefaultAsync(q => q.Slug == slug, cancellationToken);
+        if (page == null)
             return null;
 
-        var key = string.Format(PagesByIdCacheKey, slug);
-        return _cacheManager.Get(key, async () =>
-        {
-            var cached = _urlRecordManager.GetBySlugCached(slug);
-            if (cached == null)
-                return null;
-
-            return await _ctx.Pages.SingleOrDefaultAsync(x => x.Id == cached.EntityId, cancellationToken);
-        });
+        return page;
     }
 
-    public async Task<Page?> GetPageByCodeAsync(string code, bool showHidden = false, CancellationToken cancellationToken)
+    public async Task<Page?> GetPageByCodeAsync(string code, bool showHidden = false, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(code))
             return null;
@@ -89,12 +79,6 @@ public class PageService : IPageService
             _logger.LogError("InsertPage", ex);
             throw;
         }
-
-        //cache
-        _cacheManager.RemoveByPattern(PagesPatternCacheKey);
-
-        //event notification
-        _eventPublisher.EntityInserted(page);
     }
 
     public async Task UpdatePageAsync(Page page, CancellationToken cancellationToken)
@@ -112,12 +96,6 @@ public class PageService : IPageService
             _logger.LogError("UpdatePage", ex);
             throw;
         }
-
-        //cache
-        _cacheManager.RemoveByPattern(PagesPatternCacheKey);
-
-        //event notification
-        _eventPublisher.EntityUpdated(page);
     }
 
     public async Task DeletePageAsync(Page page, CancellationToken cancellationToken)
@@ -135,11 +113,5 @@ public class PageService : IPageService
             _logger.LogError("DeletePage", ex);
             throw;
         }
-
-        //cache
-        _cacheManager.RemoveByPattern(PagesPatternCacheKey);
-
-        //event notification
-        _eventPublisher.EntityDeleted(page);
     }
 }

@@ -7,9 +7,9 @@ public interface IWorldService
 {
     List<Country> GetAllCountries();
 
-    Task<List<LookupDto1<byte>>> GetAllCountriesAsync(CancellationToken cancellationToken);
+    Task<List<LookupDto1<ushort>>> GetAllCountriesAsync(CancellationToken cancellationToken);
 
-    Task<List<LookupDto1<ushort>>> GetProvincesAsync(byte countryId, CancellationToken cancellationToken);
+    Task<List<LookupDto1<ushort>>> GetProvincesAsync(ushort countryId, CancellationToken cancellationToken);
 
     Task<List<LookupDto1<ushort>>> GetDistrictsAsync(ushort provinceId, CancellationToken cancellationToken);
 

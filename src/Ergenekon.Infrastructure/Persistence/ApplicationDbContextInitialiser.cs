@@ -1,4 +1,5 @@
-﻿using Ergenekon.Domain.Consts;
+﻿using Ergenekon.Application.World.Services;
+using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -17,19 +18,22 @@ public class ApplicationDbContextInitialiser
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly IWebHostEnvironment _env;
+    private readonly IBasarsoftTerritoryService _basarsoftTerritoryService;
 
     public ApplicationDbContextInitialiser(
         ILogger<ApplicationDbContextInitialiser> logger,
         ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
-        IWebHostEnvironment env)
+        IWebHostEnvironment env,
+        IBasarsoftTerritoryService basarsoftTerritoryService)
     {
         _logger = logger;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
         _env = env;
+        _basarsoftTerritoryService = basarsoftTerritoryService;
     }
 
     public bool EnsureCreated()
@@ -135,28 +139,28 @@ public class ApplicationDbContextInitialiser
     {
         var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
             .OrderBy(o => o.DisplayOrder)
-            .Reverse()
+            //.Reverse()
             .ToList();
 
-        var ciTR = new System.Globalization.CultureInfo("tr-TR");
-        var ciEN = new System.Globalization.CultureInfo("en-US");
+        //var ciTR = new System.Globalization.CultureInfo("tr-TR");
+        //var ciEN = new System.Globalization.CultureInfo("en-US");
 
         foreach (var country in countries)
         {
-            country.Name = country.Name.ToUpper(ciTR);
-            country.EnglishName = country.EnglishName.ToUpper(ciEN);
+            //country.Name = country.Name.ToUpper(ciTR);
+            //country.EnglishName = country.EnglishName.ToUpper(ciEN);
 
-            foreach (var province in country.Provinces)
-            {
-                province.Name = province.Name.ToUpper();
-            }
+            //foreach (var province in country.Provinces)
+            //{
+            //province.Name = province.Name.ToUpper();
+            //}
 
             _context.Countries.Add(country);
+            _context.SaveChanges();
         }
 
-        _context.SaveChanges();
-
-        CreateDistricts();
+        //CreateDistricts();
+        CreateDistrictsFromBasarsoft();
     }
 
     private void CreateDistricts()
@@ -181,6 +185,42 @@ public class ApplicationDbContextInitialiser
 
                 _context.Districts.Add(district);
                 _context.SaveChanges();
+            }
+        }
+    }
+
+    private void CreateDistrictsFromBasarsoft()
+    {
+        var trCountryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
+        var trProvinces = _context.Provinces.Where(q => q.CountryId == trCountryId).ToList();
+
+        var bsDistricts = _basarsoftTerritoryService.GetDistricts();
+        //_context.Districts.AddRange(bsDistricts);
+        //_context.SaveChanges();
+
+        var bsNeighborhoods = _basarsoftTerritoryService.GetNeighborhoods();
+        //_context.Neighborhoods.AddRange(bsNeighborhoods);
+        //_context.SaveChanges();
+
+        foreach (var province in trProvinces)
+        {
+            var districts = bsDistricts.Where(q => q.ProvinceId == province.Id);
+            foreach (var district in districts)
+            {
+                var bsDistrictId = district.Id;
+                district.Id = 0;
+
+                _context.Districts.Add(district);
+                _context.SaveChanges();
+
+                var neighborhoods = bsNeighborhoods.Where(q => q.DistrictId == bsDistrictId);
+                foreach (var neighborhood in neighborhoods)
+                {
+                    neighborhood.Id = 0;
+
+                    _context.Neighborhoods.Add(neighborhood);
+                    _context.SaveChanges();
+                }
             }
         }
     }
@@ -219,4 +259,5 @@ public class ApplicationDbContextInitialiser
     }
 
     #endregion
+
 }

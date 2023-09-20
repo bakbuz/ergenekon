@@ -19,7 +19,7 @@ public class WorldsController : ApiControllerBase
     [HttpGet("countries/{countryId}/provinces")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-    public async Task<IActionResult> GetProvinces([FromRoute] byte countryId)
+    public async Task<IActionResult> GetProvinces([FromRoute] ushort countryId)
     {
         if (countryId <= 0)
             //return BadRequest(new ErrorResponse("Belirtilen kimlik değeri geçersiz: " + countryId));

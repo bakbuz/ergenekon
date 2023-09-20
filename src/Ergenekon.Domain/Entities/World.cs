@@ -2,7 +2,7 @@
 
 namespace Ergenekon.Domain.Entities;
 
-public class Country : BaseEntity<byte>
+public class Country : BaseEntity<ushort>
 {
     public Country()
     {
@@ -34,7 +34,7 @@ public class Country : BaseEntity<byte>
 public class Province : BaseEntity<ushort>
 {
     //[JsonIgnore]
-    public byte CountryId { get; set; }
+    public ushort CountryId { get; set; }
 
     public string Name { get; set; } = null!;
 
