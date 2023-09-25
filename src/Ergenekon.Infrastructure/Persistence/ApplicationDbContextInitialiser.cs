@@ -204,7 +204,7 @@ public class ApplicationDbContextInitialiser
 
         foreach (var province in trProvinces)
         {
-            var districts = bsDistricts.Where(q => q.ProvinceId == province.Id);
+            var districts = bsDistricts.Where(q => q.ProvinceId == province.Id).ToList();
             foreach (var district in districts)
             {
                 var bsDistrictId = district.Id;
@@ -213,10 +213,11 @@ public class ApplicationDbContextInitialiser
                 _context.Districts.Add(district);
                 _context.SaveChanges();
 
-                var neighborhoods = bsNeighborhoods.Where(q => q.DistrictId == bsDistrictId);
+                var neighborhoods = bsNeighborhoods.Where(q => q.DistrictId == bsDistrictId).ToList();
                 foreach (var neighborhood in neighborhoods)
                 {
                     neighborhood.Id = 0;
+                    neighborhood.DistrictId = district.Id;
 
                     _context.Neighborhoods.Add(neighborhood);
                     _context.SaveChanges();
