@@ -8,16 +8,16 @@ public record GetNeighborhoodsByDistrictIdQuery(ushort DistrictId) : IRequest<Li
 
 public class GetNeighborhoodsByDistrictIdQueryHandler : IRequestHandler<GetNeighborhoodsByDistrictIdQuery, List<LookupDto1<uint>>>
 {
-    private readonly ITerritoryService _worldService;
+    private readonly ITerritoryService _territoryService;
 
-    public GetNeighborhoodsByDistrictIdQueryHandler(ITerritoryService worldService)
+    public GetNeighborhoodsByDistrictIdQueryHandler(ITerritoryService territoryService)
     {
-        _worldService = worldService;
+        _territoryService = territoryService;
     }
 
     public async Task<List<LookupDto1<uint>>> Handle(GetNeighborhoodsByDistrictIdQuery request, CancellationToken cancellationToken)
     {
-        return await _worldService.GetNeighborhoodsAsync(request.DistrictId, cancellationToken);
+        return await _territoryService.GetNeighborhoodsAsync(request.DistrictId, cancellationToken);
     }
 }
 

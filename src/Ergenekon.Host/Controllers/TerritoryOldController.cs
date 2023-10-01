@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
 
-public class TerritoryController : ApiControllerBase
+public class TerritoryOldController : ApiControllerBase
 {
     [HttpGet("countries")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
@@ -16,10 +16,10 @@ public class TerritoryController : ApiControllerBase
         return Ok(result);
     }
 
-    [HttpGet("provinces")]
+    [HttpGet("countries/{countryId}/provinces")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-    public async Task<IActionResult> GetProvinces([FromQuery] byte countryId)
+    public async Task<IActionResult> GetProvinces([FromRoute] byte countryId)
     {
         if (countryId <= 0)
             //return BadRequest(new ErrorResponse("Belirtilen kimlik değeri geçersiz: " + countryId));
@@ -28,10 +28,10 @@ public class TerritoryController : ApiControllerBase
         return Ok(await Mediator.Send(new GetProvincesByCountryIdQuery(countryId)));
     }
 
-    [HttpGet("districts")]
+    [HttpGet("countries/{countryId}/provinces/{provinceId}/districts")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-    public async Task<IActionResult> GetDistricts([FromQuery] ushort provinceId)
+    public async Task<IActionResult> GetDistricts([FromRoute] ushort provinceId)
     {
         if (provinceId <= 0)
             //return BadRequest(new ErrorResponse("Belirtilen kimlik değeri geçersiz: " + provinceId));
@@ -40,10 +40,10 @@ public class TerritoryController : ApiControllerBase
         return Ok(await Mediator.Send(new GetDistrictsByProvinceIdQuery(provinceId)));
     }
 
-    [HttpGet("neighborhoods")]
+    [HttpGet("countries/{countryId}/provinces/{provinceId}/districts/{districtId}/neighborhoods")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
     //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
-    public async Task<IActionResult> GetNeighborhoods([FromQuery] ushort districtId)
+    public async Task<IActionResult> GetNeighborhoods([FromRoute] ushort districtId)
     {
         if (districtId <= 0)
             throw new ArgumentOutOfRangeException(nameof(districtId));

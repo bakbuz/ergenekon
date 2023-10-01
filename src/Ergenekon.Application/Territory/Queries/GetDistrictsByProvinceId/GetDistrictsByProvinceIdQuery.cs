@@ -8,16 +8,16 @@ public record GetDistrictsByProvinceIdQuery(ushort ProvinceId) : IRequest<List<L
 
 public class GetGetDistrictsByProvinceIdQueryHandler : IRequestHandler<GetDistrictsByProvinceIdQuery, List<LookupDto1<ushort>>>
 {
-    private readonly ITerritoryService _worldService;
+    private readonly ITerritoryService _territoryService;
 
-    public GetGetDistrictsByProvinceIdQueryHandler(ITerritoryService worldService)
+    public GetGetDistrictsByProvinceIdQueryHandler(ITerritoryService territoryService)
     {
-        _worldService = worldService;
+        _territoryService = territoryService;
     }
 
     public async Task<List<LookupDto1<ushort>>> Handle(GetDistrictsByProvinceIdQuery request, CancellationToken cancellationToken)
     {
-        return await _worldService.GetDistrictsAsync(request.ProvinceId, cancellationToken);
+        return await _territoryService.GetDistrictsAsync(request.ProvinceId, cancellationToken);
     }
 }
 

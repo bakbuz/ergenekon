@@ -4,19 +4,19 @@ using MediatR;
 
 namespace Ergenekon.Application.Territory.Queries.GetCountries;
 
-public record GetCountriesQuery : IRequest<List<LookupDto1<ushort>>>;
+public record GetCountriesQuery : IRequest<List<LookupDto1<byte>>>;
 
-public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, List<LookupDto1<ushort>>>
+public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, List<LookupDto1<byte>>>
 {
-    private readonly ITerritoryService _worldService;
+    private readonly ITerritoryService _territoryService;
 
-    public GetCountriesQueryHandler(ITerritoryService worldService)
+    public GetCountriesQueryHandler(ITerritoryService territoryService)
     {
-        _worldService = worldService;
+        _territoryService = territoryService;
     }
 
-    public async Task<List<LookupDto1<ushort>>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
+    public async Task<List<LookupDto1<byte>>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
     {
-        return await _worldService.GetAllCountriesAsync(cancellationToken);
+        return await _territoryService.GetAllCountriesAsync(cancellationToken);
     }
 }
