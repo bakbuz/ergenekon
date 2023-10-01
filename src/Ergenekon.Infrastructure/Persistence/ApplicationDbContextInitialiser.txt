@@ -117,6 +117,24 @@ public class ApplicationDbContextInitialiser
             CreateCountries();
     }
 
+    private void CreateCountriesOld()
+    {
+        var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
+            .OrderBy(o => o.DisplayOrder)
+            .ToList();
+
+        var ciTR = new System.Globalization.CultureInfo("tr-TR");
+        var ciEN = new System.Globalization.CultureInfo("en-US");
+
+        foreach (var country in countries)
+        {
+            _context.Countries.Add(country);
+            _context.SaveChanges();
+        }
+
+        CreateDistricts();
+    }
+
     private void CreateCountries()
     {
         var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
@@ -130,7 +148,33 @@ public class ApplicationDbContextInitialiser
         }
 
         //CreateDistricts();
-        //CreateDistrictsFromBasarsoft();
+        CreateDistrictsFromBasarsoft();
+    }
+
+    private void CreateDistricts()
+    {
+        var trCountryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
+        var trProvinces = _context.Provinces.Where(q => q.CountryId == trCountryId).ToList();
+
+        var allProvinces = ReadFromJson<List<CityImportDto>>("turkiye_il_ilce.json")
+            .OrderBy(o => o.DisplayOrder)
+            .ToList();
+
+        foreach (var sp in trProvinces)
+        {
+            var province = allProvinces.Where(q => q.Abbreviation == sp.Abbreviation).Single();
+            var districtNames = province.Districts.Order();
+
+            foreach (var districtName in districtNames)
+            {
+                var district = new District();
+                district.ProvinceId = sp.Id;
+                district.Name = districtName;
+
+                _context.Districts.Add(district);
+                _context.SaveChanges();
+            }
+        }
     }
 
     private void CreateDistrictsFromBasarsoft()
