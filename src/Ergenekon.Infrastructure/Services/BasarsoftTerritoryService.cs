@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Ergenekon.Application.World.Services;
+using Ergenekon.Application.Territory.Services;
 using Ergenekon.Domain.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;

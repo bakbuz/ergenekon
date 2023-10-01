@@ -34,10 +34,11 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
         _operationalStoreOptions = operationalStoreOptions.Value;
     }
 
+    // To-do lists
     public DbSet<TodoList> TodoLists { get; set; }
     public DbSet<TodoItem> TodoItems { get; set; }
 
-
+    // Territory
     public DbSet<Country> Countries { get; set; }
     public DbSet<Province> Provinces { get; set; }
     public DbSet<District> Districts { get; set; }
@@ -48,11 +49,11 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
 
     // Listings
     public DbSet<Category> Categories { get; set; }
-    public DbSet<Product> Products { get; set; }
-
-
-    public DbSet<Page> Pages { get; set; }
     public DbSet<SearchTerm> SearchTerms { get; set; }
+
+    // Others
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Page> Pages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

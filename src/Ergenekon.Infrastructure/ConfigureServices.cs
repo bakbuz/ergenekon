@@ -1,7 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Pages.Services;
 using Ergenekon.Application.SearchTerms.Services;
-using Ergenekon.Application.World.Services;
+using Ergenekon.Application.Territory.Services;
 using Ergenekon.Infrastructure.Files;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Localization;
@@ -60,7 +60,7 @@ public static class ConfigureServices
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
         services.AddScoped<Ergenekon.Infrastructure.Identity.IAuthenticationService, Ergenekon.Infrastructure.Identity.AuthenticationService>();
         services.AddScoped<IIdentityService, IdentityService>();
-        services.AddScoped<IWorldService, WorldService>();
+        services.AddScoped<ITerritoryService, TerritoryService>();
         services.AddScoped<IMailboxService, MailboxService>();
 
         services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));

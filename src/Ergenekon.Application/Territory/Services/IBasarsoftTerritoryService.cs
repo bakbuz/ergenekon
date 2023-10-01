@@ -1,6 +1,6 @@
 ﻿using Ergenekon.Domain.Entities;
 
-namespace Ergenekon.Application.World.Services;
+namespace Ergenekon.Application.Territory.Services;
 
 public interface IBasarsoftTerritoryService
 {

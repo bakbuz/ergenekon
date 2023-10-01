@@ -1,12 +1,12 @@
-﻿using Ergenekon.Application.World.Queries.GetCountries;
-using Ergenekon.Application.World.Queries.GetGetDistrictsByProvinceId;
-using Ergenekon.Application.World.Queries.GetNeighborhoodsByDistrictId;
-using Ergenekon.Application.World.Queries.GetProvincesByCountryId;
+﻿using Ergenekon.Application.Territory.Queries.GetCountries;
+using Ergenekon.Application.Territory.Queries.GetGetDistrictsByProvinceId;
+using Ergenekon.Application.Territory.Queries.GetNeighborhoodsByDistrictId;
+using Ergenekon.Application.Territory.Queries.GetProvincesByCountryId;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ergenekon.Host.Controllers;
 
-public class WorldsController : ApiControllerBase
+public class TerritoryController : ApiControllerBase
 {
     [HttpGet("countries")]
     //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]

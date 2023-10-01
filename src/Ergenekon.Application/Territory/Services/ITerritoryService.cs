@@ -1,9 +1,9 @@
 ﻿using Ergenekon.Application.Common.Models;
 using Ergenekon.Domain.Entities;
 
-namespace Ergenekon.Application.World.Services;
+namespace Ergenekon.Application.Territory.Services;
 
-public interface IWorldService
+public interface ITerritoryService
 {
     List<Country> GetAllCountries();
 

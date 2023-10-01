@@ -1,16 +1,16 @@
 ﻿using Ergenekon.Application.Common.Models;
-using Ergenekon.Application.World.Services;
+using Ergenekon.Application.Territory.Services;
 using MediatR;
 
-namespace Ergenekon.Application.World.Queries.GetCountries;
+namespace Ergenekon.Application.Territory.Queries.GetCountries;
 
 public record GetCountriesQuery : IRequest<List<LookupDto1<ushort>>>;
 
 public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, List<LookupDto1<ushort>>>
 {
-    private readonly IWorldService _worldService;
+    private readonly ITerritoryService _worldService;
 
-    public GetCountriesQueryHandler(IWorldService worldService)
+    public GetCountriesQueryHandler(ITerritoryService worldService)
     {
         _worldService = worldService;
     }

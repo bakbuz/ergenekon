@@ -1,5 +1,5 @@
 ﻿using Ergenekon.Application.Common.Models;
-using Ergenekon.Application.World.Services;
+using Ergenekon.Application.Territory.Services;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +7,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Ergenekon.Infrastructure.Services;
 
-public class WorldService : IWorldService
+public class TerritoryService : ITerritoryService
 {
     private readonly ApplicationDbContext _ctx;
 
-    public WorldService([NotNull] ApplicationDbContext ctx)
+    public TerritoryService([NotNull] ApplicationDbContext ctx)
     {
         _ctx = ctx;
     }

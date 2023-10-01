@@ -1,4 +1,4 @@
-﻿using Ergenekon.Application.World.Services;
+﻿using Ergenekon.Application.Territory.Services;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
@@ -112,9 +112,9 @@ public class ApplicationDbContextInitialiser
             await _context.SaveChangesAsync();
         }
 
-        // World items
-        if (!_context.Countries.Any())
-            CreateCountries();
+        // Territory items
+        //if (!_context.Countries.Any())
+        //CreateCountries();
     }
 
     private void CreateCountriesOld()
