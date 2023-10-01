@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Ergenekon.Domain.Entities;
+﻿namespace Ergenekon.Domain.Entities;
 
 public class Country : BaseEntity<ushort>
 {
@@ -21,29 +19,23 @@ public class Country : BaseEntity<ushort>
 
     public short? CallingCode { get; set; }
 
-    //[JsonIgnore]
     public bool Published { get; set; }
 
-    //[JsonIgnore]
     public short DisplayOrder { get; set; }
 
-    //[JsonIgnore]
     public virtual ICollection<Province> Provinces { get; set; }
 }
 
 public class Province : BaseEntity<ushort>
 {
-    //[JsonIgnore]
     public ushort CountryId { get; set; }
 
     public string Name { get; set; } = null!;
 
     public string Abbreviation { get; set; } = null!;
 
-    //[JsonIgnore]
     public short DisplayOrder { get; set; }
 
-    //[JsonIgnore]
     public virtual Country Country { get; set; } = null!;
 
     public virtual ICollection<District> Districts { get; set; } = new List<District>();
@@ -51,7 +43,6 @@ public class Province : BaseEntity<ushort>
 
 public class District : BaseEntity<ushort>
 {
-    [JsonIgnore]
     public ushort ProvinceId { get; set; }
 
     public string Name { get; set; } = null!;

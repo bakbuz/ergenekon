@@ -68,7 +68,7 @@ public static class ConfigureServices
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPageService, PageService>();
         services.AddScoped<ISearchTermService, SearchTermService>();
-        services.AddScoped<IBasarsoftTerritoryService, BasarsoftTerritoryService>();        
+        services.AddScoped<IBasarsoftTerritoryService, BasarsoftTerritoryService>();
 
         //services.AddAuthentication().AddIdentityServerJwt();
         services.AddAuthenticationJwt(configuration);

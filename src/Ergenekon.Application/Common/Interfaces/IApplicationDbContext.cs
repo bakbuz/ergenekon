@@ -1,4 +1,5 @@
 ﻿using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Domain.Entities.Media;
 using Microsoft.EntityFrameworkCore;
 

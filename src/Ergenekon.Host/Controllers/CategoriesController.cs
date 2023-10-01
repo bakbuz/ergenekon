@@ -5,7 +5,6 @@ using Ergenekon.Application.Catalog.Categories.Queries.GetCategories;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategoriesByParentId;
 using Ergenekon.Application.Catalog.Categories.Queries.GetCategoryById;
 using Ergenekon.Application.Catalog.Categories.Shared;
-using Ergenekon.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

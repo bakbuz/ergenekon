@@ -1,5 +1,5 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
-using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Listings;
 using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.CreateCategory;

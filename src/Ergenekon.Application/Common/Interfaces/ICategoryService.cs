@@ -1,4 +1,4 @@
-﻿using Ergenekon.Domain.Entities;
+﻿using Ergenekon.Domain.Entities.Listings;
 
 namespace Ergenekon.Application.Common.Interfaces;
 

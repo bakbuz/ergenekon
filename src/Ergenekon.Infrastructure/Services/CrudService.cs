@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Common;
 using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;

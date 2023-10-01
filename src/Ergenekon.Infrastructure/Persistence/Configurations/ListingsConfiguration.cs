@@ -1,4 +1,5 @@
 ﻿using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Listings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

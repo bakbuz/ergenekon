@@ -3,6 +3,7 @@ using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Domain.Entities.Media;
 using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Persistence.Interceptors;
@@ -45,8 +46,11 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Video> Videos { get; set; }
 
+    // Listings
     public DbSet<Category> Categories { get; set; }
     public DbSet<Product> Products { get; set; }
+
+
     public DbSet<Page> Pages { get; set; }
     public DbSet<SearchTerm> SearchTerms { get; set; }
 
