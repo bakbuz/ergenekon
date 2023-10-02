@@ -1,19 +1,24 @@
-﻿using Ergenekon.Application.Territory.Services;
+﻿using Dapper;
+using Ergenekon.Application.Territory.Services;
+using Ergenekon.Domain.Common;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
+using FluentEmail.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Ergenekon.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitialiser
 {
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;
+    private readonly IConfiguration _configuration;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
@@ -22,6 +27,7 @@ public class ApplicationDbContextInitialiser
 
     public ApplicationDbContextInitialiser(
         ILogger<ApplicationDbContextInitialiser> logger,
+        IConfiguration configuration,
         ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
@@ -29,6 +35,7 @@ public class ApplicationDbContextInitialiser
         IBasarsoftTerritoryService basarsoftTerritoryService)
     {
         _logger = logger;
+        _configuration = configuration;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
@@ -119,18 +126,45 @@ public class ApplicationDbContextInitialiser
 
     private async Task CreateCountriesAsync()
     {
-        var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
+        var data = ReadFromJson<List<Country>>("CountriesAndStates.js")
             .OrderBy(o => o.DisplayOrder)
             .ToList();
 
-        foreach (var country in countries)
+        var con = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        con.Open();
+
+        foreach (var item in data)
         {
-            _context.Countries.Add(country);
-            await _context.SaveChangesAsync();
+            //var country = new Country();
+            //country.Name = item.Name;
+            //country.EnglishName = item.EnglishName;
+            //country.Iso2Code = item.Iso2Code;
+            //country.Iso3Code = item.Iso3Code;
+            //country.NumericIsoCode = item.NumericIsoCode;
+            //country.CallingCode = item.CallingCode;
+            //country.Published = item.Published;
+            //country.DisplayOrder = item.DisplayOrder;
+
+            //_context.Countries.Add(country);
+            //await _context.SaveChangesAsync();
+
+            int newId = await con.ExecuteAsync("INSERT INTO [Territory].[Countries] ([Name],[EnglishName],[Iso2Code],[Iso3Code],[NumericIsoCode],[CallingCode],[Published],[DisplayOrder]) VALUES(@Name,@EnglishName,@Iso2Code,@Iso3Code,@NumericIsoCode,@CallingCode,@Published,@DisplayOrder); SELECT SCOPE_IDENTITY();", item);
+
+            var provinces = item.Provinces.ToList();
+            provinces.ForEach(a => a.CountryId = Convert.ToByte(newId));
+            await con.ExecuteAsync("INSERT INTO [Territory].[Provinces] ([CountryId],[Name],[Abbreviation],[DisplayOrder]) VALUES(@CountryId,@Name,@Abbreviation,@DisplayOrder)", provinces);
         }
+
+        con.Close();
+        con.Dispose();
 
         //CreateDistricts();
         //CreateDistrictsFromBasarsoft();
+    }
+
+    private void InsertCountry(Country country)
+    {
+
     }
 
     private void CreateDistrictsFromBasarsoft()
@@ -185,22 +219,41 @@ public class ApplicationDbContextInitialiser
         return JsonSerializer.Deserialize<T>(jsonData);
     }
 
-    internal class CityImportDto
+    public class CountryImport : BaseEntity<byte>
     {
-        [JsonPropertyName("mame")]
-        public string Name { get; set; } = default!;
+        public CountryImport()
+        {
+            Provinces = new HashSet<ProvinceImport>();
+        }
 
-        [JsonPropertyName("abbreviation")]
-        public string Abbreviation { get; set; } = default!;
+        public string Name { get; set; } = null!;
 
-        [JsonPropertyName("display_order")]
-        public int DisplayOrder { get; set; }
+        public string EnglishName { get; set; } = null!;
 
-        [JsonPropertyName("district_count")]
-        public int DistrictCount { get; set; }
+        public string Iso2Code { get; set; } = null!;
 
-        [JsonPropertyName("districts")]
-        public List<string> Districts { get; set; } = default!;
+        public string Iso3Code { get; set; } = null!;
+
+        public short NumericIsoCode { get; set; }
+
+        public short? CallingCode { get; set; }
+
+        public bool Published { get; set; }
+
+        public short DisplayOrder { get; set; }
+
+        public virtual ICollection<ProvinceImport> Provinces { get; set; }
+    }
+
+    public class ProvinceImport : BaseEntity<ushort>
+    {
+        public byte CountryId { get; set; }
+
+        public string Name { get; set; } = null!;
+
+        public string Abbreviation { get; set; } = null!;
+
+        public short DisplayOrder { get; set; }
     }
 
     #endregion
