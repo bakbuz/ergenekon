@@ -114,10 +114,10 @@ public class ApplicationDbContextInitialiser
 
         // Territory items
         if (!_context.Countries.Any())
-            CreateCountries();
+            await CreateCountriesAsync();
     }
 
-    private void CreateCountries()
+    private async Task CreateCountriesAsync()
     {
         var countries = ReadFromJson<List<Country>>("CountriesAndStates.js")
             .OrderBy(o => o.DisplayOrder)
@@ -126,7 +126,7 @@ public class ApplicationDbContextInitialiser
         foreach (var country in countries)
         {
             _context.Countries.Add(country);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         //CreateDistricts();
