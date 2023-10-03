@@ -162,11 +162,6 @@ public class ApplicationDbContextInitialiser
         //CreateDistrictsFromBasarsoft();
     }
 
-    private void InsertCountry(Country country)
-    {
-
-    }
-
     private void CreateDistrictsFromBasarsoft()
     {
         var trCountryId = _context.Countries.Single(s => s.Iso2Code == "TR").Id;
