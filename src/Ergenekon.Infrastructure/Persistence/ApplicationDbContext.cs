@@ -3,6 +3,7 @@ using Duende.IdentityServer.EntityFramework.Options;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
+using Ergenekon.Domain.Entities.Catalog;
 using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Domain.Entities.Media;
 using Ergenekon.Infrastructure.Identity;
@@ -44,15 +45,18 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     public DbSet<District> Districts { get; set; }
     public DbSet<Neighborhood> Neighborhoods { get; set; }
 
-    public DbSet<Picture> Pictures { get; set; }
-    public DbSet<Video> Videos { get; set; }
+    // Catalog
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Product> Products { get; set; }
 
     // Listings
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<SearchTerm> SearchTerms { get; set; }
+    public DbSet<Breed> Breeds { get; set; }
+    public DbSet<Listing> Listings { get; set; }
 
     // Others
-    public DbSet<Product> Products { get; set; }
+    public DbSet<Picture> Pictures { get; set; }
+    public DbSet<Video> Videos { get; set; }
+    public DbSet<SearchTerm> SearchTerms { get; set; }
     public DbSet<Page> Pages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)

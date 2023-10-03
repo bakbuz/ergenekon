@@ -1,7 +1,6 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Common;
-using Ergenekon.Domain.Entities;
-using Ergenekon.Domain.Entities.Listings;
+using Ergenekon.Domain.Entities.Catalog;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
@@ -84,6 +83,7 @@ public class CategoryService : CrudService<Category, int>, ICategoryService
         return await _context.Categories.Where(q => q.ParentId == parentId).ToListAsync(cancellationToken);
     }
 }
+
 public class ProductService : CrudService<Product, Guid>, IProductService
 {
     public ProductService(ApplicationDbContext context) : base(context)

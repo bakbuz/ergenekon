@@ -7,13 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Entities\Listings\Listing.cs" />
-	  <Compile Remove="Entities\Listings\ListingMedia.cs" />
-	  <Compile Remove="Entities\Listings\ListingPicture.cs" />
-	  <Compile Remove="Entities\Listings\ListingStatus.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="MediatR" Version="12.1.1" />
 	</ItemGroup>
 </Project>

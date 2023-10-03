@@ -1,6 +1,6 @@
-﻿using Patiyuva.Domain.Entities.Media;
+﻿using Ergenekon.Domain.Entities.Media;
 
-namespace Patiyuva.Domain.Entities.Listings
+namespace Ergenekon.Domain.Entities.Listings
 {
     public class ListingMedia
     {
@@ -10,12 +10,12 @@ namespace Patiyuva.Domain.Entities.Listings
 
         public int PictureId { get; set; }
 
-        public int DisplayOrder { get; set; }
+        public short DisplayOrder { get; set; }
 
         public MediaType MediaType { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        public virtual Listing Listing { get; set; }
+        public virtual Listing Listing { get; set; } = null!;
     }
 }

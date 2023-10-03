@@ -1,4 +1,4 @@
-﻿using Ergenekon.Domain.Entities.Listings;
+﻿using Ergenekon.Domain.Entities.Catalog;
 
 namespace Ergenekon.Application.Catalog.Categories.Shared;
 

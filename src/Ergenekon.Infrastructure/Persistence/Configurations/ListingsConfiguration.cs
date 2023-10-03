@@ -1,30 +1,37 @@
-﻿using Ergenekon.Domain.Entities;
-using Ergenekon.Domain.Entities.Listings;
+﻿using Ergenekon.Domain.Entities.Listings;
+using Ergenekon.Domain.Entities.Media;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ergenekon.Infrastructure.Persistence.Configurations;
 
-public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+public class BreedConfiguration : IEntityTypeConfiguration<Breed>
 {
-    public void Configure(EntityTypeBuilder<Category> builder)
+    public void Configure(EntityTypeBuilder<Breed> builder)
     {
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
         builder.Property(e => e.Description).HasMaxLength(100).IsRequired();
-        builder.Property(e => e.Picture).HasMaxLength(100);
     }
 }
 
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 {
-    public void Configure(EntityTypeBuilder<Product> builder)
+    public void Configure(EntityTypeBuilder<Listing> builder)
     {
         builder.HasKey(e => e.Id);
 
-        builder.Property(e => e.Code).HasMaxLength(100);
-        builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
-        builder.Property(e => e.Description).HasMaxLength(100);
+        builder.Property(e => e.Slug).HasMaxLength(100);
+        builder.Property(e => e.Title).HasMaxLength(100).IsRequired();
+        builder.Property(e => e.Summary).HasMaxLength(100);
+    }
+}
+
+public class ListingPictureConfiguration : IEntityTypeConfiguration<ListingPicture>
+{
+    public void Configure(EntityTypeBuilder<ListingPicture> builder)
+    {
+        builder.HasKey(e => e.Id);
     }
 }

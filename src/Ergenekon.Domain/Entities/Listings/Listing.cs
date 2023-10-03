@@ -1,15 +1,15 @@
-﻿using Patiyuva.Domain.Enums;
-using System.Text.Json.Serialization;
+﻿namespace Ergenekon.Domain.Entities.Listings;
 
-namespace Patiyuva.Domain.Entities.Listings;
-
-public partial class Listing
+public partial class Listing : BaseAuditableEntity<int>
 {
-    public int Id { get; set; }
+    public Listing()
+    {
+        Pictures = new HashSet<ListingPicture>();
+    }
 
-    public int UserId { get; set; }
+    public short BreedId { get; set; }
 
-    public int CategoryId { get; set; }
+    public int OwnerId { get; set; }
 
     public string Slug { get; set; } = null!;
 
@@ -51,25 +51,9 @@ public partial class Listing
 
     public ListingStatus Status { get; set; }
 
-    [JsonIgnore]
-    public int CreatedBy { get; set; }
-
-    public DateTime CreatedAt { get; set; }
-
-    [JsonIgnore]
-    public int? UpdatedBy { get; set; }
-
-    [JsonIgnore]
-    public DateTime? UpdatedAt { get; set; }
-
-    [JsonIgnore]
     public int? DeletedBy { get; set; }
 
-    [JsonIgnore]
     public DateTime? DeletedAt { get; set; }
 
-    //public virtual User User { get; set; }
-
-    // public virtual ICollection<ListingMedia> Medias { get; set; }
     public virtual ICollection<ListingPicture> Pictures { get; set; }
 }

@@ -4,7 +4,6 @@ using Ergenekon.Domain.Common;
 using Ergenekon.Domain.Consts;
 using Ergenekon.Domain.Entities;
 using Ergenekon.Infrastructure.Identity;
-using FluentEmail.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;

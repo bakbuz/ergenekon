@@ -1,6 +1,6 @@
 ﻿using Ergenekon.Application.Common.Exceptions;
 using Ergenekon.Application.Common.Interfaces;
-using Ergenekon.Domain.Entities.Listings;
+using Ergenekon.Domain.Entities.Catalog;
 using MediatR;
 
 namespace Ergenekon.Application.Catalog.Categories.Commands.UpdateCategory;

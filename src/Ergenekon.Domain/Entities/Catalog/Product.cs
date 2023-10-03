@@ -1,4 +1,4 @@
-﻿namespace Ergenekon.Domain.Entities;
+﻿namespace Ergenekon.Domain.Entities.Catalog;
 
 public class Product : BaseAuditableEntity<Guid>
 {
