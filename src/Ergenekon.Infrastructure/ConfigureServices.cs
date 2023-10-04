@@ -58,14 +58,22 @@ public static class ConfigureServices
         });
 
         services.AddScoped<ICsvFileBuilder, CsvFileBuilder>();
-        services.AddScoped<Ergenekon.Infrastructure.Identity.IAuthenticationService, Ergenekon.Infrastructure.Identity.AuthenticationService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<ITerritoryService, TerritoryService>();
         services.AddScoped<IMailboxService, MailboxService>();
 
         services.AddScoped(typeof(ICrudService<,>), typeof(CrudService<,>));
+
+        // Catalog
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IProductService, ProductService>();
+
+        // Listings
+        services.AddScoped<IBreedService, BreedService>();
+        services.AddScoped<IListingService, ListingService>();
+
+        // Others
         services.AddScoped<IPageService, PageService>();
         services.AddScoped<ISearchTermService, SearchTermService>();
         services.AddScoped<IBasarsoftTerritoryService, BasarsoftTerritoryService>();

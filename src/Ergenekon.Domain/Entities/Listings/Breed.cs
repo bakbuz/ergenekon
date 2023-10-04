@@ -7,4 +7,6 @@ public class Breed : BaseAuditableEntity<short>
     public string Name { get; set; } = null!;
 
     public string? Description { get; set; }
+
+    public short DisplayOrder { get; set; }
 }

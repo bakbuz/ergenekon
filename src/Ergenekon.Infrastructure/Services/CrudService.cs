@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Common;
 using Ergenekon.Domain.Entities.Catalog;
+using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
@@ -87,6 +88,20 @@ public class CategoryService : CrudService<Category, int>, ICategoryService
 public class ProductService : CrudService<Product, Guid>, IProductService
 {
     public ProductService(ApplicationDbContext context) : base(context)
+    {
+    }
+}
+
+public class BreedService : CrudService<Breed, short>, IBreedService
+{
+    public BreedService(ApplicationDbContext context) : base(context)
+    {
+    }
+}
+
+public class ListingService : CrudService<Listing, int>, IListingService
+{
+    public ListingService(ApplicationDbContext context) : base(context)
     {
     }
 }
