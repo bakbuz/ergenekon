@@ -19,7 +19,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[Name] FROM [Territory].[Countries]";
         List<Country> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<Country>(sql).ToList();
@@ -32,7 +32,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[CountryId],[Name],[UAVT] FROM [Territory].[Provinces]";
         List<Province> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<Province>(sql).ToList();
@@ -45,7 +45,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[ProvinceId],[Name],[UAVT],[Type] FROM [Territory].[Districts]";
         List<District> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<District>(sql).ToList();
@@ -58,7 +58,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[ProvinceId],[Name],[UAVT],[Type] FROM [Territory].[Districts] WHERE ProvinceId=@ProvinceId";
         List<District> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<District>(sql, new { ProvinceId = provinceId }).ToList();
@@ -71,7 +71,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[DistrictId],[Name],[UAVT],[TypeDefId] FROM [Territory].[Neighborhoods]";
         List<Neighborhood> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<Neighborhood>(sql).ToList();
@@ -84,7 +84,7 @@ public class BasarsoftTerritoryService : IBasarsoftTerritoryService
     {
         var sql = "SELECT [Id],[DistrictId],[Name],[UAVT],[TypeDefId] FROM [Territory].[Neighborhoods] WHERE DistrictId=@DistrictId";
         List<Neighborhood> data;
-        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("BasarsoftConnection")))
+        using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("Basarsoft")))
         {
             sqlConnection.Open();
             data = sqlConnection.Query<Neighborhood>(sql, new { DistrictId = districtId }).ToList();

@@ -52,12 +52,14 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, 
     // Listings
     public DbSet<Breed> Breeds { get; set; }
     public DbSet<Listing> Listings { get; set; }
+    public DbSet<ListingPicture> ListingPictures { get; set; }
 
     // Others
     public DbSet<Picture> Pictures { get; set; }
     public DbSet<Video> Videos { get; set; }
     public DbSet<SearchTerm> SearchTerms { get; set; }
     public DbSet<Page> Pages { get; set; }
+    public DbSet<RequestLog> RequestLogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -1,10 +1,12 @@
-﻿using Ergenekon.Application.Common.Interfaces;
+﻿using Azure.Core;
+using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Domain.Common;
 using Ergenekon.Domain.Entities.Catalog;
 using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace Ergenekon.Infrastructure.Services;
 
@@ -95,13 +97,6 @@ public class ProductService : CrudService<Product, Guid>, IProductService
 public class BreedService : CrudService<Breed, short>, IBreedService
 {
     public BreedService(ApplicationDbContext context) : base(context)
-    {
-    }
-}
-
-public class ListingService : CrudService<Listing, int>, IListingService
-{
-    public ListingService(ApplicationDbContext context) : base(context)
     {
     }
 }

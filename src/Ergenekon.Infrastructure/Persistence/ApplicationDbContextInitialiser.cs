@@ -129,7 +129,7 @@ public class ApplicationDbContextInitialiser
             .OrderBy(o => o.DisplayOrder)
             .ToList();
 
-        var con = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        var con = new SqlConnection(_configuration.GetConnectionString("Default"));
         con.Open();
 
         foreach (var item in data)

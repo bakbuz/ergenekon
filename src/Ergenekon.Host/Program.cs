@@ -1,3 +1,5 @@
+using Ergenekon.Application.Storaging;
+using Ergenekon.Host.Extensions;
 using Ergenekon.Infrastructure.Persistence;
 using Serilog;
 
@@ -12,6 +14,13 @@ builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHostServices();
+
+builder.Services.AddStackExchangeRedisCache(action =>
+{
+    action.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+builder.Services.Configure<MinioOptions>(builder.Configuration.GetSection("MinioOptions"));
 
 var app = builder.Build();
 
@@ -51,7 +60,18 @@ app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
 
-app.UseSerilogRequestLogging();
+app.UseSerilogRequestLogging(options =>
+{
+    // Attach additional properties to the request completion event
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+        diagnosticContext.Set("QueryString", httpContext.Request.QueryString.ToString());
+        diagnosticContext.Set("RequestBody", httpContext.ReadRequestBody());
+        diagnosticContext.Set("ResponseBody", httpContext.ReadResponseBody());
+    };
+});
 
 app.UseOpenApi();       // serve OpenAPI/Swagger documents
 app.UseSwaggerUi3();    // serve Swagger UI

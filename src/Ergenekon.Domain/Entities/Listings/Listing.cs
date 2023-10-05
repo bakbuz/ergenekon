@@ -43,9 +43,11 @@ public partial class Listing : BaseAuditableEntity<int>
 
     //public string? VideoIds { get; set; }
 
-    public ushort? ProvinceId { get; set; }
+    public ushort ProvinceId { get; set; }
 
-    public ushort? DistrictId { get; set; }
+    public ushort DistrictId { get; set; }
+
+    public uint NeighborhoodId { get; set; }
 
     public string? LastIpAddress { get; set; }
 
@@ -54,6 +56,8 @@ public partial class Listing : BaseAuditableEntity<int>
     public int? DeletedBy { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public virtual Breed Breed { get; set; } = null!;
 
     public virtual ICollection<ListingPicture> Pictures { get; set; }
 }

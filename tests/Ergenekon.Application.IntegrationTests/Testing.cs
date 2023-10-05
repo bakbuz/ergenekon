@@ -26,7 +26,7 @@ public partial class Testing
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
         _configuration = _factory.Services.GetRequiredService<IConfiguration>();
 
-        _checkpoint = Respawner.CreateAsync(_configuration.GetConnectionString("DefaultConnection")!, new RespawnerOptions
+        _checkpoint = Respawner.CreateAsync(_configuration.GetConnectionString("Default")!, new RespawnerOptions
         {
             TablesToIgnore = new Respawn.Graph.Table[] { "__EFMigrationsHistory" }
         }).GetAwaiter().GetResult();
@@ -103,7 +103,7 @@ public partial class Testing
     {
         try
         {
-            await _checkpoint.ResetAsync(_configuration.GetConnectionString("DefaultConnection")!);
+            await _checkpoint.ResetAsync(_configuration.GetConnectionString("Default")!);
         }
         catch (Exception)
         {
