@@ -26,7 +26,7 @@ public static class CacheExt
 
     public static async Task<T> GetDataAsync<T>(this IDistributedCache distributedCache, string key, Func<T> acquire, int cacheTimeInMinute = 15)
     {
-        var cachedValue = distributedCache.GetString(key);
+        var cachedValue = await distributedCache.GetStringAsync(key);
 
         //item already is in cache, so return it
         if (cachedValue != null && cachedValue.Length > 0)
