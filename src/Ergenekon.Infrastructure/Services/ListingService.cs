@@ -22,7 +22,7 @@ public class ListingService : CrudService<Listing, int>, IListingService
         _fileStorage = fileStorage;
     }
 
-    public async Task<ListingSummaryVm> SearchAsync(GetFilterRequest request, CancellationToken cancellationToken)
+    public async Task<ListingSummaryVm> SearchAsync(GetListingsQuery request, CancellationToken cancellationToken)
     {
         var query = _context.Listings.Where(q => q.Status == ListingStatus.Published);
 

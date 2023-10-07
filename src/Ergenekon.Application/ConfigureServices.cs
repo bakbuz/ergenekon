@@ -1,4 +1,5 @@
 ﻿using Ergenekon.Application.Common.Behaviours;
+using Ergenekon.Application.Storaging;
 using FluentValidation;
 using MediatR;
 using System.Reflection;
@@ -25,6 +26,8 @@ public static class ConfigureServices
 
         ValidatorOptions.Global.LanguageManager.Enabled = true;
         ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
+
+        services.AddScoped<IFileStorage, FileStorage>();
 
         return services;
     }

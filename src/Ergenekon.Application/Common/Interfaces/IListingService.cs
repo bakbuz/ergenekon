@@ -6,7 +6,7 @@ namespace Ergenekon.Application.Common.Interfaces;
 
 public interface IListingService : ICrudService<Listing, int>
 {
-    Task<ListingSummaryVm> SearchAsync(GetFilterRequest request, CancellationToken cancellationToken);
+    Task<ListingSummaryVm> SearchAsync(GetListingsQuery request, CancellationToken cancellationToken);
 
     Task<List<Listing>> GetPublishedListingsAsync(CancellationToken cancellationToken);
 
