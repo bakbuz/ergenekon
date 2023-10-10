@@ -9,8 +9,10 @@ namespace Ergenekon.Host.Controllers;
 public class ListingsController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<ListingSummaryVm>>> GetListings()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ListingSummaryVm>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
+    public async Task<ActionResult<List<ListingSummaryVm>>> GetListings([FromQuery] GetListingsQuery query, CancellationToken cancellationToken)
     {
-        return Ok(await Mediator.Send(new GetListingsQuery()));
+        return Ok(await Mediator.Send(query));
     }
 }
