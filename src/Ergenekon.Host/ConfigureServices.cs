@@ -1,4 +1,5 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
+using Ergenekon.Host;
 using Ergenekon.Host.Services;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddHostServices(this IServiceCollection services)
+    public static IServiceCollection AddHostServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -61,9 +62,30 @@ public static class ConfigureServices
             options.LowercaseUrls = true;
         });
 
+        services.ConfigureCors(configuration);
+
         services.AddScoped<IWebHelper, WebHelper>();
         services.AddScoped<IImageProcessor, SkiaSharpImageProcessor>();
 
         return services;
     }
+
+    private static void ConfigureCors(this IServiceCollection services, IConfiguration configuration)
+    {
+        string[] origins = configuration["App:CorsOrigins"].Split(",", StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy(App.DefaultCorsPolicyName, builder =>
+            {
+                builder
+                    .WithOrigins(origins)
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+    }
+
 }

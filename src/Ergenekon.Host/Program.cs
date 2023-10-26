@@ -13,7 +13,7 @@ builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
 // Add services to the container.
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddHostServices();
+builder.Services.AddHostServices(builder.Configuration);
 
 builder.Services.AddStackExchangeRedisCache(action =>
 {
@@ -55,6 +55,7 @@ app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
 app.UseRouting();
+app.UseCors(Ergenekon.Host.App.DefaultCorsPolicyName);
 
 app.UseAuthentication();
 app.UseIdentityServer();

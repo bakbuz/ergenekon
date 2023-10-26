@@ -1,4 +1,5 @@
-﻿using Ergenekon.Application.Territory.Queries.GetCountries;
+﻿using Ergenekon.Application.Common.Models;
+using Ergenekon.Application.Territory.Queries.GetCountries;
 using Ergenekon.Application.Territory.Queries.GetGetDistrictsByProvinceId;
 using Ergenekon.Application.Territory.Queries.GetNeighborhoodsByDistrictId;
 using Ergenekon.Application.Territory.Queries.GetProvincesByCountryId;
@@ -9,7 +10,7 @@ namespace Ergenekon.Host.Controllers;
 public class TerritoryController : ApiControllerBase
 {
     [HttpGet("countries")]
-    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1<byte>>))]
     public async Task<IActionResult> GetCountries()
     {
         var result = await Mediator.Send(new GetCountriesQuery());
@@ -17,8 +18,7 @@ public class TerritoryController : ApiControllerBase
     }
 
     [HttpGet("provinces")]
-    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1<ushort>>))]
     public async Task<IActionResult> GetProvinces([FromQuery] byte countryId)
     {
         if (countryId <= 0)
@@ -29,8 +29,7 @@ public class TerritoryController : ApiControllerBase
     }
 
     [HttpGet("districts")]
-    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1<ushort>>))]
     public async Task<IActionResult> GetDistricts([FromQuery] ushort provinceId)
     {
         if (provinceId <= 0)
@@ -41,8 +40,7 @@ public class TerritoryController : ApiControllerBase
     }
 
     [HttpGet("neighborhoods")]
-    //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1>))]
-    //[ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<LookupDto1<uint>>))]
     public async Task<IActionResult> GetNeighborhoods([FromQuery] ushort districtId)
     {
         if (districtId <= 0)
