@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  ergenekon.host:
+    image: ${DOCKER_REGISTRY-}ergenekonhost
+    build:
+      context: .
+      dockerfile: src/Ergenekon.Host/Dockerfile
