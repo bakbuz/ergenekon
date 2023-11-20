@@ -19,3 +19,4 @@ up:
 
 down:
 	docker-compose down
+	docker image remove ergenekon.host
