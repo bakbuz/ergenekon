@@ -147,10 +147,14 @@ public class ApplicationDbContextInitialiser
             //_context.Countries.Add(country);
             //await _context.SaveChangesAsync();
 
-            int newId = await con.ExecuteAsync("INSERT INTO [Territory].[Countries] ([Name],[EnglishName],[Iso2Code],[Iso3Code],[NumericIsoCode],[CallingCode],[Published],[DisplayOrder]) VALUES(@Name,@EnglishName,@Iso2Code,@Iso3Code,@NumericIsoCode,@CallingCode,@Published,@DisplayOrder); SELECT SCOPE_IDENTITY();", item);
+            byte countryId = await con.QuerySingleAsync<byte>("INSERT INTO [Territory].[Countries] ([Name],[EnglishName],[Iso2Code],[Iso3Code],[NumericIsoCode],[CallingCode],[Published],[DisplayOrder]) VALUES(@Name,@EnglishName,@Iso2Code,@Iso3Code,@NumericIsoCode,@CallingCode,@Published,@DisplayOrder); SELECT SCOPE_IDENTITY();", item);
+            //var countryId = Convert.ToByte(newId);
 
             var provinces = item.Provinces.ToList();
-            provinces.ForEach(a => a.CountryId = Convert.ToByte(newId));
+            foreach (var province in provinces)
+            {
+                province.CountryId = countryId;
+            }
             await con.ExecuteAsync("INSERT INTO [Territory].[Provinces] ([CountryId],[Name],[Abbreviation],[DisplayOrder]) VALUES(@CountryId,@Name,@Abbreviation,@DisplayOrder)", provinces);
         }
 

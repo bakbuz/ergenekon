@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using System.Text;
+﻿using System.Text;
 
 namespace Ergenekon.Host.Extensions;
 
