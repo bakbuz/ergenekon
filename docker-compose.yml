@@ -2,7 +2,7 @@ version: '3.4'
 name: ergenekon
 
 services:
-  ergenekon.host:
+  ergenekon.api:
     image: ${DOCKER_REGISTRY-}ergenekon.host:latest
     build:
       context: .
