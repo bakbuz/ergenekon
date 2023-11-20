@@ -23,7 +23,7 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 
         builder.Property(e => e.Slug).HasMaxLength(100).IsUnicode(false);
         builder.Property(e => e.Title).HasMaxLength(100).IsRequired();
-        builder.Property(e => e.Summary).HasMaxLength(500);
+        builder.Property(e => e.Summary).HasMaxLength(1000);
     }
 }
 
