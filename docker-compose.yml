@@ -1,8 +1,20 @@
 version: '3.4'
+name: ergenekon
 
 services:
   ergenekon.host:
-    image: ${DOCKER_REGISTRY-}ergenekonhost
+    image: ${DOCKER_REGISTRY-}ergenekon.host:latest
     build:
       context: .
       dockerfile: src/Ergenekon.Host/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_HTTPS_PORT=1923
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=PwdfnysNQcT
+    ports:
+      - 1923:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${USERPROFILE}\.aspnet\https:/https/
