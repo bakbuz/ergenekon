@@ -2,24 +2,24 @@
 using Ergenekon.Application.Users.Shared;
 using MediatR;
 
-namespace Ergenekon.Application.Users.GetUserById;
+namespace Ergenekon.Application.Users.GetCurrentUser;
 
-public record GetUserByIdQuery() : IRequest<UserSummaryDto?>
+public record GetCurrentUserQuery() : IRequest<UserSummaryDto?>
 {
 }
 
-public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserSummaryDto?>
+public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, UserSummaryDto?>
 {
     private readonly IIdentityService _identityService;
     private readonly ICurrentUser _currentUser;
 
-    public GetUserByIdQueryHandler(IIdentityService identityService, ICurrentUser currentUser)
+    public GetCurrentUserQueryHandler(IIdentityService identityService, ICurrentUser currentUser)
     {
         _identityService = identityService;
         _currentUser = currentUser;
     }
 
-    public async Task<UserSummaryDto?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+    public async Task<UserSummaryDto?> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
     {
         string? userId = _currentUser.UserId;
         if (string.IsNullOrEmpty(userId))

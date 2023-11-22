@@ -1,5 +1,5 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
-using Ergenekon.Application.Users.GetUserById;
+using Ergenekon.Application.Users.GetCurrentUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +20,6 @@ public class UserController : ApiControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAsync()
     {
-        return Ok(await Mediator.Send(new GetUserByIdQuery()));
+        return Ok(await Mediator.Send(new GetCurrentUserQuery()));
     }
 }
