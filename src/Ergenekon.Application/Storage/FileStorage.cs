@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
 
-namespace Ergenekon.Application.Storaging;
+namespace Ergenekon.Application.Storage;
 
 public interface IFileStorage
 {
@@ -14,9 +14,9 @@ public interface IFileStorage
 
     string GetAbsolutePath(string objectName);
 
-    Task<FileUploadResult> UploadStreamAsync(Stream stream, string objectName, string contentType, long length, CancellationToken cancellationToken = default);
+    Task<FileUploadResult> UploadObjectAsync(Stream stream, string objectName, string contentType, CancellationToken cancellationToken);
 
-    Task<FileUploadResult> UploadDataAsync(byte[] data, string objectName, string contentType, CancellationToken cancellationToken);
+    Task<FileUploadResult> UploadObjectAsync(byte[] data, string objectName, string contentType, CancellationToken cancellationToken);
 
     Task<byte[]> GetBytesAsync(string objectName, CancellationToken cancellationToken);
 
@@ -25,30 +25,19 @@ public interface IFileStorage
 
 public class FileStorage : IFileStorage
 {
+    private readonly IMinioClient _minioClient;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<FileStorage> _logger;
+
     private readonly string _bucketName;
 
-    private readonly MinioOptions _minioOptions;
-    private readonly ILogger<FileStorage> _logger;
-    private readonly IMinioClient _minioClient;
-
-    public FileStorage(IOptions<MinioOptions> options, ILogger<FileStorage> logger)
+    public FileStorage(IMinioClient minioClient, IConfiguration configuration, ILogger<FileStorage> logger)
     {
-        _minioOptions = options.Value;
+        _minioClient = minioClient;
+        _configuration = configuration;
         _logger = logger;
 
-        _bucketName = _minioOptions.BucketName;
-        _minioClient = GetMinioClient();
-    }
-
-    private IMinioClient GetMinioClient()
-    {
-        IMinioClient minioClient = new MinioClient()
-            .WithEndpoint(_minioOptions.Endpoint)
-            .WithCredentials(_minioOptions.AccessKey, _minioOptions.SecretKey)
-            .WithSSL(_minioOptions.UseSSL)
-            .Build();
-
-        return minioClient;
+        _bucketName = _configuration["MinioOptions:BucketName"];
     }
 
     private async Task CreateBucketIfNotExistsAsync(CancellationToken cancellationToken)
@@ -85,13 +74,13 @@ public class FileStorage : IFileStorage
 
     public string GetAbsolutePath(string objectName)
     {
-        if (_minioOptions.Endpoint == "patiyuva-storaging:9000")
-            return $"http://127.0.0.1:9000/{_bucketName}/{objectName}";
+        //if (_minioClient.Config.Endpoint == "patiyuva-storaging:9000")
+        //return $"http://127.0.0.1:9000/{_bucketName}/{objectName}";
 
-        return $"{_minioOptions.Endpoint}/{_bucketName}/{objectName}";
+        return $"{_minioClient.Config.Endpoint}/{_bucketName}/{objectName}";
     }
 
-    public async Task<FileUploadResult> UploadStreamAsync(Stream stream, string objectName, string contentType, long length, CancellationToken cancellationToken = default)
+    public async Task<FileUploadResult> UploadObjectAsync(Stream stream, string objectName, string contentType, CancellationToken cancellationToken)
     {
         try
         {
@@ -101,7 +90,7 @@ public class FileStorage : IFileStorage
                     .WithBucket(_bucketName)
                     .WithObject(objectName)
                     .WithStreamData(stream)
-                    .WithObjectSize(length)
+                    .WithObjectSize(stream.Length)
                     .WithContentType(contentType);
 
             await _minioClient.PutObjectAsync(putObjectArgs, cancellationToken);
@@ -116,7 +105,7 @@ public class FileStorage : IFileStorage
         }
     }
 
-    public async Task<FileUploadResult> UploadDataAsync(byte[] data, string objectName, string contentType, CancellationToken cancellationToken)
+    public async Task<FileUploadResult> UploadObjectAsync(byte[] data, string objectName, string contentType, CancellationToken cancellationToken)
     {
         try
         {

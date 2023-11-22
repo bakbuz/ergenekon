@@ -1,5 +1,6 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Common.Models;
+using Ergenekon.Application.Users.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,19 @@ public class IdentityService : IIdentityService
         _authorizationService = authorizationService;
     }
 
-    public async Task<string?> GetUserNameAsync(string userId)
+    public async Task<UserSummaryDto?> GetUserAsync(string userId, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user == null)
+            return null;
+
+        return new UserSummaryDto
+        {
+            Username = user.UserName
+        };
+    }
+
+    public async Task<string?> GetUsernameAsync(string userId)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId);
         if (user == null)

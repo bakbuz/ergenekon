@@ -1,14 +1,16 @@
 ﻿using Ergenekon.Application.Common.Behaviours;
-using Ergenekon.Application.Storaging;
+using Ergenekon.Application.Storage;
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Configuration;
+using Minio;
 using System.Reflection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class ConfigureServices
+public static class DependencyInjection
 {
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         var assembly = Assembly.GetExecutingAssembly();
 
@@ -27,6 +29,12 @@ public static class ConfigureServices
         ValidatorOptions.Global.LanguageManager.Enabled = true;
         ValidatorOptions.Global.LanguageManager.Culture = new System.Globalization.CultureInfo("tr");
 
+        services.AddMinio(cfg =>
+        {
+            cfg.WithEndpoint(configuration["MinioOptions:Endpoint"]);
+            cfg.WithCredentials(configuration["MinioOptions:AccessKey"], configuration["MinioOptions:SecretKey"]);
+            cfg.WithSSL(configuration["MinioOptions:UseSSL"] == "true");
+        });
         services.AddScoped<IFileStorage, FileStorage>();
 
         return services;

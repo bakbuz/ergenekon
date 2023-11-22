@@ -1,7 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Listings.Listings.Queries.GetListings;
 using Ergenekon.Application.Listings.Listings.Shared;
-using Ergenekon.Application.Storaging;
+using Ergenekon.Application.Storage;
 using Ergenekon.Domain.Entities.Listings;
 using Ergenekon.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,4 @@
-﻿namespace Ergenekon.Application.Storaging;
+﻿namespace Ergenekon.Application.Storage;
 
 public class FileObject
 {

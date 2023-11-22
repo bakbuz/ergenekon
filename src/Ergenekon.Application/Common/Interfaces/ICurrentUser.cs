@@ -1,6 +1,6 @@
 ﻿namespace Ergenekon.Application.Common.Interfaces;
 
-public interface ICurrentUserService
+public interface ICurrentUser
 {
     string? UserId { get; }
 }

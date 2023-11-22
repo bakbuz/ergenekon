@@ -8,12 +8,12 @@ namespace Ergenekon.Infrastructure.Persistence.Interceptors;
 
 public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {
-    private readonly ICurrentUserService _currentUserService;
+    private readonly ICurrentUser _currentUser;
 
     public AuditableEntitySaveChangesInterceptor(
-        ICurrentUserService currentUserService)
+        ICurrentUser currentUser)
     {
-        _currentUserService = currentUserService;
+        _currentUser = currentUser;
     }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
@@ -40,13 +40,13 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = _currentUserService.UserId;
+                entry.Entity.CreatedBy = _currentUser.UserId;
                 entry.Entity.CreatedAt = DateTime.Now;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.LastModifiedBy = _currentUserService.UserId;
+                entry.Entity.LastModifiedBy = _currentUser.UserId;
                 entry.Entity.LastModifiedAt = DateTime.Now;
             }
         }

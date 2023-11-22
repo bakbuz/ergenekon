@@ -17,7 +17,7 @@ public class AuthenticationService : IAuthenticationService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IMailboxService _mailboxService;
-    private readonly ICurrentUserService _currentUserService;
+    private readonly ICurrentUser _currentUser;
     private readonly IConfiguration _configuration;
     private readonly IWebHelper _webHelper;
     private readonly ILogger<AuthenticationService> _logger;
@@ -26,7 +26,7 @@ public class AuthenticationService : IAuthenticationService
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IMailboxService mailboxService,
-        ICurrentUserService currentUserService,
+        ICurrentUser currentUser,
         IConfiguration configuration,
         IWebHelper webHelper,
         ILogger<AuthenticationService> logger)
@@ -34,7 +34,7 @@ public class AuthenticationService : IAuthenticationService
         _userManager = userManager;
         _signInManager = signInManager;
         _mailboxService = mailboxService;
-        _currentUserService = currentUserService;
+        _currentUser = currentUser;
         _configuration = configuration;
         _webHelper = webHelper;
         _logger = logger;

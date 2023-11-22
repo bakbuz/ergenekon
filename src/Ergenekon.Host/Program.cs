@@ -1,4 +1,3 @@
-using Ergenekon.Application.Storaging;
 using Ergenekon.Host.Extensions;
 using Ergenekon.Infrastructure.Persistence;
 using Serilog;
@@ -11,7 +10,7 @@ builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
     .ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddHostServices(builder.Configuration);
 
@@ -19,8 +18,6 @@ builder.Services.AddStackExchangeRedisCache(action =>
 {
     action.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
-
-builder.Services.Configure<MinioOptions>(builder.Configuration.GetSection("MinioOptions"));
 
 var app = builder.Build();
 

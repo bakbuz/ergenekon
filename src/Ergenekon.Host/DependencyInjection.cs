@@ -9,13 +9,13 @@ using ZymLabs.NSwag.FluentValidation;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class ConfigureServices
+public static class DependencyInjection
 {
     public static IServiceCollection AddHostServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<ICurrentUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
 

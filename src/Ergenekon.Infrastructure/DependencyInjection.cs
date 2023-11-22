@@ -19,7 +19,7 @@ using System.Text;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class ConfigureServices
+public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
