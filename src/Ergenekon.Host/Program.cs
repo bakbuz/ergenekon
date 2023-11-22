@@ -30,17 +30,17 @@ if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docke
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 
-    // Initialise and seed database
+    // Initialize and seed database
     using (var scope = app.Services.CreateScope())
     {
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-        //await initialiser.InitialiseAsync();
-        //await initialiser.SeedAsync();
+        var initializer = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitializer>();
+        //await initializer.InitializeAsync();
+        //await initializer.SeedAsync();
 
         // TEMP
-        if (initialiser.EnsureCreated())
+        if (initializer.EnsureCreated())
         {
-            await initialiser.SeedAsync();
+            await initializer.SeedAsync();
         }
     }
 }

@@ -38,7 +38,7 @@ public static class FormFileExtensions
 
     private static long FromMegaBytes(long mb)
     {
-        return mb * 1024l * 1024l;
+        return mb * 1024L * 1024L;
     }
 }
 

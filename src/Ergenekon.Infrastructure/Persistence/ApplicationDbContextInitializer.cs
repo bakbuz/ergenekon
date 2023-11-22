@@ -14,9 +14,9 @@ using System.Text.Json;
 
 namespace Ergenekon.Infrastructure.Persistence;
 
-public class ApplicationDbContextInitialiser
+public class ApplicationDbContextInitializer
 {
-    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
+    private readonly ILogger<ApplicationDbContextInitializer> _logger;
     private readonly IConfiguration _configuration;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
@@ -24,8 +24,8 @@ public class ApplicationDbContextInitialiser
     private readonly IWebHostEnvironment _env;
     private readonly IBasarsoftTerritoryService _basarsoftTerritoryService;
 
-    public ApplicationDbContextInitialiser(
-        ILogger<ApplicationDbContextInitialiser> logger,
+    public ApplicationDbContextInitializer(
+        ILogger<ApplicationDbContextInitializer> logger,
         IConfiguration configuration,
         ApplicationDbContext context,
         UserManager<ApplicationUser> userManager,
@@ -47,7 +47,7 @@ public class ApplicationDbContextInitialiser
         return _context.Database.EnsureCreated();
     }
 
-    public async Task InitialiseAsync()
+    public async Task InitializeAsync()
     {
         try
         {
@@ -59,7 +59,7 @@ public class ApplicationDbContextInitialiser
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while initialising the database.");
+            _logger.LogError(ex, "An error occurred while initializing the database.");
             throw;
         }
     }
@@ -110,7 +110,7 @@ public class ApplicationDbContextInitialiser
                 {
                     new TodoItem { Title = "Make a todo list 📃" },
                     new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
+                    new TodoItem { Title = "Realize you've already done two things on the list! 🤯"},
                     new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
                 }
             });
