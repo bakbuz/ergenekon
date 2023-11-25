@@ -3,7 +3,7 @@ name: ergenekon
 
 services:
   ergenekon.api:
-    image: ${DOCKER_REGISTRY-}ergenekon.host:latest
+    image: ${DOCKER_REGISTRY-}ergenekon-host:latest
     build:
       context: .
       dockerfile: src/Ergenekon.Host/Dockerfile
