@@ -46,11 +46,8 @@ public static class DependencyInjection
         {
             configure.Title = "Ergenekon API";
 
-
             // Add the fluent validations schema processor
-            var fluentValidationSchemaProcessor =
-                sp.CreateScope().ServiceProvider.GetRequiredService<FluentValidationSchemaProcessor>();
-
+            var fluentValidationSchemaProcessor = sp.CreateScope().ServiceProvider.GetRequiredService<FluentValidationSchemaProcessor>();
             configure.SchemaSettings.SchemaProcessors.Add(fluentValidationSchemaProcessor);
 
             // Add JWT
