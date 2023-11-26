@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Ergenekon.Infrastructure.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Respawn;
 using System.Data.Common;
@@ -19,8 +21,8 @@ public class SqlServerTestDatabase : ITestDatabase
             .Build();
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-
-        Guard.Against.Null(connectionString);
+        if (string.IsNullOrEmpty(connectionString))
+            throw new ArgumentNullException(nameof(connectionString), "Connection string 'DefaultConnection' not found.");
 
         _connectionString = connectionString;
     }

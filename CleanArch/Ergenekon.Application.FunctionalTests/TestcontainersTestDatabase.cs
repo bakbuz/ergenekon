@@ -1,6 +1,9 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Ergenekon.Infrastructure.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Respawn;
 using System.Data.Common;
+using Testcontainers.MsSql;
 
 namespace Ergenekon.Application.FunctionalTests;
 

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Ergenekon.Domain.Constants;
+using Ergenekon.Infrastructure.Data;
+using Ergenekon.Infrastructure.Identity;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ergenekon.Application.FunctionalTests;
