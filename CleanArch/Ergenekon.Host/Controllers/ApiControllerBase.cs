@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Ergenekon.Host.Controllers;
 
 [ApiController]
-//[ApiExceptionFilter]
 [Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {

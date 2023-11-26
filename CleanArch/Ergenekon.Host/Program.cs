@@ -1,4 +1,5 @@
 using Ergenekon.Infrastructure.Data;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,11 +28,16 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi(settings =>
-{
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
+// NSwag
+app.UseOpenApi();   // serve OpenAPI/Swagger documents
+app.UseSwaggerUi(); // serve Swagger UI
+app.UseReDoc();     // serve ReDoc UI
+
+//app.UseSwaggerUi(settings =>
+//{
+//    settings.Path = "/swagger";
+//    settings.DocumentPath = "/swagger/v1/swagger.json";
+//});
 
 app.MapControllerRoute(
     name: "default",
@@ -43,8 +49,7 @@ app.MapFallbackToFile("index.html");
 
 app.UseExceptionHandler(options => { });
 
-app.Map("/", () => Results.Redirect("/api"));
-
+//app.Map("/", () => Results.Redirect("/swagger"));
 //app.MapEndpoints();
 
 app.Run();
