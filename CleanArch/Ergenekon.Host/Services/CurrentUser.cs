@@ -1,9 +1,9 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using System.Security.Claims;
 
-namespace Ergenekon.Web.Services;
+namespace Ergenekon.Host.Services;
 
-public class CurrentUser : IUser
+public class CurrentUser : ICurrentUser
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 

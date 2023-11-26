@@ -1,8 +1,8 @@
 ﻿using Azure.Identity;
 using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Host.Infrastructure;
+using Ergenekon.Host.Services;
 using Ergenekon.Infrastructure.Data;
-using Ergenekon.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
@@ -16,7 +16,7 @@ public static class DependencyInjection
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddScoped<IUser, CurrentUser>();
+        services.AddScoped<ICurrentUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
 
