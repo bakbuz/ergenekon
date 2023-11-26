@@ -1,6 +1,5 @@
-﻿using System.Security.Claims;
-
-using Ergenekon.Application.Common.Interfaces;
+﻿using Ergenekon.Application.Common.Interfaces;
+using System.Security.Claims;
 
 namespace Ergenekon.Web.Services;
 

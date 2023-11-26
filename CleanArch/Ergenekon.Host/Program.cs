@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Ergenekon.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);

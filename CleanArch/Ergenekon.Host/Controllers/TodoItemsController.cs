@@ -6,7 +6,6 @@ using Ergenekon.Application.TodoItems.Commands.UpdateTodoItemDetail;
 using Ergenekon.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 
 namespace Ergenekon.Host.Controllers;
 
