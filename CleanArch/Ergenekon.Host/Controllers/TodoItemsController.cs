@@ -13,7 +13,7 @@ namespace Ergenekon.Host.Controllers;
 public class TodoItemsController : ApiControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<TodoItemBriefDto>>> GetTodoItemsWithPagination([FromQuery] GetTodoItemsWithPaginationQuery query)
+    public async Task<ActionResult<PaginatedList<TodoItemBriefDto>>> GetTodoItemsWithPagination([AsParameters] GetTodoItemsWithPaginationQuery query)
     {
         return await Mediator.Send(query);
     }
@@ -31,9 +31,7 @@ public class TodoItemsController : ApiControllerBase
     public async Task<IActionResult> Update(int id, UpdateTodoItemCommand command)
     {
         if (id != command.Id)
-        {
             return BadRequest();
-        }
 
         await Mediator.Send(command);
 
@@ -47,9 +45,7 @@ public class TodoItemsController : ApiControllerBase
     public async Task<IActionResult> UpdateItemDetails(int id, UpdateTodoItemDetailCommand command)
     {
         if (id != command.Id)
-        {
             return BadRequest();
-        }
 
         await Mediator.Send(command);
 

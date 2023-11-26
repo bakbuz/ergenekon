@@ -37,9 +37,7 @@ public class TodoListsController : ApiControllerBase
     public async Task<IActionResult> Update(int id, UpdateTodoListCommand command)
     {
         if (id != command.Id)
-        {
             return BadRequest();
-        }
 
         await Mediator.Send(command);
 
