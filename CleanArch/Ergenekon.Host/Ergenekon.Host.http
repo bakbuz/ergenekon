@@ -1,6 +1,139 @@
-@Ergenekon.Host_HostAddress = http://localhost:5085
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Ergenekon_HostAddress = https://localhost:5001
 
-GET {{Ergenekon.Host_HostAddress}}/weatherforecast/
-Accept: application/json
+@Username=administrator@localhost
+@Password=Administrator1!
+@BearerToken=<YourToken>
+
+# POST Users Register
+POST {{Ergenekon_HostAddress}}/api/Users/Register
+Content-Type: application/json
+
+{
+  "username": "{{Username}}",
+  "password": "{{Password}}"
+}
+
+###
+
+# POST Users Login
+POST {{Ergenekon_HostAddress}}/api/Users/Login
+Content-Type: application/json
+
+{
+  "username": "{{Username}}",
+  "password": "{{Password}}"
+}
+
+###
+
+# POST Users Refresh
+POST {{Ergenekon_HostAddress}}/api/Users/Refresh
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+{
+  "refreshToken": ""
+}
+
+###
+
+# GET WeatherForecast
+GET {{Ergenekon_HostAddress}}/api/WeatherForecasts
+Authorization: Bearer {{BearerToken}}
+
+###
+
+# GET TodoLists
+GET {{Ergenekon_HostAddress}}/api/TodoLists
+Authorization: Bearer {{BearerToken}}
+
+###
+
+# POST TodoLists
+POST {{Ergenekon_HostAddress}}/api/TodoLists
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+// CreateTodoListCommand
+{
+  "Title": "Backlog"
+}
+
+###
+
+# PUT TodoLists
+PUT {{Ergenekon_HostAddress}}/api/TodoLists/1
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+// UpdateTodoListCommand
+{
+  "Id": 1,
+  "Title": "Product Backlog"
+}
+
+###
+
+# DELETE TodoLists
+DELETE {{Ergenekon_HostAddress}}/api/TodoLists/1
+Authorization: Bearer {{BearerToken}}
+
+###
+
+# GET TodoItems
+@PageNumber = 1
+@PageSize = 10
+GET {{Ergenekon_HostAddress}}/api/TodoItems?ListId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}
+
+Authorization: Bearer {{BearerToken}}
+
+###
+
+# POST TodoItems
+POST {{Ergenekon_HostAddress}}/api/TodoItems
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+// CreateTodoItemCommand
+{
+  "ListId": 1,
+  "Title": "Eat a burrito 🌯"
+}
+
+###
+
+#PUT TodoItems UpdateItemDetails
+PUT {{Ergenekon_HostAddress}}/api/TodoItems/UpdateItemDetails?Id=1
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+// UpdateTodoItemDetailCommand
+{
+  "Id": 1,
+  "ListId": 1,
+  "Priority": 3,
+  "Note": "This is a good idea!"
+}
+
+###
+
+# PUT TodoItems
+PUT {{Ergenekon_HostAddress}}/api/TodoItems/1
+Authorization: Bearer {{BearerToken}}
+Content-Type: application/json
+
+// UpdateTodoItemCommand
+{
+  "Id": 1,
+  "Title": "Eat a yummy burrito 🌯",
+  "Done": true
+}
+
+###
+
+# DELETE TodoItem
+DELETE {{Ergenekon_HostAddress}}/api/TodoItems/1
+Authorization: Bearer {{BearerToken}}
 
 ###
