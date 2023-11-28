@@ -25,7 +25,10 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-            options.UseSqlServer(connectionString);
+            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+                options.UseInMemoryDatabase("memorydb");
+            else
+                options.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
