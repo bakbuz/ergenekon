@@ -1,8 +1,6 @@
 using Ergenekon.Infrastructure.Data;
-using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
