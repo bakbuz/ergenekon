@@ -31,12 +31,6 @@ app.UseOpenApi();   // serve OpenAPI/Swagger documents
 app.UseSwaggerUi(); // serve Swagger UI
 app.UseReDoc();     // serve ReDoc UI
 
-//app.UseSwaggerUi(settings =>
-//{
-//    settings.Path = "/swagger";
-//    settings.DocumentPath = "/swagger/v1/swagger.json";
-//});
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
