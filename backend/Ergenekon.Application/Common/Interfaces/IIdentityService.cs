@@ -7,13 +7,11 @@ public interface IIdentityService
 {
     Task<UserSummaryDto?> GetUserAsync(string userId, CancellationToken cancellationToken);
 
-    Task<string?> GetUserNameAsync(string userId);
+    Task<string?> GetUsernameAsync(string userId, CancellationToken cancellationToken);
 
-    Task<bool> IsInRoleAsync(string userId, string role);
+    Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellationToken);
 
-    Task<bool> AuthorizeAsync(string userId, string policyName);
+    Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken );
 
-    Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
-
-    Task<Result> DeleteUserAsync(string userId);
+    Task<Result> DeleteUserAsync(string userId, CancellationToken cancellationToken);
 }

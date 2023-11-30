@@ -3,6 +3,7 @@ using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.TodoItems.Commands.CreateTodoItem;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Threading;
 
 namespace Ergenekon.Application.UnitTests.Common.Behaviours;
 
@@ -25,20 +26,24 @@ public class RequestLoggerTests
     {
         _currentUser.Setup(x => x.Id).Returns(Guid.NewGuid().ToString());
 
+        CancellationToken cancellationToken = new CancellationToken();
+
         var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUser.Object, _identityService.Object);
 
         await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
+        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<string>(), cancellationToken), Times.Once);
     }
 
     [Test]
     public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
     {
+        CancellationToken cancellationToken = new CancellationToken();
+
         var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUser.Object, _identityService.Object);
 
         await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Never);
+        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<string>(), cancellationToken), Times.Never);
     }
 }

@@ -35,41 +35,27 @@ public class IdentityService : IIdentityService
         };
     }
 
-    public async Task<string?> GetUserNameAsync(string userId)
+    public async Task<string?> GetUsernameAsync(string userId, CancellationToken cancellationToken)
     {
-        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user == null)
+            return null;
 
         return user.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellationToken)
     {
-        var user = new ApplicationUser
-        {
-            UserName = userName,
-            Email = userName,
-        };
-
-        var result = await _userManager.CreateAsync(user, password);
-
-        return (result.ToApplicationResult(), user.Id);
-    }
-
-    public async Task<bool> IsInRoleAsync(string userId, string role)
-    {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        var user =await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId,cancellationToken);
 
         return user != null && await _userManager.IsInRoleAsync(user, role);
     }
 
-    public async Task<bool> AuthorizeAsync(string userId, string policyName)
+    public async Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
-
+        var user =await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId,cancellationToken);
         if (user == null)
-        {
             return false;
-        }
 
         var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
 
@@ -78,17 +64,23 @@ public class IdentityService : IIdentityService
         return result.Succeeded;
     }
 
-    public async Task<Result> DeleteUserAsync(string userId)
+    public async Task<Result> DeleteUserAsync(string userId, CancellationToken cancellationToken)
     {
-        var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user == null)
+            return Result.Failure(new List<string> { "Kullanıcı bulunamadı" });
 
-        return user != null ? await DeleteUserAsync(user) : Result.Success();
+        user.Status = UserStatus.Deleted;
+
+        await _userManager.UpdateAsync(user);
+
+        return Result.Success();
     }
 
-    public async Task<Result> DeleteUserAsync(ApplicationUser user)
-    {
-        var result = await _userManager.DeleteAsync(user);
+    //public async Task<Result> DeleteUserAsync(ApplicationUser user)
+    //{
+    //    var result = await _userManager.DeleteAsync(user);
 
-        return result.ToApplicationResult();
-    }
+    //    return result.ToApplicationResult();
+    //}
 }
