@@ -26,7 +26,7 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-                options.UseInMemoryDatabase("memorydb");
+                options.UseInMemoryDatabase("ErgenekonDb");
             else
                 options.UseSqlServer(connectionString);
         });
