@@ -1,9 +1,12 @@
 ﻿using Ergenekon.Application.Common.Models;
+using Ergenekon.Application.Users.Shared;
 
 namespace Ergenekon.Application.Common.Interfaces;
 
 public interface IIdentityService
 {
+    Task<UserSummaryDto?> GetUserAsync(string userId, CancellationToken cancellationToken);
+
     Task<string?> GetUserNameAsync(string userId);
 
     Task<bool> IsInRoleAsync(string userId, string role);
