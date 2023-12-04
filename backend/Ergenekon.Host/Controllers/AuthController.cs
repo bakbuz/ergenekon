@@ -107,7 +107,7 @@ public class AuthController : ApiControllerBase
         return Ok(new ResponseMessage("E-posta adresiniz başarıyla doğrulandı"));
     }
 
-    [HttpGet("Confirm-Email-Change")]
+    [HttpGet("confirm-email-change")]
     public async Task<IActionResult> ConfirmEmailChangeAsync([FromQuery] ConfirmEmailChangeRequest request)
     {
         var validateResult = new ConfirmEmailChangeRequestValidator().Validate(request);
