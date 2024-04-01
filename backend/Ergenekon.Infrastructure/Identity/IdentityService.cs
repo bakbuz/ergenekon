@@ -46,14 +46,14 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellationToken)
     {
-        var user =await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId,cancellationToken);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
 
         return user != null && await _userManager.IsInRoleAsync(user, role);
     }
 
     public async Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken)
     {
-        var user =await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId,cancellationToken);
+        var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user == null)
             return false;
 

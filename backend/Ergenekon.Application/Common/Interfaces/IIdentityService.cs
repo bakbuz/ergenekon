@@ -11,7 +11,7 @@ public interface IIdentityService
 
     Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellationToken);
 
-    Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken );
+    Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken);
 
     Task<Result> DeleteUserAsync(string userId, CancellationToken cancellationToken);
 }

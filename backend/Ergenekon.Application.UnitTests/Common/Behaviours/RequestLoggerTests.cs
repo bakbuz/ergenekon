@@ -3,7 +3,6 @@ using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.TodoItems.Commands.CreateTodoItem;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Threading;
 
 namespace Ergenekon.Application.UnitTests.Common.Behaviours;
 
