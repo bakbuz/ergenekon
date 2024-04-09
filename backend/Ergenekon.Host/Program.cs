@@ -24,7 +24,7 @@ else
 
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 // NSwag
 app.UseOpenApi();   // serve OpenAPI/Swagger documents
@@ -35,7 +35,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapRazorPages();
+app.MapControllers();
+//app.MapRazorPages();
 
 app.MapFallbackToFile("index.html");
 

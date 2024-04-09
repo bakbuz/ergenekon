@@ -25,8 +25,8 @@ public static class DependencyInjection
 
         services.AddExceptionHandler<CustomExceptionHandler>();
 
-        //services.AddControllers();
-        services.AddRazorPages();
+        services.AddControllers();
+        //services.AddRazorPages();
 
         services.AddScoped(provider =>
         {
