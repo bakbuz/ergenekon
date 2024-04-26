@@ -17,6 +17,11 @@ public class WebHelper : IWebHelper
         _configuration = configuration;
     }
 
+    public string? GetCurrentIpAddress()
+    {
+        return _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+    }
+
     public string GetCurrentApplicationUrl()
     {
         if (_httpContextAccessor.HttpContext == null)
@@ -46,7 +51,5 @@ public class WebHelper : IWebHelper
 
         return HtmlEncoder.Default.Encode($"{_configuration["AppOptions:ClientUrl"]}/{_configuration["AppOptions:ClientResetPasswordPath"]}?code={code}");
     }
-
-
 
 }

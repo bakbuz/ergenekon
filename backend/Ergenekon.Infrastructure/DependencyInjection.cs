@@ -18,6 +18,7 @@ public static class DependencyInjection
         if (string.IsNullOrEmpty(connectionString))
             throw new ArgumentNullException(nameof(connectionString), "Connection string 'DefaultConnection' not found.");
 
+        // Data Layer: DbContext
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 

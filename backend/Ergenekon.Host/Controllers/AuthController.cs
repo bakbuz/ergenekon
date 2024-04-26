@@ -1,9 +1,8 @@
-﻿using Ergenekon.Infrastructure.Identity;
+﻿using Ergenekon.Host.Models;
+using Ergenekon.Infrastructure.Identity;
 using Ergenekon.Infrastructure.Identity.Models;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Ergenekon.Host.Controllers;
 
@@ -29,7 +28,6 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("register")]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TokenValues))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
         var validateResult = new RegisterRequestValidator().Validate(request);
@@ -46,7 +44,6 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenValues))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
     {
         var validateResult = new LoginRequestValidator().Validate(request);
@@ -63,7 +60,6 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("password-recovery")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> PasswordRecoveryAsync([FromBody] PasswordRecoveryRequest request, CancellationToken cancellationToken)
     {
         var validateResult = new PasswordRecoveryRequestValidator().Validate(request);
@@ -79,7 +75,6 @@ public class AuthController : ApiControllerBase
 
     [HttpPost("password-reset")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseMessage))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseErrors))]
     public async Task<IActionResult> PasswordResetAsync([FromBody] PasswordResetRequest request)
     {
         var validateResult = new PasswordResetRequestValidator().Validate(request);
@@ -129,42 +124,4 @@ public class ResponseMessage
         Message = message;
     }
     public string Message { get; set; }
-}
-
-public class ResponseError
-{
-    public ResponseError(string message, string? code = null)
-    {
-        Code = code;
-        Message = message;
-    }
-
-    public string? Code { get; set; }
-
-    public string Message { get; set; }
-}
-
-public class ResponseErrors
-{
-    public ResponseErrors(string message, string? code = null)
-    {
-        Errors = new ResponseError[] { new ResponseError(message, code) };
-    }
-
-    public ResponseErrors(IdentityResult result)
-    {
-        Errors = result.Errors.Select(s => new ResponseError(s.Description, s.Code)).ToArray();
-    }
-
-    public ResponseErrors(ModelStateDictionary modelState)
-    {
-        Errors = modelState.SelectMany(s => s.Value.Errors.Select(e => new ResponseError(e.ErrorMessage))).ToArray();
-    }
-
-    public ResponseErrors(ValidationResult validateResult)
-    {
-        Errors = validateResult.Errors.Select(s => new ResponseError(s.ErrorMessage, s.ErrorCode)).ToArray();
-    }
-
-    public ResponseError[] Errors { get; set; }
 }
