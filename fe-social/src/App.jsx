@@ -23,9 +23,6 @@ const PasswordReset = lazy(() => import("./pages/Auth/PasswordReset"));
 
 const Profile = lazy(() => import("./pages/Profile"));
 const Settings = lazy(() => import("./pages/Settings"));
-const Listing = lazy(() => import("./pages/Listing"));
-const Listings = lazy(() => import("./pages/Listings"));
-const Editor = lazy(() => import("./pages/Editor"));
 
 export default () => {
   const [store, { pullUser }] = useStore()
@@ -61,9 +58,6 @@ export default () => {
               <Route path="settings" component={Settings} />
               <Route path="u/:username" component={Profile} />
 
-              <Route path="ilanlar" component={Listings} />
-              <Route path="ilan/:slug" component={Listing} />
-              <Route path="ilan-yayinla/:slug" component={Editor} />
               <Route path="" component={Home} />
             </Routes>
           </Show>

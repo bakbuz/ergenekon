@@ -60,7 +60,7 @@ export default () => {
                   <small>Hesap oluştur düğmesine tıklayarak, <A href="javascript:;">Kullanım Koşulları</A>'nı ve <A href="javascript:;">Gizlilik Bildirimini</A>'ni kapsayan <A href="javascript:;">Çerez Kullanımı</A>'nı kabul etmiş olursun.</small>
                   <button type="submit" class="btn btn-lg btn-primary mt-3" disabled={state.inProgress}>Hesap oluştur</button>
                 </div>
-                <p class="mb-0 mt-3 text-center">&copy; 2023&nbsp;<a target="_blank" href="https://patiyuva.com">Patiyuva.</a> Tüm hakları saklıdır.</p>
+                <p class="mb-0 mt-3 text-center">&copy; 2023&nbsp;<a target="_blank" href="https://ergenekon.com">Ergenekon.</a> Tüm hakları saklıdır.</p>
               </form>
             </div>
           </div>

@@ -1,7 +1,7 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 import App from './App';
-import { initTheme } from './patiyuva';
+import { initTheme } from './theme';
 import { Provider } from './store';
 
 render(() => (

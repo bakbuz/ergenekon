@@ -1,6 +1,6 @@
 import { A, useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
-import logo from '../assets/img/patiyuva.svg';
+import logo from '../assets/img/logo.svg';
 import placeholder from '../assets/img/placeholder.jpg';
 import { useStore } from "../store";
 
@@ -25,9 +25,9 @@ export default () => {
         <div class="container">
 
           <A class="navbar-brand" href="/" title={store.appName}>
-            <div class="d-flex align-middle patiyuva-logo">
+            <div class="d-flex align-middle">
               <img src={logo} alt="Her pati bir yuva bekler" width="24" />
-              <span class="ms-2 fs-4 d-none d-sm-inline">Patiyuva</span>
+              <span class="ms-2 fs-4 d-none d-sm-inline">Ergenekon</span>
             </div>
           </A>
 

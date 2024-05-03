@@ -1,5 +1,5 @@
 import { A } from '@solidjs/router';
-import logo from '../assets/img/patiyuva.svg'
+import logo from '../assets/img/icons8-wolf-96.png'
 
 export default () => {
   return (
@@ -8,10 +8,10 @@ export default () => {
         <div class="container">
           <div class="row g-3">
             <div class="col-sm-6 col-lg-3">
-              <div class="d-flex align-middle patiyuva-logo">
+              <div class="d-flex align-middle">
                 <A href='/'>
                   <img src={logo} alt="Her pati bir yuva bekler" width="32" />
-                  <span class="ms-2 fs-2">Patiyuva</span>
+                  <span class="ms-2 fs-2">Ergenekon</span>
                 </A>
               </div>
               <p class="mt-3">Her pati bir yuva bekler</p>
@@ -46,7 +46,7 @@ export default () => {
         <hr class="mb-0 mt-5" />
         <div class="bg- light py-3">
           <div class="container">
-            <p class="text-center my-1">&copy; 2023 <a class="text-reset" target="_blank" href="https://patiyuva.com"> Patiyuva. </a>Tüm hakları saklıdır.</p>
+            <p class="text-center my-1">&copy; 2023 <a class="text-reset" target="_blank" href="https://patiyuva.com"> Ergenekon. </a>Tüm hakları saklıdır.</p>
           </div>
         </div>
       </footer>

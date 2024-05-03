@@ -5,3 +5,4 @@ export function getRandomInt(min, max) {
 export function prettyDate(date) {
   return new Date(date).toDateString()
 }
+

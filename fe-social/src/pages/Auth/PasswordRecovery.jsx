@@ -19,7 +19,7 @@ export default () => {
 								<div class="my-4">
 									<p>Giriş sayfasına dönmek için <A href="/giris">buraya tıklayın</A></p>
 								</div>
-								<p class="mb-0 mt-3">&copy; 2023&nbsp; <a target="_blank" href="https://patiyuva.com">Patiyuva.</a> Tüm hakları saklıdır.</p>
+								<p class="mb-0 mt-3">&copy; 2023&nbsp; <a target="_blank" href="https://ergenekon.com">Ergenekon.</a> Tüm hakları saklıdır.</p>
 							</form>
 						</div>
 					</div>

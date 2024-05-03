@@ -4,7 +4,7 @@ export const initTheme = function () {
 }
 
 export const getTheme = function () {
-  let theme = localStorage.getItem("patiyuva.theme")
+  let theme = localStorage.getItem("ergenekon.theme")
   if (theme == null || theme == "")
     theme = "light"
 
@@ -17,7 +17,7 @@ export const currentThemeIsDark = function () {
 }
 
 export const setTheme = function (theme) {
-  localStorage.setItem("patiyuva.theme", theme);
+  localStorage.setItem("ergenekon.theme", theme);
   document.documentElement.setAttribute('data-bs-theme', theme)
   setModeSwitch(theme)
 }
@@ -31,14 +31,3 @@ const setModeSwitch = function (theme) {
   });
 }
 
-const setListingCreateLight = function () {
-  const btn = document.getElementById('listing-create');
-  btn.classList.remove('btn-dark');
-  btn.classList.add('btn-primary');
-}
-
-const setListingCreateDark = function () {
-  const btn = document.getElementById('listing-create');
-  btn.classList.add('btn-dark');
-  btn.classList.remove('btn-primary');
-}

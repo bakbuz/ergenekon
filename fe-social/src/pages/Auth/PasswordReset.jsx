@@ -24,7 +24,7 @@
 								</div>
 								<div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Sıfırla</button></div>
 
-								<p class="mb-0 mt-3">&copy; 2023 <A target="_blank" href="https://patiyuva.com">Patiyuva.</A> Tüm hakları saklıdır.</p>
+								<p class="mb-0 mt-3">&copy; 2023 <A target="_blank" href="https://ergenekon.com">Ergenekon.</A> Tüm hakları saklıdır.</p>
 							</form>
 						</div>
 					</div>
