@@ -26,7 +26,7 @@ export default () => {
 
           <A class="navbar-brand" href="/" title={store.appName}>
             <div class="d-flex align-middle">
-              <img src={logo} alt="Her pati bir yuva bekler" width="24" />
+              <img src={logo} alt="Yeniden Ergenekon" width="24" />
               <span class="ms-2 fs-4 d-none d-sm-inline">Ergenekon</span>
             </div>
           </A>
@@ -40,12 +40,6 @@ export default () => {
                 </li>
                 <li class="nav-item">
                   <A class="nav-link" href="/kaydol">Kaydol</A>
-                </li>
-                <li class="nav-item">
-                  <A class="btn btn-primary" href="/kaydol?ret=ilan-yayinla">
-                    <i class="bi bi-journal-plus fs-6"></i>&nbsp;
-                    <span class="d-none d-md-inline">Ücretsiz İlan Yayınla</span>
-                  </A>
                 </li>
               </ul>
             )}>

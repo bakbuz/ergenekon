@@ -10,11 +10,11 @@ export default () => {
             <div class="col-sm-6 col-lg-3">
               <div class="d-flex align-middle">
                 <A href='/'>
-                  <img src={logo} alt="Her pati bir yuva bekler" width="32" />
+                  <img src={logo} alt="Yeniden Ergenekon" width="32" />
                   <span class="ms-2 fs-2">Ergenekon</span>
                 </A>
               </div>
-              <p class="mt-3">Her pati bir yuva bekler</p>
+              <p class="mt-3">Yeniden Ergenekon</p>
             </div>
             <div class="col-sm-6 col-lg-3">
               <h5 class="mb-4">İndir</h5>
