@@ -1,0 +1,102 @@
+[data-bs-theme=light] {
+  .form-select {
+    background-color: initial
+  }
+}
+
+[data-bs-theme=dark] {
+  .patiyuva-logo img {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+}
+
+header.fixed-top+main {
+  padding-top: calc(1rem + 56px);
+  margin-bottom: 1.5rem;
+}
+
+.notifications>.dropdown-menu {
+  width: 300px !important;
+}
+
+// i.bi {
+//   padding-right: 0.5rem;
+// }
+
+@media (max-width: 576px) {
+  header.fixed-top+main {
+    padding-top: calc(0.5rem + 56px);
+    margin-bottom: 0.5rem;
+  }
+
+  main>.container {
+    padding: 0;
+  }
+
+  .card-header,
+  .card-body {
+    padding: 0.5rem;
+  }
+}
+
+.patiyuva-listing-horizontal-filter select {
+  /* min-width: 200px; */
+}
+
+.pati-listing img.card-img-top {
+  max-height: 120px;
+}
+
+.pati-listing-thumbnails img {
+  width: 100px;
+  height: 100px;
+  margin: 2px;
+}
+
+
+/* photo 1 */
+
+.patiyuva-add-image {
+  width: 170px !important;
+}
+
+.patiyuva-add-image label {
+  width: 100%;
+  height: 100%;
+  display: inline-block
+}
+
+.patiyuva-add-image label:hover {
+  cursor: cell;
+}
+
+
+.patiyuva-sortable-item1 {
+  width: 100px;
+  height: 100px;
+}
+
+.patiyuva-sortable-item1 img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.patiyuva-sortable-item1 img:hover {
+  cursor: move;
+}
+
+.patiyuva-sortable-item1 .icon-sm {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+/* photo 2 */
+
+.patiyuva-sortable-item2 img {
+  max-height: 200px;
+}
+
+.patiyuva-sortable-item2 img:hover {
+  cursor: move;
+}
