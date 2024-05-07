@@ -1,6 +1,6 @@
 ﻿namespace Ergenekon.Infrastructure.Identity;
 
-public static class IdentityConstants
+public static class IdentityDefaults
 {
     public const int PasswordMinimumLength = 6;
     public const int PasswordMaximumLength = 36;
@@ -9,12 +9,5 @@ public static class IdentityConstants
 
     public const string DefaultUserName = "bayram";
     public const string DefaultUserEmail = "bayram@maydere.com";
-    public const string DefaultUserPass = "Ab123,,";
-
-    public static class RoleNames
-    {
-        public const string Admin = "Admin";
-        public const string Manager = "Manager";
-        public const string Editor = "Editor";
-    }
+    public const string DefaultUserPass = "ASdf12,,";
 }

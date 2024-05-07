@@ -78,11 +78,11 @@ public class ApplicationDbContextInitialiser
         }
 
         // Default users
-        var administrator = new ApplicationUser { UserName = "bakbuz", Email = "bayram@maydere.com" };
+        var administrator = new ApplicationUser { UserName = IdentityDefaults.DefaultUserName, Email = IdentityDefaults.DefaultUserEmail };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
-            await _userManager.CreateAsync(administrator, "ASdf12,,");
+            await _userManager.CreateAsync(administrator, IdentityDefaults.DefaultUserPass);
             if (!string.IsNullOrWhiteSpace(administratorRole.Name))
             {
                 await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
