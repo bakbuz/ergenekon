@@ -14,7 +14,7 @@ public partial class Testing
     private static ITestDatabase _database;
     private static CustomWebApplicationFactory _factory = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
-    private static string? _userId;
+    private static string? _currentUserId;
 
     [OneTimeSetUp]
     public async Task RunBeforeAnyTests()
@@ -46,7 +46,7 @@ public partial class Testing
 
     public static string? GetUserId()
     {
-        return _userId;
+        return _currentUserId;
     }
 
     public static async Task<string> RunAsDefaultUserAsync()
@@ -83,9 +83,9 @@ public partial class Testing
 
         if (result.Succeeded)
         {
-            _userId = user.Id;
+            _currentUserId = user.Id;
 
-            return _userId;
+            return _currentUserId;
         }
 
         var errors = string.Join(Environment.NewLine, result.Errors);
@@ -103,7 +103,7 @@ public partial class Testing
         {
         }
 
-        _userId = null;
+        _currentUserId = null;
     }
 
     public static async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)

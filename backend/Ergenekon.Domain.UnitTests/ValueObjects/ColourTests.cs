@@ -43,6 +43,7 @@ public class ColourTests
     [Test]
     public void ShouldThrowUnsupportedColourExceptionGivenNotSupportedColourCode()
     {
-        FluentActions.Invoking(() => Colour.From("##FF33CC")).Should().Throw<UnsupportedColourException>();
+        FluentActions.Invoking(() => Colour.From("##FF33CC"))
+            .Should().Throw<UnsupportedColourException>();
     }
 }

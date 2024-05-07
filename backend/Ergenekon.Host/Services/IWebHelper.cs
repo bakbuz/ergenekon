@@ -1,4 +1,4 @@
-﻿namespace Ergenekon.Infrastructure.Services;
+﻿namespace Ergenekon.Host.Services;
 
 public interface IWebHelper
 {

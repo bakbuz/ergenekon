@@ -5,7 +5,7 @@ using Ergenekon.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using Ergenekon.Application.TodoLists.Queries.GetTodos;
 using Ergenekon.Domain.Entities;
 using System.Reflection;
-using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace Ergenekon.Application.UnitTests.Common.Mappings;
 
@@ -47,9 +47,6 @@ public class MappingTests
             return Activator.CreateInstance(type)!;
 
         // Type without parameterless constructor
-        // TODO: Figure out an alternative approach to the now obsolete `FormatterServices.GetUninitializedObject` method.
-#pragma warning disable SYSLIB0050 // Type or member is obsolete
-        return FormatterServices.GetUninitializedObject(type);
-#pragma warning restore SYSLIB0050 // Type or member is obsolete
+        return RuntimeHelpers.GetUninitializedObject(type);
     }
 }

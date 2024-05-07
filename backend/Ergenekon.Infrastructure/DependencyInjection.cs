@@ -14,9 +14,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-        if (string.IsNullOrEmpty(connectionString))
-            throw new ArgumentNullException(nameof(connectionString), "Connection string 'DefaultConnection' not found.");
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new ArgumentException("Connection string 'DefaultConnection' not found.");
 
         // Data Layer: DbContext
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
@@ -26,10 +24,11 @@ public static class DependencyInjection
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-                options.UseInMemoryDatabase("ErgenekonDb");
-            else
-                options.UseSqlServer(connectionString);
+#if (UseSQLite)
+            options.UseSqlite(connectionString);
+#else
+            options.UseSqlServer(connectionString);
+#endif
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());

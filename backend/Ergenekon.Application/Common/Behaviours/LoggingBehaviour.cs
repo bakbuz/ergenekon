@@ -28,6 +28,7 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
             userName = await _identityService.GetUsernameAsync(userId, cancellationToken);
         }
 
-        _logger.LogInformation("Ergenekon Request: {Name} {@UserId} {@UserName} {@Request}", requestName, userId, userName, request);
+        _logger.LogInformation("Ergenekon Request: {Name} {@UserId} {@UserName} {@Request}",
+            requestName, userId, userName, request);
     }
 }

@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Text;
 
-namespace Ergenekon.Infrastructure.Services;
-
+namespace Ergenekon.Infrastructure;
 
 public interface IMailboxService
 {
