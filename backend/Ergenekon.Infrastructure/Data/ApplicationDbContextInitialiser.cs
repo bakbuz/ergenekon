@@ -95,7 +95,7 @@ public class ApplicationDbContextInitialiser
         {
             _context.TodoLists.Add(new TodoList
             {
-                Title = "Todo List",
+                Name = "Todo List",
                 Items =
                 {
                     new TodoItem { Title = "Make a todo list 📃" },

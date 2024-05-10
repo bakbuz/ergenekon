@@ -5,7 +5,7 @@ namespace Ergenekon.Application.TodoLists.Commands.CreateTodoList;
 
 public record CreateTodoListCommand : IRequest<int>
 {
-    public string? Title { get; init; }
+    public string Name { get; init; }
 }
 
 public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListCommand, int>
@@ -21,7 +21,7 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
     {
         var entity = new TodoList();
 
-        entity.Title = request.Title;
+        entity.Name = request.Name;
 
         _context.TodoLists.Add(entity);
 

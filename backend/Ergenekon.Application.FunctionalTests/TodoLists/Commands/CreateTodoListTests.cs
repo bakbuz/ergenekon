@@ -12,16 +12,16 @@ public class CreateTodoListTests : BaseTestFixture
     }
 
     [Test]
-    public async Task ShouldRequireUniqueTitle()
+    public async Task ShouldRequireUniqueName()
     {
         await SendAsync(new CreateTodoListCommand
         {
-            Title = "Shopping"
+            Name = "Shopping"
         });
 
         var command = new CreateTodoListCommand
         {
-            Title = "Shopping"
+            Name = "Shopping"
         };
 
         await FluentActions.Invoking(() =>
@@ -35,7 +35,7 @@ public class CreateTodoListTests : BaseTestFixture
 
         var command = new CreateTodoListCommand
         {
-            Title = "Tasks"
+            Name = "Tasks"
         };
 
         var id = await SendAsync(command);
@@ -43,7 +43,7 @@ public class CreateTodoListTests : BaseTestFixture
         var list = await FindAsync<TodoList>(id);
 
         list.Should().NotBeNull();
-        list!.Title.Should().Be(command.Title);
+        list!.Name.Should().Be(command.Name);
         list.CreatedBy.Should().Be(userId);
         list.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
     }

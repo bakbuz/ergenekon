@@ -8,7 +8,7 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
 {
     public void Configure(EntityTypeBuilder<TodoList> builder)
     {
-        builder.Property(t => t.Title)
+        builder.Property(t => t.Name)
             .HasMaxLength(200)
             .IsRequired();
 
