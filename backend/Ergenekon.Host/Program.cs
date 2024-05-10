@@ -1,4 +1,5 @@
 using Ergenekon.Infrastructure.Data;
+using Ergenekon.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,19 +27,18 @@ app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 //app.UseStaticFiles();
 
+// Identity Endpoints
+app.MapGroup("account").MapIdentityApi<ApplicationUser>().WithTags("Account");
+
 // NSwag
 app.UseOpenApi();   // serve OpenAPI/Swagger documents
 app.UseSwaggerUi(); // serve Swagger UI
 app.UseReDoc();     // serve ReDoc UI
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
-
 app.MapControllers();
 //app.MapRazorPages();
 
-app.MapFallbackToFile("index.html");
+//app.MapFallbackToFile("index.html");
 
 app.UseExceptionHandler(options => { });
 
