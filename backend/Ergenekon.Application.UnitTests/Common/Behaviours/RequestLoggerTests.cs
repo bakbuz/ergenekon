@@ -25,11 +25,11 @@ public class RequestLoggerTests
     {
         _currentUser.Setup(x => x.Id).Returns(Guid.NewGuid());
 
-        CancellationToken cancellationToken = new CancellationToken();
+        CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
         var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUser.Object, _identityService.Object);
 
-        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Name = "name" }, cancellationToken);
 
         _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<Guid>(), cancellationToken), Times.Once);
     }
@@ -37,11 +37,11 @@ public class RequestLoggerTests
     [Test]
     public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
     {
-        CancellationToken cancellationToken = new CancellationToken();
+        CancellationToken cancellationToken = new CancellationTokenSource().Token;
 
         var requestLogger = new LoggingBehaviour<CreateTodoItemCommand>(_logger.Object, _currentUser.Object, _identityService.Object);
 
-        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
+        await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Name = "name" }, cancellationToken);
 
         _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<Guid>(), cancellationToken), Times.Never);
     }

@@ -26,7 +26,7 @@ public class CreateTodoItemTests : BaseTestFixture
         var command = new CreateTodoItemCommand
         {
             ListId = listId,
-            Title = "Tasks"
+            Name = "Tasks"
         };
 
         var itemId = await SendAsync(command);
@@ -35,7 +35,7 @@ public class CreateTodoItemTests : BaseTestFixture
 
         item.Should().NotBeNull();
         item!.ListId.Should().Be(command.ListId);
-        item.Title.Should().Be(command.Title);
+        item.Name.Should().Be(command.Name);
         item.CreatedBy.Should().Be(userId);
         item.CreatedAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(10000));
         item.LastModifiedBy.Should().Be(userId);

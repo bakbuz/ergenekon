@@ -8,7 +8,7 @@ public record CreateTodoItemCommand : IRequest<int>
 {
     public int ListId { get; init; }
 
-    public string? Title { get; init; }
+    public string Name { get; init; } = null!;
 }
 
 public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
@@ -25,7 +25,7 @@ public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemComman
         var entity = new TodoItem
         {
             ListId = request.ListId,
-            Title = request.Title,
+            Name = request.Name,
             Done = false
         };
 
