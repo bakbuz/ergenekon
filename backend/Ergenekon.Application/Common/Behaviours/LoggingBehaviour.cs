@@ -19,16 +19,15 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
 
     public async Task Process(TRequest request, CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        var userId = _currentUser.Id ?? string.Empty;
+        string? requestName = typeof(TRequest).Name;
         string? userName = string.Empty;
 
-        if (!string.IsNullOrEmpty(userId))
+        if (_currentUser.Id.HasValue)
         {
-            userName = await _identityService.GetUsernameAsync(userId, cancellationToken);
+            userName = await _identityService.GetUsernameAsync(_currentUser.Id.Value, cancellationToken);
         }
 
         _logger.LogInformation("Ergenekon Request: {Name} {@UserId} {@UserName} {@Request}",
-            requestName, userId, userName, request);
+            requestName, _currentUser.Id, userName, request);
     }
 }

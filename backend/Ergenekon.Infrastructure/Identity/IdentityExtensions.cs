@@ -12,17 +12,22 @@ public static class IdentityExtensions
             : Result.Failure(result.Errors.Select(e => e.Description));
     }
 
+    //public static string GetDisplayName(this ApplicationUser user)
+    //{
+    //    if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
+    //        return $"{user.FirstName} {user.LastName}";
+
+    //    if (!string.IsNullOrEmpty(user.FirstName))
+    //        return user.FirstName;
+
+    //    if (!string.IsNullOrEmpty(user.LastName))
+    //        return user.LastName;
+
+    //    return user.UserName!;
+    //}
+
     public static string GetDisplayName(this ApplicationUser user)
     {
-        if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
-            return $"{user.FirstName} {user.LastName}";
-
-        if (!string.IsNullOrEmpty(user.FirstName))
-            return user.FirstName;
-
-        if (!string.IsNullOrEmpty(user.LastName))
-            return user.LastName;
-
         return user.UserName!;
     }
 }

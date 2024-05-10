@@ -83,7 +83,7 @@ public partial class Testing
 
         if (result.Succeeded)
         {
-            _currentUserId = user.Id;
+            _currentUserId = user.Id.ToString();
 
             return _currentUserId;
         }

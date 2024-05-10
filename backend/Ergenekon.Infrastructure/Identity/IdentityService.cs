@@ -1,6 +1,7 @@
 ﻿using Ergenekon.Application.Common.Interfaces;
 using Ergenekon.Application.Common.Models;
 using Ergenekon.Application.Users.Shared;
+using Ergenekon.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ public class IdentityService : IIdentityService
         _authorizationService = authorizationService;
     }
 
-    public async Task<UserSummaryDto?> GetUserAsync(string userId, CancellationToken cancellationToken)
+    public async Task<UserSummaryDto?> GetUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user == null)
@@ -35,7 +36,7 @@ public class IdentityService : IIdentityService
         };
     }
 
-    public async Task<string?> GetUsernameAsync(string userId, CancellationToken cancellationToken)
+    public async Task<string?> GetUsernameAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user == null)
@@ -44,14 +45,14 @@ public class IdentityService : IIdentityService
         return user.UserName;
     }
 
-    public async Task<bool> IsInRoleAsync(string userId, string role, CancellationToken cancellationToken)
+    public async Task<bool> IsInRoleAsync(Guid userId, string role, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
 
         return user != null && await _userManager.IsInRoleAsync(user, role);
     }
 
-    public async Task<bool> AuthorizeAsync(string userId, string policyName, CancellationToken cancellationToken)
+    public async Task<bool> AuthorizeAsync(Guid userId, string policyName, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user == null)
@@ -64,7 +65,7 @@ public class IdentityService : IIdentityService
         return result.Succeeded;
     }
 
-    public async Task<Result> DeleteUserAsync(string userId, CancellationToken cancellationToken)
+    public async Task<Result> DeleteUserAsync(Guid userId, CancellationToken cancellationToken)
     {
         var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId, cancellationToken);
         if (user == null)

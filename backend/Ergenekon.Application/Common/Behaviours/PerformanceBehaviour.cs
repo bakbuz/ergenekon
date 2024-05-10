@@ -36,16 +36,15 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         if (elapsedMilliseconds > 500)
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _currentUser.Id ?? string.Empty;
             var userName = string.Empty;
 
-            if (!string.IsNullOrEmpty(userId))
+            if (_currentUser.Id.HasValue)
             {
-                userName = await _identityService.GetUsernameAsync(userId, cancellationToken);
+                userName = await _identityService.GetUsernameAsync(_currentUser.Id.Value, cancellationToken);
             }
 
             _logger.LogWarning("Ergenekon Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
-                requestName, elapsedMilliseconds, userId, userName, request);
+                requestName, elapsedMilliseconds, _currentUser.Id, userName, request);
         }
 
         return response;

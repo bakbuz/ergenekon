@@ -12,5 +12,16 @@ public class CurrentUser : ICurrentUser
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    public Guid? Id
+    {
+        get
+        {
+            var identifier = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(identifier) && Guid.TryParse(identifier, out var id))
+            {
+                return id;
+            }
+            return null;
+        }
+    }
 }

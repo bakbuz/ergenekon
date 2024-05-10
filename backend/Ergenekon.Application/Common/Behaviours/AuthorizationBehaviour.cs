@@ -41,7 +41,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
                 {
                     foreach (var role in roles)
                     {
-                        var isInRole = await _identityService.IsInRoleAsync(_currentUser.Id, role.Trim(), cancellationToken);
+                        var isInRole = await _identityService.IsInRoleAsync(_currentUser.Id.Value, role.Trim(), cancellationToken);
                         if (isInRole)
                         {
                             authorized = true;
@@ -63,7 +63,7 @@ public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRe
             {
                 foreach (var policy in authorizeAttributesWithPolicies.Select(a => a.Policy))
                 {
-                    var authorized = await _identityService.AuthorizeAsync(_currentUser.Id, policy, cancellationToken);
+                    var authorized = await _identityService.AuthorizeAsync(_currentUser.Id.Value, policy, cancellationToken);
 
                     if (!authorized)
                     {

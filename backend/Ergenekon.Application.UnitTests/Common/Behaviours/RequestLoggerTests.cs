@@ -23,7 +23,7 @@ public class RequestLoggerTests
     [Test]
     public async Task ShouldCallGetUserNameAsyncOnceIfAuthenticated()
     {
-        _currentUser.Setup(x => x.Id).Returns(Guid.NewGuid().ToString());
+        _currentUser.Setup(x => x.Id).Returns(Guid.NewGuid());
 
         CancellationToken cancellationToken = new CancellationToken();
 
@@ -31,7 +31,7 @@ public class RequestLoggerTests
 
         await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<string>(), cancellationToken), Times.Once);
+        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<Guid>(), cancellationToken), Times.Once);
     }
 
     [Test]
@@ -43,6 +43,6 @@ public class RequestLoggerTests
 
         await requestLogger.Process(new CreateTodoItemCommand { ListId = 1, Title = "title" }, new CancellationToken());
 
-        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<string>(), cancellationToken), Times.Never);
+        _identityService.Verify(i => i.GetUsernameAsync(It.IsAny<Guid>(), cancellationToken), Times.Never);
     }
 }

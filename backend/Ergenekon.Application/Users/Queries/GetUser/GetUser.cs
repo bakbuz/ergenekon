@@ -3,7 +3,7 @@ using Ergenekon.Application.Users.Shared;
 
 namespace Ergenekon.Application.Users.Queries.GetUser;
 
-public record GetUserQuery(string Id) : IRequest<UserSummaryDto?>
+public record GetUserQuery(Guid? Id) : IRequest<UserSummaryDto?>
 {
 }
 
@@ -25,10 +25,10 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserSummaryDto?
 
     public async Task<UserSummaryDto?> Handle(GetUserQuery request, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(request.Id))
+        if (!request.Id.HasValue)
             return null;
 
-        return await _identityService.GetUserAsync(request.Id, cancellationToken);
+        return await _identityService.GetUserAsync(request.Id.Value, cancellationToken);
     }
 }
 
