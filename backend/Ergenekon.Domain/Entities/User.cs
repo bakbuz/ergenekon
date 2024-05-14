@@ -1,7 +1,18 @@
 ﻿namespace Ergenekon.Domain.Entities;
 
-public class UserInfo : BaseEntity
+public class UserInfo
 {
+    public UserInfo()
+    {
+    }
+
+    public UserInfo(Guid userId)
+    {
+        Id = userId;
+    }
+
+    public Guid Id { get; set; }
+
     //[Column(Order = 94)]
     public UserStatus Status { get; set; }
 
@@ -19,6 +30,8 @@ public class UserInfo : BaseEntity
 
     //[Column(Order = 99)]
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+    //public virtual ApplicationUser { get; set; }
 }
 
 public class UserFollow

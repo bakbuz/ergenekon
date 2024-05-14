@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ergenekon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240510111420_InitialCreate")]
+    [Migration("20240510114024_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -120,11 +120,9 @@ namespace Ergenekon.Infrastructure.Migrations
 
             modelBuilder.Entity("Ergenekon.Domain.Entities.UserInfo", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
