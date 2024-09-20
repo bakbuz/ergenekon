@@ -2,16 +2,7 @@ import { Route, Router, Routes, useRoutes } from "@solidjs/router";
 import { createComputed, createSignal, lazy } from "solid-js";
 import { useStore } from "./store";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Home from "./pages/Home";
-
-//import 'bootstrap/scss/bootstrap.scss'
-import 'bootstrap/js/src/dropdown';
-//import 'bootstrap/js/src/tooltip'
-import 'bootstrap/js/src/modal';
-import 'bootstrap/js/src/offcanvas';
-import 'bootstrap/js/src/tab';
 
 import './assets/main.scss';
 import './assets/style.css';
@@ -36,17 +27,10 @@ export default () => {
     createComputed(() => store.currentUser && setAppLoaded(true));
   }
 
-  //const authPaths = ["/giris", "/kaydol", "/parola-kurtar", "/parola-sifirla"];
-  //const showHeader = !authPaths.includes(location.pathname);
-  const showHeader = true;
-
   return (
     <>
       <Suspense fallback={<div class="container">Yükleniyor...</div>}>
-        <Router>
-          <Show when={showHeader}>
-            <Header />
-          </Show>
+        <Router>          
 
           <Show when={appLoaded()}>
             <Routes>
@@ -60,11 +44,8 @@ export default () => {
 
               <Route path="" component={Home} />
             </Routes>
-          </Show>
+          </Show>          
 
-          <Show when={showHeader}>
-            <Footer />
-          </Show>
         </Router>
       </Suspense>
     </>

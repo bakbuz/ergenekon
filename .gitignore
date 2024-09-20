@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 solidjs-layout/pnpm-lock.yaml
+fe-social/pnpm-lock.yaml

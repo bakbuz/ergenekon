@@ -1,6 +1,8 @@
+import { DefaultLayout } from "../../layouts/DefaultLayout";
+
 export default ({ appName, token, store }) => {
   return (
-    <main>
+    <DefaultLayout>
       <div class="container">
 
         <div class="card">
@@ -11,6 +13,6 @@ export default ({ appName, token, store }) => {
         </div>
 
       </div>
-    </main>
+    </DefaultLayout>
   );
 };

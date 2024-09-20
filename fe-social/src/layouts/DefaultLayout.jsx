@@ -1,10 +1,20 @@
-import { Title } from "@solidjs/meta";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-export default function DefaultLayout() {
-  return (
-    <main>
-      <Title>About</Title>
-      <h1>About</h1>
-    </main>
-  );
-}
+// export default function DefaultLayout(props) {
+//   return (
+//     <>
+//       <Header />
+//       <>{props.children()}</>
+//       <Footer />
+//     </>
+//   );
+// }
+
+export const DefaultLayout = (props) => (
+  <>
+    <Header />
+    <main>{props.children}</main>
+    <Footer />
+  </>
+);
