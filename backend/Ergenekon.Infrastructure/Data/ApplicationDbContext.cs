@@ -11,13 +11,15 @@ namespace Ergenekon.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
 
     public DbSet<UserInfo> UserInfos { get; set; }
     public DbSet<UserFollow> UserFollows { get; set; }
 
     public DbSet<TodoList> TodoLists => Set<TodoList>();
-
     public DbSet<TodoItem> TodoItems => Set<TodoItem>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -25,10 +27,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        IdentityModelCreating0(builder);
+        IdentityModelCreating(builder);
     }
 
-    private void IdentityModelCreating0(ModelBuilder builder)
+    private void IdentityModelCreating(ModelBuilder builder)
     {
         builder.Entity<ApplicationUser>().ToTable(nameof(Users), Identities.IdentitySchema);
         builder.Entity<ApplicationRole>().ToTable(nameof(Roles), Identities.IdentitySchema);
