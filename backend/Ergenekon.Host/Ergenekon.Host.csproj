@@ -23,7 +23,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="ZymLabs.NSwag.FluentValidation.AspNetCore" Version="0.6.3" />
-    <PackageReference Include="MessagePack" Version="2.5.172" />
+    <PackageReference Include="MessagePack" Version="2.5.187" />
     <!--<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />-->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
